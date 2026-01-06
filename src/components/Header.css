@@ -1,0 +1,2275 @@
+/* ==================== BASE HEADER STYLES ==================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.main-header {
+  position: fixed; 
+  top: 0; 
+  left: 0;
+  right: 0;
+  width: 100%; 
+  height: 90px; 
+  z-index: 1000;
+  display: flex; 
+  align-items: center; 
+  
+  /* Top Teal Accent */
+  border-top: 3px solid #73c9c1;
+  
+  /* Black gradient overlay (The Scrim) */
+  background: linear-gradient(
+    to bottom, 
+    rgba(0, 0, 0, 0.463) 0%, 
+    rgba(0, 0, 0, 0.128) 60%, 
+    rgba(0, 0, 0, 0) 100%
+  );
+  
+  border-bottom: none;
+  transition: all 0.3s ease;
+}
+
+/* The Thin White Line */
+.main-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.25);
+  transition: opacity 0.3s ease;
+}
+
+.main-header.scrolled {
+  background: white;
+  height: 80px;
+}
+
+.main-header.scrolled::after {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.main-header.scrolled .nav-links a,
+.main-header.scrolled .services-toggle {
+  color: #000000;
+}
+
+.main-header.scrolled .book-btn {
+  color: #333;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.main-header.scrolled .book-btn:hover {
+  background: #73c9c1;
+  color: white;
+  border-color: #73c9c1;
+}
+
+.main-header.scrolled .icon-circle {
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.main-header.scrolled .icon-circle:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.main-header.scrolled .search-icon {
+  color: #333;
+}
+
+.header-container {
+  width: 100%; 
+  max-width: 1400px;
+  margin: 0 auto; 
+  padding: 0 50px;
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+}
+
+.header-logo-img { 
+  height: 24px;
+  transition: height 0.3s ease;
+  margin-right: 40px;
+  flex-shrink: 0;
+}
+
+.nav-links { 
+  display: flex; 
+  gap: 25px; 
+  align-items: center; 
+  position: relative;
+  flex-wrap: nowrap;
+}
+
+.nav-links a { 
+  text-decoration: none; 
+  color: white; 
+  font-size: 13px;
+  font-weight: 500; 
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  opacity: 0.8; 
+  letter-spacing: 0.5px; 
+  text-transform: uppercase; 
+  transition: opacity 0.3s;
+  white-space: nowrap;
+}
+
+.nav-links a:hover { 
+  opacity: 1; 
+}
+
+/* Services Dropdown */
+.services-dropdown { 
+  position: relative; 
+}
+
+.services-toggle {
+  background: none; 
+  border: none; 
+  color: white; 
+  font-size: 13px;
+  font-weight: 500; 
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  opacity: 0.9; 
+  letter-spacing: 0.5px; 
+  cursor: pointer;
+  display: flex; 
+  align-items: center; 
+  gap: 5px; 
+  text-transform: uppercase;
+  transition: opacity 0.3s;
+  padding: 0;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.services-toggle:hover { 
+  opacity: 1; 
+}
+
+.dropdown-menu {
+  position: absolute; 
+  top: 100%; 
+  left: 0; 
+  margin-top: 15px;
+  background: white; 
+  min-width: 200px; 
+  border-radius: 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+  opacity: 0;
+  visibility: hidden; 
+  transition: all 0.3s ease;
+  z-index: 1001;
+}
+
+.dropdown-menu.active { 
+  opacity: 1; 
+  visibility: visible; 
+}
+
+.dropdown-menu a {
+  display: block; 
+  padding: 12px 20px; 
+  color: #333; 
+  font-size: 13px;
+  font-weight: 500; 
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-decoration: none; 
+  transition: background 0.2s; 
+  text-transform: uppercase;
+}
+
+.dropdown-menu a:hover { 
+  background: #14b8a6; 
+  color: white; 
+}
+
+.header-actions { 
+  display: flex; 
+  align-items: center; 
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.book-btn { 
+  background: transparent; 
+  border: 1px solid rgba(255,255,255,0.4); 
+  color: white; 
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 500; 
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  cursor: pointer; 
+  text-transform: uppercase; 
+  letter-spacing: 0.5px; 
+  transition: all 0.3s;
+  white-space: nowrap;
+  border-radius: 4px;
+}
+
+.book-btn:hover { 
+  background: #14b8a6; 
+  border-color: #14b8a6; 
+}
+
+.social-icons { 
+  display: flex; 
+  gap: 12px; 
+  align-items: center; 
+}
+
+.icon-circle { 
+  width: 25px; 
+  height: 25px; 
+  border-radius: 50%; 
+  border: 1px solid rgba(255,255,255,0.2); 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  cursor: pointer; 
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+
+.icon-circle:hover { 
+  background: rgba(255,255,255,0.1); 
+}
+
+.icon-circle.whatsapp { 
+  background: #25D366; 
+  border: none; 
+}
+
+.icon-circle.whatsapp:hover { 
+  background: #1ea952; 
+}
+
+.search-icon { 
+  cursor: pointer; 
+  opacity: 0.8; 
+  transition: opacity 0.3s;
+  color: #14b8a6;
+  margin-left: 30px;
+}
+
+.search-icon:hover { 
+  opacity: 1; 
+}
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 1002;
+  transition: all 0.3s ease;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+}
+
+.mobile-menu-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.main-header.scrolled .mobile-menu-toggle:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.mobile-menu-toggle .menu-icon {
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.main-header.scrolled .mobile-menu-toggle .menu-icon {
+  color: #333;
+}
+
+.mobile-menu-toggle.active {
+  background: rgba(128, 203, 196, 0.15);
+}
+
+.mobile-menu-toggle.active .menu-icon {
+  color: #80cbc4;
+}
+
+/* Mobile Navigation Menu */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  top: 90px;
+  left: 0;
+  right: 0;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  z-index: 999;
+}
+
+.mobile-nav.active {
+  max-height: calc(100vh - 90px);
+  overflow-y: auto;
+}
+
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+}
+
+.mobile-nav-links > a {
+  padding: 15px 30px;
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: background 0.2s;
+  border-bottom: 1px solid #f0f0f0;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.mobile-nav-links > a:hover {
+  background: #f5f5f5;
+}
+
+.mobile-services-section {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.mobile-services-toggle {
+  width: 100%;
+  padding: 15px 30px;
+  background: none;
+  border: none;
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.2s;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.mobile-services-toggle:hover {
+  background: #f5f5f5;
+}
+
+.mobile-services-menu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  background: #f9f9f9;
+}
+
+.mobile-services-menu.active {
+  max-height: 500px;
+}
+
+.mobile-services-menu a {
+  display: block;
+  padding: 12px 30px 12px 50px;
+  font-size: 13px;
+  border-bottom: 1px solid #e5e5e5;
+  color: #555;
+  text-decoration: none;
+  transition: background 0.2s;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.mobile-services-menu a:hover {
+  background: #f0f0f0;
+  color: #80cbc4;
+}
+
+.mobile-book-btn {
+  margin: 20px 30px;
+  padding: 14px 28px;
+  background: #14b8a6;
+  color: white;
+  border: none;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background 0.3s;
+  width: calc(100% - 60px);
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  border-radius: 4px;
+}
+
+.mobile-book-btn:hover {
+  background: #0f9b8c;
+  transform: translateY(-1px);
+}
+
+/* Mobile Social Section */
+.mobile-social-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 10px 0;
+  border-top: 1px solid #f0f0f0;
+  margin-top: 10px;
+}
+
+.mobile-social-link {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 30px;
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s;
+  border-bottom: 1px solid #f0f0f0;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.mobile-social-link:hover {
+  background: #f5f5f5;
+}
+
+.mobile-social-link.whatsapp {
+  color: #25D366;
+}
+
+.mobile-social-link.phone {
+  color: #14b8a6;
+}
+
+.mobile-social-link i {
+  font-size: 20px;
+  width: 24px;
+  text-align: center;
+}
+
+/* Prevent body scroll when mobile menu is open */
+body.mobile-menu-open {
+  overflow: hidden;
+}
+
+/* ==================== ULTRA-WIDE & 5K DISPLAYS ==================== */
+
+/* 27-inch iMac 5K / Studio Display (5120x2880) */
+@media (min-width: 5120px) {
+  .main-header {
+    height: 160px;
+    border-top: 6px solid #73c9c1;
+  }
+
+  .main-header.scrolled {
+    height: 140px;
+  }
+
+  .header-container {
+    max-width: 4200px;
+    padding: 0 150px;
+  }
+
+  .header-logo-img {
+    height: 52px;
+    margin-right: 90px;
+  }
+
+  .nav-links {
+    gap: 55px;
+  }
+
+  .nav-links a,
+  .services-toggle {
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+
+  .dropdown-menu {
+    min-width: 200px;
+    margin-top: 30px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  }
+
+  .dropdown-menu a {
+    padding: 28px 45px;
+    font-size: 13px;
+  }
+
+  .book-btn {
+    padding: 18px 36px;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    border-radius: 8px;
+  }
+
+  .header-actions {
+    gap: 45px;
+  }
+
+  .social-icons {
+    gap: 28px;
+  }
+
+  .icon-circle {
+    width: 58px;
+    height: 58px;
+  }
+
+  .icon-circle i {
+    font-size: 28px !important;
+  }
+
+  .search-icon {
+    margin-left: 65px;
+  }
+
+  .search-icon i {
+    font-size: 28px !important;
+  }
+}
+
+/* 24-inch iMac 4.5K (4480x2520) */
+@media (min-width: 4480px) and (max-width: 5119px) {
+  .main-header {
+    height: 140px;
+    border-top: 5px solid #73c9c1;
+  }
+
+  .main-header.scrolled {
+    height: 120px;
+  }
+
+  .header-container {
+    max-width: 3600px;
+    padding: 0 130px;
+  }
+
+  .header-logo-img {
+    height: 46px;
+    margin-right: 80px;
+  }
+
+  .nav-links {
+    gap: 48px;
+  }
+
+  .nav-links a,
+  .services-toggle {
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+
+  .dropdown-menu {
+    min-width: 200px;
+    margin-top: 28px;
+  }
+
+  .dropdown-menu a {
+    padding: 26px 42px;
+    font-size: 13px;
+  }
+
+  .book-btn {
+    padding: 16px 32px;
+    font-size: 13px;
+    border-radius: 8px;
+  }
+
+  .header-actions {
+    gap: 42px;
+  }
+
+  .social-icons {
+    gap: 26px;
+  }
+
+  .icon-circle {
+    width: 54px;
+    height: 54px;
+  }
+
+  .icon-circle i {
+    font-size: 26px !important;
+  }
+
+  .search-icon {
+    margin-left: 60px;
+  }
+
+  .search-icon i {
+    font-size: 26px !important;
+  }
+}
+
+/* 16-inch MacBook Pro Retina (3456x2234) */
+@media (min-width: 3456px) and (max-width: 4479px) {
+  .main-header {
+    height: 125px;
+    border-top: 5px solid #73c9c1;
+  }
+
+  .main-header.scrolled {
+    height: 110px;
+  }
+
+  .header-container {
+    max-width: 2800px;
+    padding: 0 110px;
+  }
+
+  .header-logo-img {
+    height: 42px;
+    margin-right: 72px;
+  }
+
+  .nav-links {
+    gap: 45px;
+  }
+
+  .nav-links a,
+  .services-toggle {
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+
+  .dropdown-menu {
+    min-width: 200px;
+    margin-top: 26px;
+  }
+
+  .dropdown-menu a {
+    padding: 24px 38px;
+    font-size: 13px;
+  }
+
+  .book-btn {
+    padding: 15px 30px;
+    font-size: 13px;
+    border-radius: 7px;
+  }
+
+  .header-actions {
+    gap: 38px;
+  }
+
+  .social-icons {
+    gap: 24px;
+  }
+
+  .icon-circle {
+    width: 50px;
+    height: 50px;
+  }
+
+  .icon-circle i {
+    font-size: 24px !important;
+  }
+
+  .search-icon {
+    margin-left: 56px;
+  }
+
+  .search-icon i {
+    font-size: 24px !important;
+  }
+}
+
+/* 14-inch MacBook Pro Retina (3024x1964) */
+@media (min-width: 3024px) and (max-width: 3455px) {
+  .main-header {
+    height: 115px;
+    border-top: 4px solid #73c9c1;
+  }
+
+  .main-header.scrolled {
+    height: 100px;
+  }
+
+  .header-container {
+    max-width: 2500px;
+    padding: 0 100px;
+  }
+
+  .header-logo-img {
+    height: 38px;
+    margin-right: 68px;
+  }
+
+  .nav-links {
+    gap: 42px;
+  }
+
+  .nav-links a,
+  .services-toggle {
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+
+  .dropdown-menu {
+    min-width: 200px;
+    margin-top: 24px;
+  }
+
+  .dropdown-menu a {
+    padding: 22px 36px;
+    font-size: 13px;
+  }
+
+  .book-btn {
+    padding: 14px 28px;
+    font-size: 13px;
+    border-radius: 7px;
+  }
+
+  .header-actions {
+    gap: 36px;
+  }
+
+  .social-icons {
+    gap: 22px;
+  }
+
+  .icon-circle {
+    width: 46px;
+    height: 46px;
+  }
+
+  .icon-circle i {
+    font-size: 22px !important;
+  }
+
+  .search-icon {
+    margin-left: 52px;
+  }
+
+  .search-icon i {
+    font-size: 22px !important;
+  }
+}
+
+/* 15-inch MacBook Retina (2880x1800) */
+@media (min-width: 2880px) and (max-width: 3023px) {
+  .main-header {
+    height: 108px;
+    border-top: 4px solid #73c9c1;
+  }
+
+  .main-header.scrolled {
+    height: 95px;
+  }
+
+  .header-container {
+    max-width: 2300px;
+    padding: 0 95px;
+  }
+
+  .header-logo-img {
+    height: 36px;
+    margin-right: 64px;
+  }
+
+  .nav-links {
+    gap: 40px;
+  }
+
+  .nav-links a,
+  .services-toggle {
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+
+  .dropdown-menu {
+    min-width: 200px;
+    margin-top: 23px;
+  }
+
+  .dropdown-menu a {
+    padding: 21px 34px;
+    font-size: 13px;
+  }
+
+  .book-btn {
+    padding: 13px 26px;
+    font-size: 13px;
+    border-radius: 6px;
+  }
+
+  .header-actions {
+    gap: 34px;
+  }
+
+  .social-icons {
+    gap: 21px;
+  }
+
+  .icon-circle {
+    width: 44px;
+    height: 44px;
+  }
+
+  .icon-circle i {
+    font-size: 21px !important;
+  }
+
+  .search-icon {
+    margin-left: 50px;
+  }
+
+  .search-icon i {
+    font-size: 21px !important;
+  }
+}
+
+/* 13-inch MacBook Retina (2560x1600) */
+@media (min-width: 2560px) and (max-width: 2879px) {
+  .main-header {
+    height: 102px;
+    border-top: 4px solid #73c9c1;
+  }
+
+  .main-header.scrolled {
+    height: 90px;
+  }
+
+  .header-container {
+    max-width: 2100px;
+    padding: 0 90px;
+  }
+
+  .header-logo-img {
+    height: 34px;
+    margin-right: 60px;
+  }
+
+  .nav-links {
+    gap: 38px;
+  }
+
+  .nav-links a,
+  .services-toggle {
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+
+  .dropdown-menu {
+    min-width: 200px;
+    margin-top: 22px;
+  }
+
+  .dropdown-menu a {
+    padding: 20px 32px;
+    font-size: 13px;
+  }
+
+  .book-btn {
+    padding: 12px 24px;
+    font-size: 13px;
+    border-radius: 6px;
+  }
+
+  .header-actions {
+    gap: 32px;
+  }
+
+  .social-icons {
+    gap: 20px;
+  }
+
+  .icon-circle {
+    width: 42px;
+    height: 42px;
+  }
+
+  .icon-circle i {
+    font-size: 20px !important;
+  }
+
+  .search-icon {
+    margin-left: 48px;
+  }
+
+  .search-icon i {
+    font-size: 20px !important;
+  }
+}
+
+/* ==================== EXTRA LARGE DESKTOP (1920px+) ==================== */
+
+@media (min-width: 1920px) and (max-width: 2559px) {
+  .main-header {
+    height: 100px;
+  }
+
+  .main-header.scrolled {
+    height: 88px;
+  }
+
+  .header-container {
+    max-width: 1800px;
+    padding: 0 80px;
+  }
+
+  .header-logo-img {
+    height: 32px;
+    margin-right: 58px;
+  }
+
+  .nav-links {
+    gap: 36px;
+  }
+
+  .nav-links a,
+  .services-toggle {
+    font-size: 13px;
+  }
+
+  .dropdown-menu {
+    min-width: 200px;
+    margin-top: 20px;
+  }
+
+  .dropdown-menu a {
+    padding: 18px 30px;
+    font-size: 13px;
+  }
+
+  .book-btn {
+    padding: 11px 22px;
+    font-size: 13px;
+    border-radius: 5px;
+  }
+
+  .header-actions {
+    gap: 30px;
+  }
+
+  .social-icons {
+    gap: 18px;
+  }
+
+  .icon-circle {
+    width: 38px;
+    height: 38px;
+  }
+
+  .icon-circle i {
+    font-size: 18px !important;
+  }
+
+  .search-icon {
+    margin-left: 46px;
+  }
+
+  .search-icon i {
+    font-size: 18px !important;
+  }
+}
+
+/* ==================== LARGE DESKTOP (1728px - 1919px) ==================== */
+
+/* MacBook Pro 16.2" Scaled (~1728x1117) */
+@media (min-width: 1728px) and (max-width: 1919px) {
+  .main-header {
+    height: 96px;
+  }
+
+  .main-header.scrolled {
+    height: 85px;
+  }
+
+  .header-container {
+    max-width: 1680px;
+    padding: 0 65px;
+  }
+
+  .header-logo-img {
+    height: 30px;
+    margin-right: 52px;
+  }
+
+  .nav-links {
+    gap: 32px;
+  }
+
+  .nav-links a,
+  .services-toggle {
+    font-size: 13px;
+  }
+
+  .dropdown-menu {
+    min-width: 200px;
+    margin-top: 18px;
+  }
+
+  .dropdown-menu a {
+    padding: 16px 28px;
+    font-size: 13px;
+  }
+
+  .book-btn {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+
+  .header-actions {
+    gap: 28px;
+  }
+
+  .social-icons {
+    gap: 16px;
+  }
+
+  .icon-circle {
+    width: 36px;
+    height: 36px;
+  }
+
+  .icon-circle i {
+    font-size: 17px !important;
+  }
+
+  .search-icon {
+    margin-left: 42px;
+  }
+
+  .search-icon i {
+    font-size: 17px !important;
+  }
+}
+
+/* ==================== MEDIUM DESKTOP (1536px - 1727px) ==================== */
+
+/* MacBook Pro 16" Scaled (~1536x960) */
+@media (min-width: 1536px) and (max-width: 1727px) {
+  .main-header {
+    height: 93px;
+  }
+
+  .main-header.scrolled {
+    height: 82px;
+  }
+
+  .header-container {
+    max-width: 1500px;
+    padding: 0 58px;
+  }
+
+  .header-logo-img {
+    height: 28px;
+    margin-right: 48px;
+  }
+
+  .nav-links {
+    gap: 30px;
+  }
+
+  .nav-links a,
+  .services-toggle {
+    font-size: 13px;
+  }
+
+  .dropdown-menu {
+    min-width: 200px;
+    margin-top: 17px;
+  }
+
+  .dropdown-menu a {
+    padding: 15px 26px;
+    font-size: 13px;
+  }
+
+  .book-btn {
+    padding: 9px 18px;
+    font-size: 13px;
+  }
+
+  .header-actions {
+    gap: 26px;
+  }
+
+  .social-icons {
+    gap: 15px;
+  }
+
+  .icon-circle {
+    width: 34px;
+    height: 34px;
+  }
+
+  .icon-circle i {
+    font-size: 16px !important;
+  }
+
+  .search-icon {
+    margin-left: 40px;
+  }
+
+  .search-icon i {
+    font-size: 16px !important;
+  }
+}
+
+/* ==================== MEDIUM DESKTOP (1440px - 1535px) ==================== */
+
+/* MacBook Pro 14" & MacBook Air 15" */
+@media (min-width: 1440px) and (max-width: 1535px) {
+  .main-header {
+    height: 90px;
+  }
+
+  .main-header.scrolled {
+    height: 80px;
+  }
+
+  .header-container {
+    max-width: 1400px;
+    padding: 0 52px;
+  }
+
+  .header-logo-img {
+    height: 26px;
+    margin-right: 44px;
+  }
+
+  .nav-links {
+    gap: 28px;
+  }
+
+  .nav-links a,
+  .services-toggle {
+    font-size: 13px;
+  }
+
+  .dropdown-menu {
+    min-width: 200px;
+    margin-top: 16px;
+  }
+
+  .dropdown-menu a {
+    padding: 14px 24px;
+    font-size: 13px;
+  }
+
+  .book-btn {
+    padding: 9px 18px;
+    font-size: 13px;
+  }
+
+  .header-actions {
+    gap: 24px;
+  }
+
+  .social-icons {
+    gap: 14px;
+  }
+
+  .icon-circle {
+    width: 32px;
+    height: 32px;
+  }
+
+  .icon-circle i {
+    font-size: 15px !important;
+  }
+
+  .search-icon {
+    margin-left: 38px;
+  }
+
+  .search-icon i {
+    font-size: 15px !important;
+  }
+}
+
+/* ==================== SMALL DESKTOP (1280px - 1439px) ==================== */
+
+/* MacBook Air 13" & MacBook Pro 13" */
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .main-header {
+    height: 88px;
+  }
+
+  .main-header.scrolled {
+    height: 78px;
+  }
+
+  .header-container {
+    max-width: 1240px;
+    padding: 0 45px;
+  }
+
+  .header-logo-img {
+    height: 24px;
+    margin-right: 40px;
+  }
+
+  .nav-links {
+    gap: 25px;
+  }
+
+  .nav-links a,
+  .services-toggle {
+    font-size: 13px;
+  }
+
+  .dropdown-menu {
+    min-width: 200px;
+    margin-top: 15px;
+  }
+
+  .dropdown-menu a {
+    padding: 13px 22px;
+    font-size: 13px;
+  }
+
+  .book-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .header-actions {
+    gap: 22px;
+  }
+
+  .social-icons {
+    gap: 13px;
+  }
+
+  .icon-circle {
+    width: 30px;
+    height: 30px;
+  }
+
+  .icon-circle i {
+    font-size: 14px !important;
+  }
+
+  .search-icon {
+    margin-left: 35px;
+  }
+
+  .search-icon i {
+    font-size: 14px !important;
+  }
+}
+
+/* ==================== TABLET LANDSCAPE (1024px - 1279px) ==================== */
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .main-header {
+    height: 85px;
+  }
+
+  .main-header.scrolled {
+    height: 75px;
+  }
+
+  .header-container {
+    max-width: 1000px;
+    padding: 0 40px;
+  }
+
+  .header-logo-img {
+    height: 22px;
+    margin-right: 35px;
+  }
+
+  .nav-links {
+    gap: 22px;
+  }
+
+  .nav-links a,
+  .services-toggle {
+    font-size: 13px;
+  }
+
+  .dropdown-menu {
+    min-width: 200px;
+    margin-top: 14px;
+  }
+
+  .dropdown-menu a {
+    padding: 12px 20px;
+    font-size: 13px;
+  }
+
+  .book-btn {
+    padding: 7px 14px;
+    font-size: 13px;
+  }
+
+  .header-actions {
+    gap: 20px;
+  }
+
+  .social-icons {
+    gap: 12px;
+  }
+
+  .icon-circle {
+    width: 28px;
+    height: 28px;
+  }
+
+  .icon-circle i {
+    font-size: 13px !important;
+  }
+
+  .search-icon {
+    margin-left: 30px;
+  }
+
+  .search-icon i {
+    font-size: 13px !important;
+  }
+}
+
+/* ==================== TABLET (900px - 1023px) ==================== */
+
+@media (min-width: 900px) and (max-width: 1023px) {
+  .main-header {
+    height: 82px;
+  }
+
+  .main-header.scrolled {
+    height: 72px;
+  }
+
+  .header-container {
+    max-width: 880px;
+    padding: 0 38px;
+  }
+
+  .header-logo-img {
+    height: 21px;
+    margin-right: 30px;
+  }
+
+  .nav-links {
+    gap: 20px;
+  }
+
+  .nav-links a,
+  .services-toggle {
+    font-size: 13px;
+  }
+
+  .dropdown-menu {
+    min-width: 200px;
+    margin-top: 13px;
+  }
+
+  .dropdown-menu a {
+    padding: 11px 18px;
+    font-size: 13px;
+  }
+
+  .book-btn {
+    padding: 7px 14px;
+    font-size: 13px;
+  }
+
+  .header-actions {
+    gap: 18px;
+  }
+
+  .social-icons {
+    gap: 11px;
+  }
+
+  .icon-circle {
+    width: 27px;
+    height: 27px;
+  }
+
+  .icon-circle i {
+    font-size: 12px !important;
+  }
+
+  .search-icon {
+    margin-left: 28px;
+  }
+
+  .search-icon i {
+    font-size: 12px !important;
+  }
+}
+
+/* ==================== TABLET PORTRAIT (834px - 899px) ==================== */
+
+@media (min-width: 834px) and (max-width: 899px) {
+  .main-header {
+    height: 80px;
+  }
+
+  .main-header.scrolled {
+    height: 70px;
+  }
+
+  .header-container {
+    max-width: 820px;
+    padding: 0 35px;
+  }
+
+  .header-logo-img {
+    height: 20px;
+    margin-right: 28px;
+  }
+
+  .nav-links {
+    gap: 18px;
+  }
+
+  .nav-links a,
+  .services-toggle {
+    font-size: 13px;
+  }
+
+  .dropdown-menu {
+    min-width: 200px;
+    margin-top: 12px;
+  }
+
+  .dropdown-menu a {
+    padding: 10px 17px;
+    font-size: 13px;
+  }
+
+  .book-btn {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
+  .header-actions {
+    gap: 16px;
+  }
+
+  .social-icons {
+    gap: 10px;
+  }
+
+  .icon-circle {
+    width: 26px;
+    height: 26px;
+  }
+
+  .icon-circle i {
+    font-size: 12px !important;
+  }
+
+  .search-icon {
+    margin-left: 26px;
+  }
+
+  .search-icon i {
+    font-size: 12px !important;
+  }
+}
+
+/* ==================== TABLET PORTRAIT (768px - 833px) ==================== */
+
+@media (min-width: 768px) and (max-width: 833px) {
+  .main-header {
+    height: 78px;
+  }
+
+  .main-header.scrolled {
+    height: 68px;
+  }
+
+  .header-container {
+    max-width: 750px;
+    padding: 0 32px;
+  }
+
+  .header-logo-img {
+    height: 20px;
+    margin-right: 25px;
+  }
+
+  .nav-links {
+    gap: 16px;
+  }
+
+  .nav-links a,
+  .services-toggle {
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+
+  .dropdown-menu {
+    min-width: 200px;
+    margin-top: 12px;
+  }
+
+  .dropdown-menu a {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .book-btn {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
+  .header-actions {
+    gap: 15px;
+  }
+
+  .social-icons {
+    gap: 10px;
+  }
+
+  .icon-circle {
+    width: 25px;
+    height: 25px;
+  }
+
+  .icon-circle i {
+    font-size: 11px !important;
+  }
+
+  .search-icon {
+    margin-left: 24px;
+  }
+
+  .search-icon i {
+    font-size: 11px !important;
+  }
+}
+
+/* ==================== MOBILE BREAKPOINT ==================== */
+
+@media (max-width: 767px) {
+  .main-header {
+    height: 70px;
+    background: white !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .main-header::after {
+    background: rgba(0, 0, 0, 0.08);
+  }
+
+  .main-header.scrolled {
+    height: 70px;
+    background: white !important;
+  }
+
+  .header-container {
+    padding: 0 20px;
+  }
+
+  .header-logo-img {
+    height: 24px;
+    margin-right: 0;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .mobile-menu-toggle {
+    display: flex;
+  }
+
+  .mobile-menu-toggle .menu-icon {
+    color: #333 !important;
+  }
+
+  .mobile-menu-toggle.active .menu-icon {
+    color: #80cbc4;
+  }
+
+  .mobile-nav {
+    display: block;
+    top: 70px;
+    background: white !important;
+  }
+
+  .header-actions .book-btn {
+    display: none;
+  }
+
+  .header-actions .search-icon {
+    display: none;
+  }
+
+  .header-actions {
+    gap: 12px;
+  }
+
+  .social-icons {
+    gap: 10px;
+  }
+
+  .icon-circle {
+    width: 32px;
+    height: 32px;
+    border-color: rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .icon-circle i {
+    font-size: 15px !important;
+    color: #333 !important;
+  }
+
+  .icon-circle.whatsapp {
+    background: #25D366 !important;
+    border: none !important;
+  }
+
+  .icon-circle.whatsapp i {
+    color: white !important;
+  }
+
+  .mobile-nav-links > a,
+  .mobile-services-toggle {
+    font-size: 14px;
+  }
+
+  .mobile-services-menu a {
+    font-size: 13px;
+  }
+
+  .mobile-book-btn {
+    font-size: 13px;
+  }
+
+  .mobile-social-link {
+    font-size: 14px;
+  }
+}
+/* ==================== LARGE MOBILE & SMALL TABLET (640px - 767px) ==================== */
+
+@media (min-width: 640px) and (max-width: 767px) {
+  .header-container {
+    padding: 0 28px;
+  }
+
+  .header-logo-img {
+    height: 26px;
+  }
+
+  .icon-circle {
+    width: 34px;
+    height: 34px;
+  }
+
+  .icon-circle i {
+    font-size: 16px !important;
+  }
+
+  .mobile-nav-links > a,
+  .mobile-services-toggle {
+    font-size: 14px;
+    padding: 16px 32px;
+  }
+
+  .mobile-services-menu a {
+    font-size: 13px;
+    padding: 13px 32px 13px 52px;
+  }
+
+  .mobile-book-btn {
+    margin: 22px 32px;
+    padding: 15px 30px;
+    font-size: 13px;
+  }
+
+  .mobile-social-link {
+    padding: 16px 32px;
+    font-size: 14px;
+  }
+}
+
+/* ==================== STANDARD MOBILE (576px - 639px) ==================== */
+
+@media (min-width: 576px) and (max-width: 639px) {
+  .header-container {
+    padding: 0 25px;
+  }
+
+  .header-logo-img {
+    height: 25px;
+  }
+
+  .icon-circle {
+    width: 33px;
+    height: 33px;
+  }
+
+  .mobile-nav-links > a,
+  .mobile-services-toggle {
+    font-size: 14px;
+    padding: 15px 30px;
+  }
+
+  .mobile-services-menu a {
+    font-size: 13px;
+  }
+
+  .mobile-book-btn {
+    font-size: 13px;
+  }
+}
+
+/* ==================== MOBILE (480px - 575px) ==================== */
+
+@media (min-width: 480px) and (max-width: 575px) {
+  .header-container {
+    padding: 0 22px;
+  }
+
+  .header-logo-img {
+    height: 24px;
+  }
+
+  .icon-circle {
+    width: 32px;
+    height: 32px;
+  }
+
+  .icon-circle i {
+    font-size: 15px !important;
+  }
+
+  .mobile-nav-links > a,
+  .mobile-services-toggle {
+    font-size: 14px;
+    padding: 15px 28px;
+  }
+
+  .mobile-services-menu a {
+    font-size: 13px;
+    padding: 12px 28px 12px 48px;
+  }
+
+  .mobile-book-btn {
+    margin: 20px 28px;
+    padding: 14px 28px;
+    font-size: 13px;
+  }
+
+  .mobile-social-link {
+    padding: 15px 28px;
+    font-size: 14px;
+  }
+}
+
+/* ==================== MOBILE (428px - 479px) ==================== */
+
+@media (min-width: 428px) and (max-width: 479px) {
+  .header-container {
+    padding: 0 20px;
+  }
+
+  .header-logo-img {
+    height: 23px;
+  }
+
+  .icon-circle {
+    width: 31px;
+    height: 31px;
+  }
+
+  .mobile-nav-links > a,
+  .mobile-services-toggle {
+    font-size: 14px;
+  }
+}
+
+/* ==================== MOBILE (375px - 427px) ==================== */
+
+@media (min-width: 375px) and (max-width: 427px) {
+  .header-container {
+    padding: 0 18px;
+  }
+
+  .header-logo-img {
+    height: 22px;
+  }
+
+  .icon-circle {
+    width: 30px;
+    height: 30px;
+  }
+
+  .icon-circle i {
+    font-size: 14px !important;
+  }
+
+  .mobile-nav-links > a,
+  .mobile-services-toggle {
+    font-size: 14px;
+    padding: 14px 25px;
+  }
+
+  .mobile-services-menu a {
+    font-size: 13px;
+    padding: 11px 25px 11px 45px;
+  }
+
+  .mobile-book-btn {
+    margin: 18px 25px;
+    padding: 13px 26px;
+    font-size: 13px;
+  }
+
+  .mobile-social-link {
+    padding: 14px 25px;
+    font-size: 14px;
+  }
+
+  .mobile-social-link i {
+    font-size: 18px;
+  }
+}
+
+/* ==================== SMALL MOBILE (320px - 374px) ==================== */
+
+@media (min-width: 320px) and (max-width: 374px) {
+  .main-header {
+    height: 65px;
+  }
+
+  .main-header.scrolled {
+    height: 65px;
+  }
+
+  .header-container {
+    padding: 0 15px;
+  }
+
+  .header-logo-img {
+    height: 20px;
+  }
+
+  .icon-circle {
+    width: 28px;
+    height: 28px;
+  }
+
+  .icon-circle i {
+    font-size: 13px !important;
+  }
+
+  .header-actions {
+    gap: 8px;
+  }
+
+  .social-icons {
+    gap: 8px;
+  }
+
+  .mobile-nav {
+    top: 65px;
+  }
+
+  .mobile-nav.active {
+    max-height: calc(100vh - 65px);
+  }
+
+  .mobile-nav-links > a,
+  .mobile-services-toggle {
+    font-size: 14px;
+    padding: 13px 20px;
+  }
+
+  .mobile-services-menu a {
+    font-size: 13px;
+    padding: 10px 20px 10px 40px;
+  }
+
+  .mobile-book-btn {
+    margin: 16px 20px;
+    padding: 12px 24px;
+    font-size: 13px;
+  }
+
+  .mobile-social-link {
+    padding: 13px 20px;
+    font-size: 14px;
+    gap: 12px;
+  }
+
+  .mobile-social-link i {
+    font-size: 16px;
+    width: 20px;
+  }
+
+  .mobile-menu-toggle {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* ==================== EXTRA SMALL MOBILE (max-width: 319px) ==================== */
+
+@media (max-width: 319px) {
+  .main-header {
+    height: 60px;
+  }
+
+  .main-header.scrolled {
+    height: 60px;
+  }
+
+  .header-container {
+    padding: 0 12px;
+  }
+
+  .header-logo-img {
+    height: 18px;
+  }
+
+  .icon-circle {
+    width: 26px;
+    height: 26px;
+  }
+
+  .icon-circle i {
+    font-size: 12px !important;
+  }
+
+  .header-actions {
+    gap: 6px;
+  }
+
+  .social-icons {
+    gap: 6px;
+  }
+
+  .mobile-nav {
+    top: 60px;
+  }
+
+  .mobile-nav.active {
+    max-height: calc(100vh - 60px);
+  }
+
+  .mobile-nav-links > a,
+  .mobile-services-toggle {
+    font-size: 14px;
+    padding: 12px 18px;
+  }
+
+  .mobile-services-menu a {
+    font-size: 13px;
+    padding: 9px 18px 9px 38px;
+  }
+
+  .mobile-book-btn {
+    margin: 14px 18px;
+    padding: 11px 22px;
+    font-size: 13px;
+  }
+
+  .mobile-social-link {
+    padding: 12px 18px;
+    font-size: 14px;
+    gap: 10px;
+  }
+
+  .mobile-social-link i {
+    font-size: 15px;
+    width: 18px;
+  }
+
+  .mobile-menu-toggle {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+/* ==================== SPECIFIC DEVICE OPTIMIZATIONS ==================== */
+
+/* iPhone SE and similar small devices */
+@media (max-width: 375px) and (max-height: 667px) {
+  .main-header {
+    height: 62px;
+  }
+
+  .mobile-nav {
+    top: 62px;
+  }
+}
+
+/* iPhone 12/13/14 Pro Max and similar */
+@media (min-width: 428px) and (max-width: 430px) and (min-height: 926px) {
+  .header-logo-img {
+    height: 24px;
+  }
+
+  .icon-circle {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* iPad Mini Portrait */
+@media (min-width: 744px) and (max-width: 768px) and (orientation: portrait) {
+  .main-header {
+    height: 76px;
+  }
+
+  .header-container {
+    padding: 0 30px;
+  }
+
+  .header-logo-img {
+    height: 20px;
+  }
+}
+
+/* iPad Air/Pro Portrait */
+@media (min-width: 820px) and (max-width: 834px) and (orientation: portrait) {
+  .header-container {
+    max-width: 800px;
+    padding: 0 34px;
+  }
+}
+
+/* ==================== ORIENTATION & SPECIAL CASES ==================== */
+
+/* Landscape Mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .main-header {
+    height: 60px;
+  }
+
+  .mobile-nav {
+    top: 60px;
+  }
+
+  .mobile-nav.active {
+    max-height: calc(100vh - 60px);
+  }
+
+  .header-logo-img {
+    height: 20px;
+  }
+
+  .icon-circle {
+    width: 28px;
+    height: 28px;
+  }
+
+  .mobile-nav-links > a,
+  .mobile-services-toggle {
+    padding: 12px 25px;
+    font-size: 14px;
+  }
+
+  .mobile-services-menu a {
+    padding: 10px 25px 10px 45px;
+    font-size: 13px;
+  }
+
+  .mobile-book-btn {
+    margin: 15px 25px;
+    padding: 12px 24px;
+    font-size: 13px;
+  }
+
+  .mobile-social-link {
+    padding: 12px 25px;
+    font-size: 14px;
+  }
+}
+
+/* Tablet Landscape */
+@media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
+  .nav-links {
+    gap: 20px;
+  }
+
+  .nav-links a,
+  .services-toggle {
+    font-size: 13px;
+  }
+}
+
+/* Ultra-wide monitors (21:9 and wider) */
+@media (min-aspect-ratio: 21/9) {
+  .header-container {
+    max-width: 2200px;
+  }
+
+  .nav-links {
+    gap: 40px;
+  }
+}
+
+/* ==================== PERFORMANCE & ACCESSIBILITY ==================== */
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .main-header,
+  .main-header::after,
+  .nav-links a,
+  .services-toggle,
+  .book-btn,
+  .icon-circle,
+  .search-icon,
+  .dropdown-menu,
+  .mobile-menu-toggle,
+  .mobile-nav,
+  .mobile-services-menu,
+  .mobile-book-btn,
+  .mobile-nav-links > a,
+  .mobile-services-toggle,
+  .mobile-social-link {
+    transition: none !important;
+  }
+}
+
+/* High DPI Displays (Retina) */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .header-logo-img {
+    image-rendering: -webkit-optimize-contrast;
+  }
+
+  .nav-links a,
+  .services-toggle,
+  .dropdown-menu a,
+  .book-btn {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Dark Mode Support - FIXED FOR MOBILE */
+@media (prefers-color-scheme: dark) {
+  /* Only apply dark mode on DESKTOP */
+  @media (min-width: 768px) {
+    .mobile-nav {
+      background: #1a1a1a;
+    }
+
+    .mobile-nav-links > a,
+    .mobile-services-toggle {
+      color: #e0e0e0;
+      border-bottom-color: #333;
+    }
+
+    .mobile-nav-links > a:hover,
+    .mobile-services-toggle:hover {
+      background: #2a2a2a;
+    }
+
+    .mobile-services-menu {
+      background: #222;
+    }
+
+    .mobile-services-menu a {
+      color: #b0b0b0;
+      border-bottom-color: #333;
+    }
+
+    .mobile-social-section {
+      border-top-color: #333;
+    }
+
+    .mobile-social-link {
+      color: #e0e0e0;
+      border-bottom-color: #333;
+    }
+
+    .mobile-social-link:hover {
+      background: #2a2a2a;
+    }
+  }
+
+  /* FORCE WHITE on mobile even in dark mode */
+  @media (max-width: 767px) {
+    .main-header {
+      background: white !important;
+    }
+
+    .mobile-nav {
+      background: white !important;
+    }
+
+    .mobile-nav-links > a,
+    .mobile-services-toggle {
+      color: #333 !important;
+    }
+  }
+}
+
+/* Print Styles */
+@media print {
+  .main-header {
+    position: relative;
+    height: auto;
+    border-top: none;
+    background: white;
+  }
+
+  .main-header::after {
+    display: none;
+  }
+
+  .header-actions,
+  .mobile-menu-toggle,
+  .mobile-nav {
+    display: none;
+  }
+
+  .nav-links a {
+    color: #000;
+  }
+}
+
+/* ==================== BROWSER-SPECIFIC OPTIMIZATIONS ==================== */
+
+/* Safari-specific optimizations */
+@supports (-webkit-touch-callout: none) {
+  .mobile-nav {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .dropdown-menu {
+    -webkit-transform: translateZ(0);
+  }
+}
+
+/* Firefox-specific optimizations */
+@-moz-document url-prefix() {
+  .nav-links a,
+  .services-toggle,
+  .book-btn {
+    -moz-osx-font-smoothing: grayscale;
+  }
+}

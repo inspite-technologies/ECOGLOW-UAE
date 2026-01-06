@@ -1,0 +1,48 @@
+.about-section {
+  padding: 100px 5%;
+  background: #fff;
+}
+
+.about-text-row {
+  display: flex;
+  gap: 50px;
+  margin-bottom: 80px;
+}
+
+.about-text-left { flex: 1.5; }
+.about-text-right { flex: 1; }
+
+.luxury-text { color: #008080; font-style: italic; }
+
+.about-main-title {
+  font-size: 2.8rem;
+  line-height: 1.2;
+  font-weight: 300;
+}
+
+.about-content-row {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+.about-image-column { flex: 1; }
+.about-image { width: 100%; border-radius: 10px; }
+
+.about-accordion-column { flex: 1; }
+
+.accordion-item {
+  border-bottom: 1px solid #eee;
+  padding: 15px 0;
+}
+
+.accordion-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 10px 0;
+}

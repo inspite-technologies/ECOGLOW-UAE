@@ -1,0 +1,39 @@
+/* Advantages */
+.advantage-row {
+  border-top: 1px solid #ddd;
+  transition: background 0.3s;
+}
+.advantage-row.active { background: #f0f8f8; }
+.advantage-button {
+  width: 100%;
+  padding: 25px 5%;
+  display: flex;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* CTA */
+.advantages-cta {
+  display: flex;
+  margin-top: 80px;
+  background: #004d4d;
+  color: white;
+}
+.cta-left-full { flex: 1; }
+.cta-right-content { flex: 1; padding: 60px; }
+
+/* Message Section */
+.message-container {
+  display: flex;
+  padding: 100px 5%;
+  align-items: center;
+  gap: 100px;
+}
+.handwritten-signature {
+  font-family: 'Cursive', 'Brush Script MT', sans-serif;
+  font-size: 2.5rem;
+  color: #008080;
+  margin-top: 10px;
+}

@@ -1,0 +1,504 @@
+:root {
+  --primary: #0f766e;     /* Teal 700 */
+  --primary-hover: #115e59;
+  --bg-gray: #f8fafc;
+  --border: #e2e8f0;
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --radius: 12px;
+}
+
+/* --- 1. MAIN CONTAINER --- */
+.admin-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  /* UPDATED: Reduced bottom padding here */
+  padding: 20px 0 10px 0; 
+}
+
+/* --- 2. HEADER ROW --- */
+.admin-header-row {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 20px 25px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  width: 100%;
+}
+
+.admin-header-row h2 { margin: 0; font-size: 1.5rem; color: #0f766e; }
+.admin-header-row p { margin: 5px 0 0; color: #64748b; font-size: 0.9rem; }
+
+/* --- 3. SLIDE CARD --- */
+.hero-slide-card {
+  display: flex !important;
+  flex-direction: row !important;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 25px;
+  gap: 30px;
+  position: relative;
+  align-items: flex-start;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+  margin-bottom: 20px;
+}
+
+.slide-badge {
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  background: #0f766e;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  z-index: 10;
+}
+
+.slide-image-area {
+  width: 240px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.aspect-ratio-box {
+  width: 100%;
+  height: 135px;
+  border: 2px dashed #cbd5e1;
+  border-radius: 8px;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.aspect-ratio-box:hover { border-color: #0f766e; background: #f0fdfa; }
+.aspect-ratio-box img { width: 100%; height: 100%; object-fit: cover; }
+
+.slide-inputs-area {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+  padding-top: 5px;
+}
+
+@media (max-width: 768px) {
+  .hero-slide-card { flex-direction: column !important; }
+  .slide-image-area { width: 100%; }
+  .aspect-ratio-box { height: 180px; }
+}
+
+/* --- SERVICE CATEGORY CARD (UPDATED) --- */
+.service-category-card {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 25px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  
+  /* UPDATED: Reduced bottom padding from 25px to 15px */
+  padding: 25px 25px 15px 25px; 
+  
+  align-items: start;
+  transition: box-shadow 0.2s;
+  height: 100%;
+}
+
+.service-category-card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+  border-color: #cbd5e1;
+}
+
+.service-img-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.service-upload-box {
+  width: 100%;
+  height: 140px;
+  border: 2px dashed #e2e8f0;
+  border-radius: 8px;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.2s;
+  color: #94a3b8;
+}
+
+.service-upload-box:hover {
+  border-color: #0f766e;
+  background: #f0fdfa;
+  color: #0f766e;
+}
+
+.service-upload-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.plan-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: relative;
+  transition: transform 0.2s;
+}
+.plan-card:hover { transform: translateY(-3px); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+
+@media (max-width: 768px) {
+  .service-category-card { grid-template-columns: 1fr; }
+  .service-upload-box { height: 180px; }
+}
+
+/* --- GRID LAYOUTS --- */
+.admin-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  width: 100%;
+  align-items: start;
+}
+
+.admin-grid-responsive {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  width: 100%;
+}
+
+.admin-card {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  height: 100%;
+  transition: all 0.2s ease-in-out;
+}
+
+.admin-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border-color: #cbd5e1;
+}
+
+.icon-wrapper {
+  width: 50px;
+  height: 50px;
+  background-color: #f0fdf4;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #dcfce7;
+  flex-shrink: 0;
+}
+
+/* --- MODAL --- */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-content {
+  background: white;
+  width: 500px;
+  max-width: 90vw;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  animation: slideUp 0.3s ease-out;
+  position: relative;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 640px) {
+  .admin-grid-responsive { grid-template-columns: 1fr; }
+  .modal-content { padding: 20px; width: 95%; }
+}
+
+/* --- HELPERS --- */
+.upload-box {
+  border: 2px dashed #e2e8f0;
+  border-radius: 12px;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.2s;
+  color: #94a3b8;
+  width: 100%;
+}
+
+.upload-box:hover {
+  border-color: #0f766e;
+  background: #f0fdfa;
+  color: #0f766e;
+}
+
+.upload-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- ABOUT MANAGER LIST STYLES --- */
+.item-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.list-item-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.2s ease-in-out;
+  min-height: 200px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.list-item-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border-color: #cbd5e1;
+}
+
+.add-new-card {
+  border: 2px dashed #cbd5e1;
+  background-color: #f9fafb;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #64748b;
+}
+
+.add-new-card:hover {
+  border-color: var(--primary);
+  background-color: #f0fdfa;
+  color: var(--primary);
+  transform: translateY(-3px);
+}
+
+.card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.btn-danger {
+  background: white;
+  border: 1px solid #fecaca;
+  color: #ef4444;
+}
+.btn-danger:hover {
+  background: #fef2f2;
+  border-color: #ef4444;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #64748b;
+  padding: 5px;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+.close-btn:hover {
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+@media (max-width: 600px) {
+  .item-list-grid { grid-template-columns: 1fr; }
+}
+
+/* ... (Previous styles) ... */
+
+/* --- BANNER ADMIN SPECIFIC STYLES --- */
+
+/* 1. Banner Upload Box (Custom Height) */
+.banner-upload-box {
+  width: 100%;
+  /* Reduced height to reduce bottom gap */
+  height: 200px; 
+  border: 2px dashed #e2e8f0;
+  border-radius: 12px;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.2s ease;
+  color: #94a3b8;
+}
+
+.banner-upload-box:hover {
+  border-color: #0f766e;
+  background: #f0fdfa;
+  color: #0f766e;
+}
+
+.banner-upload-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.admin-card {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  
+  /* UPDATED: Reduced bottom padding significantly */
+  padding: 20px 20px 10px 20px;
+  
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  height: 100%;
+  transition: all 0.2s ease-in-out;
+}
+
+/* 3. Input Groups inside Cards */
+.input-group {
+  margin-bottom: 15px; /* Reduced from 20px or default */
+}
+
+/* Mobile Fix */
+@media (max-width: 768px) {
+  .banner-upload-box {
+    height: 180px;
+  }
+}
+
+/* CARD */
+.vmv-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: 200px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+
+/* TITLE */
+.vmv-title {
+  margin: 0 0 10px;
+  font-size: 1.1rem;
+  color: #0f766e;
+  text-transform: uppercase;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 6px;
+}
+
+/* CONTENT */
+.vmv-content {
+  font-size: 0.9rem;
+  color: #475569;
+  line-height: 1.5;
+}
+
+/* BUTTON WRAPPER */
+.vmv-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: auto; /* 🔥 pushes buttons to bottom */
+}
+
+/* BUTTONS */
+.vmv-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-size: 13px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.vmv-btn.edit {
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+
+.vmv-btn.delete {
+  background: #fee2e2;
+  color: #ef4444;
+  border: 1px solid #fecaca;
+}
+
+.vmv-btn:hover {
+  transform: translateY(-1px);
+}

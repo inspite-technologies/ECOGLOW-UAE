@@ -1,0 +1,716 @@
+/* AboutUs.css */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700&display=swap');
+
+:root {
+  --teal-primary: #80cbc4;
+  --text-dark: #1f2937;
+  --text-gray: #6b7280;
+  --bg-light: #f9fafb;
+}
+.clients-logo-img {
+  max-width: 100%;
+  height: auto;
+  filter: grayscale(100%); /* Optional: makes logos look elegant/uniform */
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.about-page {
+  font-family: 'Montserrat', sans-serif;
+  color: var(--text-dark);
+  overflow-x: hidden;
+}
+
+/* AboutUs.css */
+
+.about-hero {
+  height: 40vh;
+  min-height: 350px;
+  background-image: url('../assets/banner.webp');
+  background-size: cover;
+  
+  /* --- ADJUST THIS PERCENTAGE --- */
+  /* 50% is center, 100% is bottom. 80% shows mostly the bottom but not all of it. */
+  background-position: center 78%; 
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; 
+  align-items: flex-start;
+  text-align: left;
+  padding: 0px 0 120px 14%; 
+  color: white;
+}
+
+.hero-breadcrumb {
+  font-size: 0.74rem;     /* Made it smaller (was 0.9rem) */
+  font-weight: 700;       /* Made it "darker" (Bold) */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 1;             /* Removed opacity so colors are full strength */
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-title {
+  margin: 0;
+  line-height: 1.1;
+}
+
+/* About */
+.about-text {
+  font-size: 1.2rem;      /* smaller */
+  font-weight: 500;
+}
+
+/* EcoGlow */
+.brand-text {
+  font-size: 3rem;        /* bigger */
+  font-weight: 700;
+}
+
+
+/* --- Intro Section --- */
+.about-intro {
+  padding: 3rem 14%;
+  max-width: 100%;
+  margin: 0;
+  text-align: left;
+}
+
+/* 1. "About" Label */
+.section-label {
+  font-size: 1.49rem;            /* Small font */
+  color: var(--teal-primary); /* Teal color */
+  font-weight: 450;
+  letter-spacing: 1px;
+  margin-bottom: 0.1rem;      /* Space below "About" */
+  padding-top: 70px;          /* "Little top padding" as requested */
+  display: block;
+}
+
+/* 2. "EcoGlow Cleaning Services" Heading */
+.main-heading {
+  font-size: 2.1rem;          /* Big size */
+  font-weight: 400;           /* "Darker" (Bolder) */
+  color: #111;                /* Very dark gray/black */
+  margin: 0 0 1.5rem 0;       /* Spacing below the heading */
+  line-height: 1.2;
+}
+
+/* 3. "Luxury standard..." Subtitle */
+.intro-subtitle {
+  font-size: 1.6rem;          /* Smaller than heading, but clear */
+  font-weight: 400;           /* Light/Thin look */
+  line-height: 1.5;
+  color: var(--text-dark);
+  margin-bottom: 2rem;
+  max-width: 800px;
+}
+
+/* Highlight for "Luxury standard" words */
+.highlight-text {
+  color: var(--teal-primary);
+  font-weight: 500;
+  line-height: 0%;
+}
+
+.highlight-text {
+  color: var(--teal-primary);
+  font-weight: 00;
+}
+
+.intro-desc {
+  font-size: 1rem;
+  line-height: 1.8;
+  max-width: 100%;
+  margin-bottom: 60px;
+}
+
+/* --- Slogan Banner --- */
+.slogan-banner {
+  height: 400px;
+  background-image:  url('../assets/abt4.webp');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Parallax effect */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slogan-text {
+  font-size: 4.8rem;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+  letter-spacing: -1px;
+}
+/* --- FIXED VISION SECTION --- */
+.vision-section-fixed {
+  display: flex;
+  width: 100%;
+  height: 460px; 
+  background: #f3f4f6;
+  overflow: hidden;
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.vision-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 5% 0 14%; 
+}
+
+/* REDUCING THE GAP HERE */
+.vision-content .section-title {
+  /* font-size: 3.5rem; */
+  font-weight: 300;
+  color: #1a1a1a;
+  margin-bottom: 10px;
+}
+
+.vision-content .section-text {
+  font-size: 1.7rem;
+  line-height: 1.3; /* Tighter line height for the vision statement */
+  color: #333333;
+  margin-top: 0;      /* Ensure no top margin is pushing it away */
+  max-width: 600px;
+}
+
+.vision-image {
+  flex: 0.9;
+  width: 20px;
+  height: 100%;
+  background-size: cover;
+  background-position: left center ;
+
+}
+/* Update this block in your AboutUs.css */
+.mission-title {
+  font-size: 3.1rem;
+  font-weight: 350;
+  color: #1a1a1a; /* Ensuring it matches Vision/Values */
+  /* margin shorthand: top | right | bottom | left */
+  margin: 15px 0 20px 0; /* Changed from 40px to 10px */
+  line-height: 1.1;
+}
+
+.section-icon {
+  margin-bottom: 10px; /* Reduced gap between icon and title as well */
+}
+
+/* --- Split Sections Ratio Adjustment --- */
+.split-section {
+  display: flex;
+  max-height: 450px; /* Keeping your fixed height */
+  margin-top: 100px;
+  margin-bottom: 100px;
+  align-items: stretch;
+}
+/* Styling for the Mission png icon */
+.mission-icon-img {
+  width: 110px;         /* Adjust this size as needed */
+  height: auto;
+  display: block;
+  margin-left: 0;      /* Keeps it left aligned */
+  margin-right: auto;
+  margin-bottom: -25px; /* Negative margin to pull title closer */
+  object-fit: contain;
+}
+
+/* Optional: If the mission image has a white box background, use this: */
+/* .mission-icon-img { mix-blend-mode: multiply; } */
+
+.split-content {
+  /* This takes up 4 parts (80%) */
+  flex: 1; 
+  
+  /* Increased padding to keep text from looking too stretched in the wide area */
+  padding: 4rem 10% 4rem 14%; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #f3f4f6;
+}
+
+.split-image {
+  /* This takes up 1 part (20%) */
+  flex: 1; 
+  background-size: cover;
+  background-position: center left;
+}
+
+/* --- Responsive Fix --- */
+@media (max-width: 968px) {
+  .split-section, .split-section.reverse {
+    flex-direction: column;
+    max-height: none; /* Allow height to grow on mobile */
+  }
+  
+  .split-content, .split-image {
+    flex: none;
+    width: 100%;
+  }
+
+  .split-image {
+    height: 300px; /* Fixed height for the small image on mobile */
+  }
+}
+
+
+/* Ensure the icon color matches */
+.section-icon {
+  margin-bottom: 1.5rem;
+  color: var(--teal-primary);
+  display: flex; /* Keeps icon aligned */
+}
+
+/* --- VISION SECTION --- */
+.vision-section-fixed {
+  display: flex;
+  width: 100%;
+  height: 460px; 
+  background: #f3f4f6;
+  overflow: hidden;
+  margin: 100px 0;
+  align-items: stretch;
+}
+
+.vision-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  /* Aligns everything to the top */
+  justify-content: flex-start; 
+  /* Minimal top padding to bring icon to the edge */
+  padding: 20px 5% 0 14%; 
+}
+
+.vision-icon-img {
+  width: 200px;         /* Updated size */
+  height: auto;
+  display: block;
+  /* Nudges it further left than the text line */
+  margin-left: -45px;   
+  margin-top: 0;
+  /* Reduces space between icon and the word "Vision" */
+  margin-bottom: -100px; 
+  object-fit: contain;
+}
+
+/* Reverses the layout for Mission section */
+.split-section.reverse {
+  flex-direction: row-reverse;
+}
+
+.section-icon {
+  margin-bottom: 1.5rem;
+  color: var(--teal-primary);
+}
+
+.section-title {
+  font-size: 3.1rem;
+  font-weight: 350;
+    margin-bottom: 0px; /* Reduced from 40px to 5px to close the gap */
+    margin: 15px 0 40px 0;
+
+}
+
+.section-text {
+  font-size: 1.8rem;
+  line-height: 1.2;
+  color: #444444;
+}
+.vision-text {
+  font-size: 1.7rem;
+  line-height: 1.2;
+  color: #444444;
+}
+
+/* Values List Styling */
+.values-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+.values-list li {
+  margin-bottom: 2rem;
+}
+
+.value-head {
+  display: block;
+  font-size: 2rem;
+  color: var(--teal-primary);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+
+
+/* --- Clients Section --- */
+.clients-section {
+  padding: 5rem 10%;
+  text-align: center;
+  background: white;
+}
+
+.clients-title {
+  font-size: 2.5rem;
+  font-weight: 300;
+  margin-bottom: 4rem;
+  position: relative;
+  display: inline-block;
+}
+
+.clients-title::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 65px;
+  height: 10px;
+  background: var(--teal-primary);
+}
+
+.clients-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 3rem;
+  align-items: center;
+  opacity: 0.6;
+}
+
+.client-logo {
+  max-width: 100%;
+  height: auto;
+  filter: grayscale(100%);
+  transition: all 0.3s;
+}
+
+.client-logo:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.05);
+}
+.pillar-section {
+  display: flex;
+  min-height: 600px;
+  width: 100%;
+  background-color: #f8f9fa;
+  margin-bottom: 100px;
+}
+
+.pillar-content {
+  flex: 1; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start; 
+  padding-left: 14%; 
+  padding-right: 40px;
+}
+
+.pillar-inner-wrapper {
+  width: 100%;
+  max-width: 650px; 
+  text-align: left;
+}
+
+.pillar-image {
+  width: 39%; 
+  background-size: cover;
+  background-position: center;
+}
+/* Specific styling for the Values png icon */
+.values-icon-img {
+  width: 90px;        /* Adjust this number to make it smaller/larger */
+  height: auto;
+  display: block;
+  margin-left: 0;     /* Forces it to the left */
+  margin-right: auto;
+  margin-bottom: -30px;
+  padding-top: 20px;
+  object-fit: contain;
+}
+
+/* Ensure the container doesn't force centering */
+.pillar-inner-wrapper .section-icon {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+/* --- LIST STYLING --- */
+.values-list {
+  list-style: none;
+  padding: 0;
+}
+
+.value-item {
+  display: grid;
+  grid-template-columns: 45px 1fr; /* Fixed width for the number */
+  gap: 10px;
+  margin-bottom: 40px;
+  align-items: start;
+}
+
+/* Number is Black */
+.value-number {
+  font-size: 1.7rem;
+  font-weight: 300;
+  color: #1a1a1a; 
+  line-height: 1.2;
+}
+
+/* Heading is also Black */
+.value-head {
+  font-size: 1.7rem;
+  font-weight: 300;
+    color:var(--teal-primary); 
+  margin: 0 0 10px 0;
+  display: inline-block;
+}
+
+/* Description starts below the heading text */
+.value-desc {
+  font-size: 1.6rem; /* Slightly smaller for hierarchy */
+  line-height: 1.6;
+  color: #444444; /* Soft black */
+  margin: 0;
+}
+
+
+
+.section-icon {
+  color: #1a1a1a;
+}
+
+/* Mobile Fix */
+@media (max-width: 1024px) {
+  .pillar-section {
+    flex-direction: column;
+  }
+  .pillar-content {
+    padding: 60px 8%;
+  }
+  .pillar-image {
+    width: 100%;
+    height: 400px;
+  }
+}
+
+
+.values-list {
+  list-style: none;
+  padding: 0;
+}
+
+.values-list li {
+  margin-bottom: 30px;
+}
+
+.section-icon {
+  color: #1a1a1a;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .pillar-section {
+    flex-direction: column;
+  }
+  .pillar-content {
+    padding: 40px 8%;
+  }
+  .pillar-image {
+    width: 100%;
+    height: 450px;
+  }
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS
+   (Add this to the bottom of AboutUs.css)
+   ========================================= */
+
+@media (max-width: 968px) {
+
+  /* --- 1. Hero Section Adjustments --- */
+  .about-hero {
+    height: auto;
+    min-height: 350px;
+    padding: 80px 5% 40px 5%; /* Reduce side padding to 5% */
+    background-position: center center;
+  }
+
+  .brand-text {
+    font-size: 2.5rem; /* Smaller title for mobile */
+  }
+
+  .about-text {
+    font-size: 1rem;
+  }
+
+  /* --- 2. Intro Section --- */
+  .about-intro {
+    padding: 3rem 5%; /* Use more screen width */
+  }
+
+  .main-heading {
+    font-size: 1.8rem;
+  }
+
+  .intro-subtitle {
+    font-size: 1.2rem;
+  }
+
+  /* --- 3. Slogan Banner --- */
+  .slogan-banner {
+    height: 250px; /* Reduced height */
+    background-attachment: scroll; /* Fix parallax jitter on mobile */
+  }
+
+  .slogan-text {
+    font-size: 2rem;
+    padding: 0 15px;
+    line-height: 1.2;
+  }
+
+  /* --- 4. Vision Section (Fixed & Split) --- */
+  .vision-section-fixed {
+    flex-direction: column; /* Stack vertical */
+    height: auto; /* Let height grow with text */
+    margin: 40px 0;
+  }
+
+  .vision-content {
+    padding: 40px 5%;
+    order: 2; /* Text below image */
+    width: 100%;
+  }
+
+  .vision-image {
+    width: 100%;
+    height: 250px; /* Visible image bar */
+    flex: none;
+    order: 1; /* Image on top */
+  }
+
+  .vision-icon-img {
+    margin-left: 0; /* Reset negative margin so it fits */
+    width: 120px;
+    margin-bottom: 0;
+  }
+
+  .vision-text, .section-text {
+    font-size: 1.1rem; /* Readable mobile size */
+    line-height: 1.6;
+  }
+  
+  .section-title, .mission-title {
+    font-size: 2.2rem;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+  /* --- 5. Mission Split Section --- */
+  .split-section, 
+  .split-section.reverse {
+    flex-direction: column;
+    max-height: none; /* Remove fixed height */
+    margin: 40px 0;
+  }
+
+  .split-content {
+    padding: 40px 5%;
+    width: 100%;
+    flex: none;
+    order: 2;
+  }
+
+  .split-image {
+    width: 100%;
+    height: 250px; /* Visible image bar */
+    flex: none;
+    order: 1;
+  }
+  
+  .mission-icon-img {
+    margin-bottom: 0;
+    width: 80px;
+  }
+
+  /* --- 6. Values / Pillar Section --- */
+  .pillar-section {
+    flex-direction: column;
+    min-height: auto;
+    margin-bottom: 60px;
+  }
+
+  .pillar-content {
+    padding: 40px 5%;
+    width: 100%;
+    order: 2;
+  }
+
+  .pillar-image {
+    width: 100%;
+    height: 250px;
+    order: 1;
+  }
+
+  .values-icon-img {
+    width: 70px;
+    margin-bottom: 10px;
+    padding-top: 0;
+  }
+
+  /* Values List Items */
+  .value-item {
+    grid-template-columns: 30px 1fr; /* Smaller number column */
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+
+  .value-number {
+    font-size: 1.4rem;
+  }
+
+  .value-head {
+    font-size: 1.3rem;
+  }
+
+  .value-desc {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  /* --- 7. Clients Section --- */
+  .clients-section {
+    padding: 3rem 5%;
+  }
+
+  .clients-title {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+  }
+
+  .clients-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for logos */
+    gap: 2rem;
+  }
+}
+
+/* Small Phones */
+@media (max-width: 480px) {
+  .clients-grid {
+    grid-template-columns: 1fr; /* 1 column for logos */
+  }
+}

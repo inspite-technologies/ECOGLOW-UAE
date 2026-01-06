@@ -1,0 +1,39 @@
+/* ==================== GLOBAL STABILITY ==================== */
+html {
+  /* Critical: Disable CSS smooth scroll so GSAP handles physics */
+  scroll-behavior: auto !important; 
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Force GPU acceleration to stop image flickering */
+img {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translate3d(0, 0, 0); 
+}
+
+/* Optimized Section Stacking */
+.about-section, .services-section, .banner-section {
+  position: relative;
+  width: 100%;
+  will-change: transform;
+  transform: translateZ(0); /* Hardware acceleration */
+  background: white;
+}
+
+.about-image-wrapper, .service-card-image {
+  overflow: hidden;
+  /* Prevents "lagging" on Mac Safari */
+  will-change: transform, opacity;
+}
+
+.app {
+  position: relative;
+  overflow-x: hidden;
+}

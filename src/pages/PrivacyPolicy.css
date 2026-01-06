@@ -1,0 +1,383 @@
+/* PrivacyPolicy.css */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700&display=swap');
+
+:root {
+  --teal-primary: #80cbc4;
+  --text-dark: #1f2937;
+  --text-gray: #6b7280;
+  --bg-light: #f9fafb;
+}
+
+.privacy-page {
+  font-family: 'Montserrat', sans-serif;
+  color: var(--text-dark);
+  overflow-x: hidden;
+}
+
+/* Hero Section - Matching About/Services */
+.privacy-hero {
+  height: 40vh;
+  min-height: 350px;
+  background-image: url('../assets/banner.webp');
+  background-size: cover;
+  background-position: center 78%; 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; 
+  align-items: flex-start;
+  text-align: left;
+  padding: 0px 0 120px 14%; 
+  color: white;
+}
+
+.hero-breadcrumb {
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 1;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-title {
+  margin: 0;
+  line-height: 1.1;
+}
+
+/* Privacy text */
+.privacy-text {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+/* Policy text */
+.brand-text {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+/* Intro Section */
+.privacy-intro {
+  padding: 3rem 14%;
+  max-width: 100%;
+  margin: 0;
+  text-align: left;
+}
+
+.section-label {
+  font-size: 1.49rem;
+  color: var(--teal-primary);
+  font-weight: 450;
+  letter-spacing: 1px;
+  margin-bottom: 0.1rem;
+  padding-top: 70px;
+  display: block;
+}
+
+.main-heading {
+  font-size: 2.1rem;
+  font-weight: 400;
+  color: #111;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.2;
+}
+
+.intro-subtitle {
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-dark);
+  margin-bottom: 3rem;
+  max-width: 800px;
+}
+
+.highlight-text {
+  color: var(--teal-primary);
+  font-weight: 500;
+}
+
+/* Privacy Content */
+.privacy-content {
+  max-width: 100%;
+}
+
+.policy-section {
+  margin-bottom: 3rem;
+}
+
+.policy-heading {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.policy-text {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #444444;
+  margin-bottom: 1rem;
+}
+
+.policy-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.policy-list li {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #444444;
+  padding-left: 1.5rem;
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+
+.policy-list li::before {
+  content: "•";
+  color: var(--teal-primary);
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+.contact-info {
+  background: #f3f4f6;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.contact-info p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #444444;
+  margin: 0.5rem 0;
+}
+
+.last-updated {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 2px solid #e5e7eb;
+}
+
+.last-updated p {
+  font-size: 0.95rem;
+  color: #6b7280;
+  font-style: italic;
+}
+
+/* Newsletter Section - Matching Services.css */
+.newsletter-section {
+  padding: 60px 13%;
+  border-bottom: 3px solid #7dd3c0;
+}
+
+.newsletter-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
+  align-items: center;
+}
+
+.left-content {
+  padding-right: 4px;
+}
+
+.title {
+  font-size: clamp(2.5rem, 4vw, 3rem);
+  font-weight: 300;
+  margin-bottom: 30px;
+  line-height: 1.2;
+}
+
+.title .lets {
+  color: #333;
+}
+
+.title .connect {
+  color: #7dd3c0;
+}
+
+.subtitle {
+  font-size: clamp(0.7rem, 0.8vw, 0.85rem);
+  color: #1c1717;
+  line-height: 1.6;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  max-width: 100%;
+  white-space: normal;
+  text-align: left;
+}
+
+.right-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.newsletter-label {
+  font-size: clamp(0.9rem, 1.1vw, 0.5rem);
+  color: #342f2f;
+  font-weight: 500;
+}
+
+.email-form {
+  display: flex;
+  gap: 0;
+  border: 2px solid #807d7d;
+  overflow: hidden;
+}
+
+.email-input::placeholder {
+  color: #000000;
+  opacity: 1;
+  font-weight: 500;
+}
+
+.email-input {
+  flex: 1;
+  padding: 14px 20px;
+  border: none;
+  font-size: 1rem;
+  color: #333;
+  outline: none;
+}
+
+.send-button {
+  background: #7dd3c0;
+  color: white;
+  border: none;
+  padding: 14px 40px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.send-button:hover {
+  background: #6bc4b0;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 968px) {
+  /* Hero Section */
+  .privacy-hero {
+    height: auto;
+    min-height: 350px;
+    padding: 80px 5% 40px 5%;
+    background-position: center center;
+  }
+
+  .brand-text {
+    font-size: 2.5rem;
+  }
+
+  .privacy-text {
+    font-size: 1rem;
+  }
+
+  /* Intro Section */
+  .privacy-intro {
+    padding: 3rem 5%;
+  }
+
+  .main-heading {
+    font-size: 1.8rem;
+  }
+
+  .intro-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .policy-heading {
+    font-size: 1.3rem;
+  }
+
+  .policy-text,
+  .policy-list li {
+    font-size: 0.95rem;
+  }
+
+  /* Newsletter */
+  .newsletter-section {
+    padding: 40px 5%;
+  }
+
+  .newsletter-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .left-content {
+    padding-right: 0;
+    text-align: center;
+  }
+
+  .email-form {
+    flex-direction: column;
+  }
+
+  .send-button {
+    padding: 14px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 1280px) {
+  .newsletter-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .left-content {
+    padding-right: 0;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .newsletter-section {
+    padding: 30px 5%;
+  }
+
+  .newsletter-container {
+    gap: 20px;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+  }
+
+  .right-content {
+    gap: 15px;
+  }
+
+  .email-form {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .email-input {
+    padding: 12px 15px;
+    font-size: 0.9rem;
+  }
+
+  .send-button {
+    padding: 12px;
+    width: 100%;
+    font-size: 0.95rem;
+  }
+}

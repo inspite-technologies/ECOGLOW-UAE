@@ -1,0 +1,1959 @@
+/* ==================== MESSAGE/FOOTER SECTION BASE STYLES ==================== */
+
+.unified-footer-section {
+  position: relative;
+  z-index: 500;
+  background: #ffffff !important;
+  padding: 80px 0;
+  width: 100%;
+  overflow: hidden;
+  display: block; /* Ensures it takes up space in the document flow */
+}
+
+.message-container, .connect-container {
+  position: relative;
+  z-index: 101;
+  pointer-events: auto;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 100px;
+  background: transparent;
+}
+
+/* Typography - Ultra Thin */
+.section-heading-thin {
+  font-size: 36px;
+  font-weight: 300;
+  line-height: 1.1;
+  color: #131313;
+  margin-bottom: 15px;
+  letter-spacing: -0.5px;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.thin-teal-underline {
+  width: 60px;
+  height: 9px;
+  background: #73c9c1;
+  margin: 15px 0 35px 0;
+  transition: width 0.3s ease;
+}
+
+.message-content:hover .thin-teal-underline {
+  width: 70px;
+}
+
+.message-text {
+  font-size: 11.5px;
+  font-weight: 500;
+  line-height: 1.8;
+  margin-bottom: 40px;
+  letter-spacing: 0.3px;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #3b3b3b;
+  max-width: 500px;
+}
+
+/* Signature Styling */
+.signature-area {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.md-name-label {
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #3b3b3b;
+  letter-spacing: 0.5px;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.handwritten-signature {
+  font-family: 'Allura', cursive;
+  font-size: 26px;
+  font-weight: 600;
+  color: #000000;
+  margin-top: 5px;
+}
+
+/* Image */
+.message-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.md-profile-img {
+  width: 95%;
+  height: 300px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.md-profile-img:hover {
+  transform: scale(1.05);
+}
+
+.section-divider {
+  max-width: 1400px;
+  margin: 80px auto;
+  height: 1px;
+  background-color: #e0e0e0;
+  transform-origin: center;
+}
+
+/* Let's Connect Styles */
+.connect-text {
+  max-width: 100%;
+}
+
+.teal-text-thin {
+  color: #73c9c1;
+  font-weight: 100;
+  font-size: 45px;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.connect-subtitle {
+  font-size: 12px;
+  font-weight: 500;
+  color: #2b2b2b;
+  margin-top: 15px;
+  line-height: 1.6;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.newsletter-form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.newsletter-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #2b2b2b;
+  margin-bottom: 12px;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.input-group-newsletter {
+  display: flex;
+  width: 100%;
+}
+
+.newsletter-input {
+  flex: 1;
+  border: 1.4px solid #767575;
+  border-right: none;
+  padding: 16px 20px;
+  font-size: 14px;
+  color: #1e1d1d;
+  outline: none;
+  transition: border-color 0.3s ease;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: white;
+}
+
+.newsletter-input::placeholder {
+  color: #282828;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.newsletter-input:focus {
+  border-color: #73c9c1;
+}
+
+.newsletter-send-btn {
+  background: #73c9c1;
+  color: white;
+  border: none;
+  padding: 0 40px;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  white-space: nowrap;
+}
+
+.newsletter-send-btn:hover {
+  background: #0f9b8c;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+}
+
+/* ==================== ULTRA-WIDE & 5K DISPLAYS ==================== */
+
+/* 27-inch iMac 5K / Studio Display (5120x2880) */
+@media (min-width: 5120px) {
+  .unified-footer-section {
+    padding: 195px 0;
+    background: #ffffff !important;
+  }
+
+  .message-container, .connect-container {
+    max-width: 3400px;
+    padding: 0 245px;
+    gap: 245px;
+  }
+
+  .section-heading-thin {
+    font-size: 88px;
+    margin-bottom: 38px;
+  }
+
+  .thin-teal-underline {
+    width: 145px;
+    height: 22px;
+    margin: 38px 0 85px 0;
+  }
+
+  .message-content:hover .thin-teal-underline {
+    width: 170px;
+  }
+
+  .message-text {
+    font-size: 28px;
+    line-height: 1.9;
+    margin-bottom: 98px;
+    max-width: 1220px;
+    letter-spacing: 0.7px;
+  }
+
+  .signature-area {
+    gap: 12px;
+  }
+
+  .md-name-label {
+    font-size: 30px;
+    letter-spacing: 1.2px;
+  }
+
+  .handwritten-signature {
+    font-size: 63px;
+    margin-top: 12px;
+  }
+
+  .md-profile-img {
+    width: 95%;
+    height: 735px;
+  }
+
+  .section-divider {
+    max-width: 3400px;
+    margin: 195px auto;
+    height: 2.4px;
+  }
+
+  .teal-text-thin {
+    font-size: 110px;
+  }
+
+  .connect-subtitle {
+    font-size: 29px;
+    margin-top: 38px;
+    line-height: 1.7;
+  }
+
+  .newsletter-label {
+    font-size: 29px;
+    margin-bottom: 29px;
+  }
+
+  .newsletter-input {
+    border-width: 3.4px;
+    padding: 39px 49px;
+    font-size: 34px;
+  }
+
+  .newsletter-input::placeholder {
+    font-size: 29px;
+  }
+
+  .newsletter-send-btn {
+    padding: 0 98px;
+    font-size: 32px;
+    letter-spacing: 1.2px;
+  }
+}
+
+/* 24-inch iMac 4.5K (4480x2520) */
+@media (min-width: 4480px) and (max-width: 5119px) {
+  .unified-footer-section {
+    padding: 170px 0;
+    background: #ffffff !important;
+  }
+
+  .message-container, .connect-container {
+    max-width: 2980px;
+    padding: 0 215px;
+    gap: 215px;
+  }
+
+  .section-heading-thin {
+    font-size: 77px;
+    margin-bottom: 34px;
+  }
+
+  .thin-teal-underline {
+    width: 128px;
+    height: 20px;
+    margin: 34px 0 75px 0;
+  }
+
+  .message-content:hover .thin-teal-underline {
+    width: 150px;
+  }
+
+  .message-text {
+    font-size: 25px;
+    line-height: 1.9;
+    margin-bottom: 86px;
+    max-width: 1070px;
+  }
+
+  .signature-area {
+    gap: 11px;
+  }
+
+  .md-name-label {
+    font-size: 27px;
+  }
+
+  .handwritten-signature {
+    font-size: 55px;
+    margin-top: 11px;
+  }
+
+  .md-profile-img {
+    height: 645px;
+  }
+
+  .section-divider {
+    max-width: 2980px;
+    margin: 170px auto;
+    height: 2.1px;
+  }
+
+  .teal-text-thin {
+    font-size: 97px;
+  }
+
+  .connect-subtitle {
+    font-size: 26px;
+    margin-top: 34px;
+  }
+
+  .newsletter-label {
+    font-size: 26px;
+    margin-bottom: 26px;
+  }
+
+  .newsletter-input {
+    border-width: 3px;
+    padding: 34px 43px;
+    font-size: 30px;
+  }
+
+  .newsletter-input::placeholder {
+    font-size: 26px;
+  }
+
+  .newsletter-send-btn {
+    padding: 0 86px;
+    font-size: 28px;
+  }
+}
+
+/* 16-inch MacBook Pro Retina (3456x2234) */
+@media (min-width: 3456px) and (max-width: 4479px) {
+  .unified-footer-section {
+    padding: 150px 0;
+    background: #ffffff !important;
+  }
+
+  .message-container, .connect-container {
+    max-width: 2620px;
+    padding: 0 188px;
+    gap: 188px;
+  }
+
+  .section-heading-thin {
+    font-size: 68px;
+    margin-bottom: 30px;
+  }
+
+  .thin-teal-underline {
+    width: 112px;
+    height: 17.5px;
+    margin: 30px 0 66px 0;
+  }
+
+  .message-content:hover .thin-teal-underline {
+    width: 132px;
+  }
+
+  .message-text {
+    font-size: 22px;
+    line-height: 1.85;
+    margin-bottom: 75px;
+    max-width: 940px;
+  }
+
+  .signature-area {
+    gap: 9px;
+  }
+
+  .md-name-label {
+    font-size: 24px;
+  }
+
+  .handwritten-signature {
+    font-size: 49px;
+    margin-top: 9px;
+  }
+
+  .md-profile-img {
+    height: 565px;
+  }
+
+  .section-divider {
+    max-width: 2620px;
+    margin: 150px auto;
+    height: 1.9px;
+  }
+
+  .teal-text-thin {
+    font-size: 85px;
+  }
+
+  .connect-subtitle {
+    font-size: 23px;
+    margin-top: 30px;
+  }
+
+  .newsletter-label {
+    font-size: 23px;
+    margin-bottom: 23px;
+  }
+
+  .newsletter-input {
+    border-width: 2.6px;
+    padding: 30px 38px;
+    font-size: 26px;
+  }
+
+  .newsletter-input::placeholder {
+    font-size: 23px;
+  }
+
+  .newsletter-send-btn {
+    padding: 0 75px;
+    font-size: 25px;
+  }
+}
+
+/* 14-inch MacBook Pro Retina (3024x1964) */
+@media (min-width: 3024px) and (max-width: 3455px) {
+  .unified-footer-section {
+    padding: 135px 0;
+    background: #ffffff !important;
+  }
+
+  .message-container, .connect-container {
+    max-width: 2340px;
+    padding: 0 168px;
+    gap: 168px;
+  }
+
+  .section-heading-thin {
+    font-size: 61px;
+    margin-bottom: 27px;
+  }
+
+  .thin-teal-underline {
+    width: 100px;
+    height: 16px;
+    margin: 27px 0 59px 0;
+  }
+
+  .message-content:hover .thin-teal-underline {
+    width: 118px;
+  }
+
+  .message-text {
+    font-size: 20px;
+    line-height: 1.85;
+    margin-bottom: 67px;
+    max-width: 840px;
+  }
+
+  .signature-area {
+    gap: 8px;
+  }
+
+  .md-name-label {
+    font-size: 21px;
+  }
+
+  .handwritten-signature {
+    font-size: 44px;
+    margin-top: 8px;
+  }
+
+  .md-profile-img {
+    height: 505px;
+  }
+
+  .section-divider {
+    max-width: 2340px;
+    margin: 135px auto;
+    height: 1.7px;
+  }
+
+  .teal-text-thin {
+    font-size: 76px;
+  }
+
+  .connect-subtitle {
+    font-size: 20px;
+    margin-top: 27px;
+  }
+
+  .newsletter-label {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .newsletter-input {
+    border-width: 2.3px;
+    padding: 27px 34px;
+    font-size: 24px;
+  }
+
+  .newsletter-input::placeholder {
+    font-size: 20px;
+  }
+
+  .newsletter-send-btn {
+    padding: 0 67px;
+    font-size: 22px;
+  }
+}
+
+/* 15-inch MacBook Retina (2880x1800) */
+@media (min-width: 2880px) and (max-width: 3023px) {
+  .unified-footer-section {
+    padding: 125px 0;
+    background: #ffffff !important;
+  }
+
+  .message-container, .connect-container {
+    max-width: 2160px;
+    padding: 0 155px;
+    gap: 155px;
+  }
+
+  .section-heading-thin {
+    font-size: 57px;
+    margin-bottom: 25px;
+  }
+
+  .thin-teal-underline {
+    width: 93px;
+    height: 15px;
+    margin: 25px 0 55px 0;
+  }
+
+  .message-content:hover .thin-teal-underline {
+    width: 109px;
+  }
+
+  .message-text {
+    font-size: 18px;
+    line-height: 1.85;
+    margin-bottom: 62px;
+    max-width: 775px;
+  }
+
+  .md-name-label {
+    font-size: 20px;
+  }
+
+  .handwritten-signature {
+    font-size: 41px;
+  }
+
+  .md-profile-img {
+    height: 470px;
+  }
+
+  .section-divider {
+    max-width: 2160px;
+    margin: 125px auto;
+    height: 1.6px;
+  }
+
+  .teal-text-thin {
+    font-size: 71px;
+  }
+
+  .connect-subtitle {
+    font-size: 19px;
+    margin-top: 25px;
+  }
+
+  .newsletter-label {
+    font-size: 19px;
+  }
+
+  .newsletter-input {
+    border-width: 2.2px;
+    padding: 25px 31px;
+    font-size: 22px;
+  }
+
+  .newsletter-input::placeholder {
+    font-size: 19px;
+  }
+
+  .newsletter-send-btn {
+    padding: 0 62px;
+    font-size: 20px;
+  }
+}
+
+/* 13-inch MacBook Retina (2560x1600) */
+@media (min-width: 2560px) and (max-width: 2879px) {
+  .unified-footer-section {
+    padding: 115px 0;
+    background: #ffffff !important;
+  }
+
+  .message-container, .connect-container {
+    max-width: 1960px;
+    padding: 0 143px;
+    gap: 143px;
+  }
+
+  .section-heading-thin {
+    font-size: 53px;
+    margin-bottom: 24px;
+  }
+
+  .thin-teal-underline {
+    width: 86px;
+    height: 14px;
+    margin: 24px 0 51px 0;
+  }
+
+  .message-content:hover .thin-teal-underline {
+    width: 100px;
+  }
+
+  .message-text {
+    font-size: 17px;
+    line-height: 1.85;
+    margin-bottom: 57px;
+    max-width: 715px;
+  }
+
+  .md-name-label {
+    font-size: 18px;
+  }
+
+  .handwritten-signature {
+    font-size: 38px;
+  }
+
+  .md-profile-img {
+    height: 430px;
+  }
+
+  .section-divider {
+    max-width: 1960px;
+    margin: 115px auto;
+    height: 1.5px;
+  }
+
+  .teal-text-thin {
+    font-size: 65px;
+  }
+
+  .connect-subtitle {
+    font-size: 17px;
+    margin-top: 24px;
+  }
+
+  .newsletter-label {
+    font-size: 17px;
+  }
+
+  .newsletter-input {
+    border-width: 2px;
+    padding: 23px 29px;
+    font-size: 20px;
+  }
+
+  .newsletter-input::placeholder {
+    font-size: 17px;
+  }
+
+  .newsletter-send-btn {
+    padding: 0 57px;
+    font-size: 19px;
+  }
+}
+
+/* ==================== EXTRA LARGE DESKTOP (1920px+) ==================== */
+
+@media (min-width: 1920px) and (max-width: 2559px) {
+  .unified-footer-section {
+    padding: 105px 0;
+    background: #ffffff !important;
+  }
+
+  .message-container, .connect-container {
+    max-width: 1820px;
+    padding: 0 132px;
+    gap: 132px;
+  }
+
+  .section-heading-thin {
+    font-size: 50px;
+    margin-bottom: 22px;
+  }
+
+  .thin-teal-underline {
+    width: 79px;
+    height: 13px;
+    margin: 22px 0 47px 0;
+  }
+
+  .message-content:hover .thin-teal-underline {
+    width: 93px;
+  }
+
+  .message-text {
+    font-size: 16px;
+    line-height: 1.85;
+    margin-bottom: 53px;
+    max-width: 660px;
+  }
+
+  .md-name-label {
+    font-size: 17px;
+  }
+
+  .handwritten-signature {
+    font-size: 35px;
+  }
+
+  .md-profile-img {
+    height: 395px;
+  }
+
+  .section-divider {
+    max-width: 1820px;
+    margin: 105px auto;
+  }
+
+  .teal-text-thin {
+    font-size: 59px;
+  }
+
+  .connect-subtitle {
+    font-size: 16px;
+    margin-top: 22px;
+  }
+
+  .newsletter-label {
+    font-size: 16px;
+  }
+
+  .newsletter-input {
+    padding: 21px 26px;
+    font-size: 18px;
+  }
+
+  .newsletter-input::placeholder {
+    font-size: 16px;
+  }
+
+  .newsletter-send-btn {
+    padding: 0 53px;
+    font-size: 17px;
+  }
+}
+
+/* ==================== LARGE DESKTOP (1728px - 1919px) ==================== */
+
+@media (min-width: 1728px) and (max-width: 1919px) {
+  .unified-footer-section {
+    padding: 98px 0;
+    background: #ffffff !important;
+  }
+
+  .message-container, .connect-container {
+    max-width: 1680px;
+    padding: 0 122px;
+    gap: 122px;
+  }
+
+  .section-heading-thin {
+    font-size: 47px;
+    margin-bottom: 21px;
+  }
+
+  .thin-teal-underline {
+    width: 74px;
+    height: 12px;
+    margin: 21px 0 44px 0;
+  }
+
+  .message-content:hover .thin-teal-underline {
+    width: 87px;
+  }
+
+  .message-text {
+    font-size: 15px;
+    line-height: 1.85;
+    margin-bottom: 49px;
+    max-width: 610px;
+  }
+
+  .md-name-label {
+    font-size: 16px;
+  }
+
+  .handwritten-signature {
+    font-size: 33px;
+  }
+
+  .md-profile-img {
+    height: 365px;
+  }
+
+  .section-divider {
+    max-width: 1680px;
+    margin: 98px auto;
+  }
+
+  .teal-text-thin {
+    font-size: 56px;
+  }
+
+  .connect-subtitle {
+    font-size: 15px;
+    margin-top: 21px;
+  }
+
+  .newsletter-label {
+    font-size: 15px;
+  }
+
+  .newsletter-input {
+    padding: 20px 25px;
+    font-size: 17px;
+  }
+
+  .newsletter-input::placeholder {
+    font-size: 15px;
+  }
+
+  .newsletter-send-btn {
+    padding: 0 49px;
+    font-size: 16px;
+  }
+}
+
+/* ==================== MEDIUM DESKTOP (1536px - 1727px) ==================== */
+
+@media (min-width: 1536px) and (max-width: 1727px) {
+  .unified-footer-section {
+    padding: 92px 0;
+    background: #ffffff !important;
+  }
+
+  .message-container, .connect-container {
+    max-width: 1550px;
+    padding: 0 113px;
+    gap: 113px;
+  }
+
+  .section-heading-thin {
+    font-size: 44px;
+    margin-bottom: 20px;
+  }
+
+  .thin-teal-underline {
+    width: 70px;
+    height: 11.5px;
+    margin: 20px 0 41px 0;
+  }
+
+  .message-content:hover .thin-teal-underline {
+    width: 82px;
+  }
+
+  .message-text {
+    font-size: 14px;
+    line-height: 1.85;
+    margin-bottom: 46px;
+    max-width: 565px;
+  }
+
+  .md-name-label {
+    font-size: 15px;
+  }
+
+  .handwritten-signature {
+    font-size: 31px;
+  }
+
+  .md-profile-img {
+    height: 340px;
+  }
+
+  .section-divider {
+    max-width: 1550px;
+    margin: 92px auto;
+  }
+
+  .teal-text-thin {
+    font-size: 53px;
+  }
+
+  .connect-subtitle {
+    font-size: 14px;
+    margin-top: 20px;
+  }
+
+  .newsletter-label {
+    font-size: 14px;
+  }
+
+  .newsletter-input {
+    padding: 19px 24px;
+    font-size: 16px;
+  }
+
+  .newsletter-input::placeholder {
+    font-size: 14px;
+  }
+
+  .newsletter-send-btn {
+    padding: 0 46px;
+    font-size: 15px;
+  }
+}
+
+/* ==================== MEDIUM DESKTOP (1440px - 1535px) ==================== */
+
+@media (min-width: 1440px) and (max-width: 1535px) {
+  .unified-footer-section {
+    padding: 86px 0;
+    background: #ffffff !important;
+  }
+
+  .message-container, .connect-container {
+    max-width: 1450px;
+    padding: 0 106px;
+    gap: 106px;
+  }
+
+  .section-heading-thin {
+    font-size: 42px;
+    margin-bottom: 19px;
+  }
+
+  .thin-teal-underline {
+    width: 67px;
+    height: 11px;
+    margin: 19px 0 39px 0;
+  }
+
+  .message-content:hover .thin-teal-underline {
+    width: 79px;
+  }
+
+  .message-text {
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 43px;
+    max-width: 530px;
+  }
+
+  .md-name-label {
+    font-size: 15px;
+  }
+
+  .handwritten-signature {
+    font-size: 30px;
+  }
+
+  .md-profile-img {
+    height: 320px;
+  }
+
+  .section-divider {
+    max-width: 1450px;
+    margin: 86px auto;
+  }
+
+  .teal-text-thin {
+    font-size: 51px;
+  }
+
+  .connect-subtitle {
+    font-size: 14px;
+    margin-top: 19px;
+  }
+
+  .newsletter-label {
+    font-size: 14px;
+  }
+
+  .newsletter-input {
+    padding: 18px 23px;
+    font-size: 16px;
+  }
+
+  .newsletter-input::placeholder {
+    font-size: 14px;
+  }
+
+  .newsletter-send-btn {
+    padding: 0 43px;
+    font-size: 15px;
+  }
+}
+
+/* ==================== SMALL DESKTOP (1280px - 1439px) ==================== */
+
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .unified-footer-section {
+    padding: 80px 0;
+    background: #ffffff !important;
+  }
+
+  .message-container, .connect-container {
+    max-width: 1400px;
+    padding: 0 100px;
+    gap: 100px;
+  }
+
+  .section-heading-thin {
+    font-size: 36px;
+    margin-bottom: 15px;
+  }
+
+  .thin-teal-underline {
+    width: 60px;
+    height: 9px;
+    margin: 15px 0 35px 0;
+  }
+
+  .message-content:hover .thin-teal-underline {
+    width: 70px;
+  }
+
+  .message-text {
+    font-size: 11.5px;
+    line-height: 1.8;
+    margin-bottom: 40px;
+    max-width: 500px;
+  }
+
+  .md-name-label {
+    font-size: 12.5px;
+  }
+
+  .handwritten-signature {
+    font-size: 26px;
+  }
+
+  .md-profile-img {
+    height: 300px;
+  }
+
+  .section-divider {
+    max-width: 1400px;
+    margin: 80px auto;
+  }
+
+  .teal-text-thin {
+    font-size: 45px;
+  }
+
+  .connect-subtitle {
+    font-size: 12px;
+    margin-top: 15px;
+  }
+
+  .newsletter-label {
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+
+  .newsletter-input {
+    padding: 16px 20px;
+    font-size: 14px;
+  }
+
+  .newsletter-input::placeholder {
+    font-size: 12px;
+  }
+
+  .newsletter-send-btn {
+    padding: 0 40px;
+    font-size: 13px;
+  }
+}
+
+/* ==================== TABLET LANDSCAPE (1024px - 1279px) ==================== */
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .unified-footer-section {
+    padding: 72px 0;
+    background: #ffffff !important;
+  }
+
+  .message-container, .connect-container {
+    max-width: 1200px;
+    padding: 0 85px;
+    gap: 85px;
+  }
+
+  .section-heading-thin {
+    font-size: 34px;
+  }
+
+  .thin-teal-underline {
+    width: 57px;
+    height: 9px;
+    margin: 14px 0 33px 0;
+  }
+
+  .message-text {
+    font-size: 11.5px;
+    line-height: 1.8;
+    margin-bottom: 38px;
+  }
+
+  .md-name-label {
+    font-size: 12.5px;
+  }
+
+  .handwritten-signature {
+    font-size: 25px;
+  }
+
+  .md-profile-img {
+    height: 285px;
+  }
+
+  .section-divider {
+    margin: 72px auto;
+  }
+
+  .teal-text-thin {
+    font-size: 43px;
+  }
+
+  .connect-subtitle {
+    font-size: 12px;
+  }
+
+  .newsletter-input {
+    padding: 15px 19px;
+    font-size: 13px;
+  }
+
+  .newsletter-send-btn {
+    padding: 0 38px;
+    font-size: 12px;
+  }
+}
+
+/* ==================== TABLET (900px - 1023px) ==================== */
+
+@media (min-width: 900px) and (max-width: 1023px) {
+  .unified-footer-section {
+    padding: 68px 0;
+    background: #ffffff !important;
+  }
+
+  .message-container, .connect-container {
+    padding: 0 75px;
+    gap: 75px;
+  }
+
+  .section-heading-thin {
+    font-size: 33px;
+  }
+
+  .thin-teal-underline {
+    width: 55px;
+  }
+
+  .md-profile-img {
+    height: 270px;
+  }
+
+  .section-divider {
+    margin: 68px auto;
+  }
+
+  .teal-text-thin {
+    font-size: 41px;
+  }
+}
+
+/* ==================== TABLET PORTRAIT (834px - 899px) ==================== */
+
+@media (min-width: 834px) and (max-width: 899px) {
+  .unified-footer-section {
+    padding: 65px 0;
+    background: #ffffff !important;
+  }
+
+  .message-container, .connect-container {
+    padding: 0 68px;
+    gap: 68px;
+  }
+
+  .section-heading-thin {
+    font-size: 32px;
+  }
+
+  .thin-teal-underline {
+    width: 54px;
+  }
+
+  .md-profile-img {
+    height: 260px;
+  }
+
+  .section-divider {
+    margin: 65px auto;
+  }
+
+  .teal-text-thin {
+    font-size: 40px;
+  }
+}
+
+/* ==================== TABLET PORTRAIT (768px - 833px) ==================== */
+
+@media (min-width: 768px) and (max-width: 833px) {
+  .unified-footer-section {
+    padding: 62px 0;
+    background: #ffffff !important;
+  }
+
+  .message-container, .connect-container {
+    grid-template-columns: 1fr;
+    padding: 0 60px;
+    gap: 50px;
+  }
+
+  .section-heading-thin {
+    font-size: 32px;
+  }
+
+  .thin-teal-underline {
+    width: 53px;
+    height: 8px;
+    margin: 13px 0 32px 0;
+  }
+
+  .message-text {
+    font-size: 11.5px;
+    line-height: 1.75;
+    margin-bottom: 35px;
+    max-width: 100%;
+  }
+
+  .md-name-label {
+    font-size: 12.5px;
+  }
+
+  .handwritten-signature {
+    font-size: 24px;
+  }
+
+  .md-profile-img {
+    height: 340px;
+    width: 100%;
+  }
+
+  .section-divider {
+    margin: 62px auto;
+  }
+
+  .teal-text-thin {
+    font-size: 39px;
+  }
+
+  .connect-subtitle {
+    font-size: 12px;
+    margin-top: 14px;
+  }
+
+  .newsletter-input {
+    padding: 15px 19px;
+    font-size: 13px;
+  }
+
+  .newsletter-send-btn {
+    padding: 0 36px;
+    font-size: 12px;
+  }
+}
+
+/* ==================== MOBILE FIXES (Below 768px) ==================== */
+
+@media (max-width: 767px) {
+  .unified-footer-section {
+    background: #ffffff !important;
+    position: relative;
+    z-index: 9999; /* Force it to the very top layer on mobile */
+    margin-top: 0;
+    clear: both; /* Clears any floats from the hero */
+  }
+
+  .message-container,
+  .connect-container {
+    background: #ffffff !important; /* Ensure the container itself isn't transparent */
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==================== LARGE MOBILE & SMALL TABLET (640px - 767px) ==================== */
+
+@media (min-width: 640px) and (max-width: 767px) {
+  .unified-footer-section {
+    padding: 58px 0;
+    background: #ffffff !important;
+  }
+
+  .message-container, .connect-container {
+    grid-template-columns: 1fr;
+    padding: 0 50px;
+    gap: 46px;
+  }
+
+  .section-heading-thin {
+    font-size: 31px;
+  }
+
+  .thin-teal-underline {
+    width: 50px;
+    height: 8px;
+    margin: 13px 0 30px 0;
+  }
+
+  .message-text {
+    font-size: 11.5px;
+    line-height: 1.75;
+    margin-bottom: 33px;
+  }
+
+  .handwritten-signature {
+    font-size: 23px;
+  }
+
+  .md-profile-img {
+    height: 320px;
+  }
+
+  .section-divider {
+    margin: 58px auto;
+  }
+
+  .teal-text-thin {
+    font-size: 38px;
+  }
+
+  .connect-subtitle {
+    font-size: 12px;
+  }
+
+  .newsletter-input {
+    padding: 15px 18px;
+  }
+
+  .newsletter-send-btn {
+    padding: 0 35px;
+  }
+}
+
+/* ==================== STANDARD MOBILE (576px - 639px) ==================== */
+
+@media (min-width: 576px) and (max-width: 639px) {
+  .unified-footer-section {
+    padding: 56px 0;
+    background: #ffffff !important;
+  }
+
+  .message-container, .connect-container {
+    padding: 0 45px;
+    gap: 44px;
+  }
+
+  .section-heading-thin {
+    font-size: 30px;
+  }
+
+  .thin-teal-underline {
+    width: 48px;
+  }
+
+  .md-profile-img {
+    height: 305px;
+  }
+
+  .section-divider {
+    margin: 56px auto;
+  }
+
+  .teal-text-thin {
+    font-size: 37px;
+  }
+}
+
+/* ==================== MOBILE (480px - 575px) ==================== */
+
+@media (min-width: 480px) and (max-width: 575px) {
+  .unified-footer-section {
+    padding: 52px 0;
+    background: #ffffff !important;
+  }
+
+  .message-container, .connect-container {
+    grid-template-columns: 1fr;
+    padding: 0 38px;
+    gap: 42px;
+  }
+
+  .section-heading-thin {
+    font-size: 29px;
+    line-height: 1.2;
+  }
+
+  .thin-teal-underline {
+    width: 46px;
+    height: 7px;
+    margin: 12px 0 28px 0;
+  }
+
+  .message-text {
+    font-size: 11.5px;
+    line-height: 1.7;
+    margin-bottom: 31px;
+    max-width: 100%;
+  }
+
+  .md-name-label {
+    font-size: 12.5px;
+  }
+
+  .handwritten-signature {
+    font-size: 22px;
+  }
+
+  .md-profile-img {
+    height: 290px;
+    width: 100%;
+  }
+
+  .section-divider {
+    margin: 52px auto;
+  }
+
+  .teal-text-thin {
+    font-size: 36px;
+  }
+
+  .connect-subtitle {
+    font-size: 12px;
+    margin-top: 13px;
+    line-height: 1.6;
+  }
+
+  .newsletter-label {
+    font-size: 12px;
+    margin-bottom: 11px;
+  }
+
+  .input-group-newsletter {
+    flex-direction: column;
+  }
+
+  .newsletter-input {
+    padding: 14px 17px;
+    font-size: 13px;
+    border: 1.4px solid #767575;
+    border-bottom: none;
+    background: white;
+  }
+
+  .newsletter-send-btn {
+    padding: 14px 32px;
+    font-size: 12px;
+    width: 100%;
+  }
+}
+
+/* ==================== MOBILE (428px - 479px) ==================== */
+
+@media (min-width: 428px) and (max-width: 479px) {
+  .unified-footer-section {
+    padding: 50px 0;
+    background: #ffffff !important;
+  }
+
+  .message-container, .connect-container {
+    padding: 0 35px;
+    gap: 40px;
+  }
+
+  .section-heading-thin {
+    font-size: 28px;
+  }
+
+  .thin-teal-underline {
+    width: 44px;
+  }
+
+  .md-profile-img {
+    height: 280px;
+  }
+
+  .section-divider {
+    margin: 50px auto;
+  }
+
+  .teal-text-thin {
+    font-size: 35px;
+  }
+}
+
+/* ==================== MOBILE (375px - 427px) ==================== */
+
+@media (min-width: 375px) and (max-width: 427px) {
+  .unified-footer-section {
+    padding: 48px 0;
+    background: #ffffff !important;
+  }
+
+  .message-container, .connect-container {
+    grid-template-columns: 1fr;
+    padding: 0 32px;
+    gap: 38px;
+  }
+
+  .section-heading-thin {
+    font-size: 27px;
+    line-height: 1.2;
+  }
+
+  .thin-teal-underline {
+    width: 42px;
+    height: 7px;
+    margin: 11px 0 26px 0;
+  }
+
+  .message-text {
+    font-size: 11.5px;
+    line-height: 1.7;
+    margin-bottom: 29px;
+  }
+
+  .md-name-label {
+    font-size: 12.5px;
+  }
+
+  .handwritten-signature {
+    font-size: 21px;
+  }
+
+  .md-profile-img {
+    height: 270px;
+  }
+
+  .section-divider {
+    margin: 48px auto;
+  }
+
+  .teal-text-thin {
+    font-size: 34px;
+  }
+
+  .connect-subtitle {
+    font-size: 12px;
+    margin-top: 12px;
+  }
+
+  .newsletter-label {
+    font-size: 12px;
+    margin-bottom: 11px;
+  }
+
+  .input-group-newsletter {
+    flex-direction: column;
+  }
+
+  .newsletter-input {
+    padding: 13px 16px;
+    font-size: 12px;
+    border: 1.4px solid #767575;
+    border-bottom: none;
+    background: white;
+  }
+
+  .newsletter-send-btn {
+    padding: 13px 30px;
+    font-size: 11px;
+    width: 100%;
+  }
+}
+
+/* ==================== SMALL MOBILE (320px - 374px) ==================== */
+
+@media (min-width: 320px) and (max-width: 374px) {
+  .unified-footer-section {
+    padding: 45px 0;
+    background: #ffffff !important;
+  }
+
+  .message-container, .connect-container {
+    grid-template-columns: 1fr;
+    padding: 0 28px;
+    gap: 36px;
+  }
+
+  .section-heading-thin {
+    font-size: 26px;
+    line-height: 1.2;
+  }
+
+  .thin-teal-underline {
+    width: 40px;
+    height: 7px;
+    margin: 11px 0 24px 0;
+  }
+
+  .message-text {
+    font-size: 11.5px;
+    line-height: 1.65;
+    margin-bottom: 27px;
+  }
+
+  .md-name-label {
+    font-size: 12.5px;
+  }
+
+  .handwritten-signature {
+    font-size: 20px;
+  }
+
+  .md-profile-img {
+    height: 250px;
+  }
+
+  .section-divider {
+    margin: 45px auto;
+  }
+
+  .teal-text-thin {
+    font-size: 33px;
+  }
+
+  .connect-subtitle {
+    font-size: 12px;
+    margin-top: 12px;
+  }
+
+  .newsletter-label {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+
+  .newsletter-input {
+    padding: 12px 15px;
+    font-size: 12px;
+    background: white;
+  }
+
+  .newsletter-send-btn {
+    padding: 12px 28px;
+    font-size: 11px;
+  }
+}
+
+/* ==================== EXTRA SMALL MOBILE (max-width: 319px) ==================== */
+
+@media (max-width: 319px) {
+  .unified-footer-section {
+    padding: 42px 0;
+    background: #ffffff !important;
+  }
+
+  .message-container, .connect-container {
+    grid-template-columns: 1fr;
+    padding: 0 24px;
+    gap: 34px;
+  }
+
+  .section-heading-thin {
+    font-size: 25px;
+    line-height: 1.2;
+  }
+
+  .thin-teal-underline {
+    width: 38px;
+    height: 6px;
+    margin: 10px 0 22px 0;
+  }
+
+  .message-text {
+    font-size: 11.5px;
+    line-height: 1.65;
+    margin-bottom: 25px;
+  }
+
+  .md-name-label {
+    font-size: 12.5px;
+  }
+
+  .handwritten-signature {
+    font-size: 19px;
+  }
+
+  .md-profile-img {
+    height: 230px;
+  }
+
+  .section-divider {
+    margin: 42px auto;
+  }
+
+  .teal-text-thin {
+    font-size: 32px;
+  }
+
+  .connect-subtitle {
+    font-size: 12px;
+  }
+
+  .newsletter-label {
+    font-size: 12px;
+  }
+
+  .newsletter-input {
+    padding: 11px 14px;
+    font-size: 12px;
+    background: white;
+  }
+
+  .newsletter-send-btn {
+    padding: 11px 26px;
+    font-size: 10px;
+  }
+}
+
+/* ==================== SPECIFIC DEVICE OPTIMIZATIONS ==================== */
+
+/* iPhone SE and similar small devices */
+@media (max-width: 375px) and (max-height: 667px) {
+  .unified-footer-section {
+    padding: 46px 0;
+    background: #ffffff !important;
+  }
+
+  .md-profile-img {
+    height: 260px;
+  }
+}
+
+/* iPhone 12/13/14 Pro Max */
+@media (min-width: 428px) and (max-width: 430px) and (min-height: 926px) {
+  .md-profile-img {
+    height: 290px;
+  }
+}
+
+/* iPad Mini Portrait */
+@media (min-width: 744px) and (max-width: 768px) and (orientation: portrait) {
+  .md-profile-img {
+    height: 330px;
+  }
+}
+
+/* iPad Air/Pro Portrait */
+@media (min-width: 820px) and (max-width: 834px) and (orientation: portrait) {
+  .md-profile-img {
+    height: 350px;
+  }
+}
+
+/* ==================== ORIENTATION & SPECIAL CASES ==================== */
+
+/* Landscape Mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .unified-footer-section {
+    padding: 45px 0;
+    background: #ffffff !important;
+  }
+
+  .message-container, .connect-container {
+    gap: 38px;
+  }
+
+  .md-profile-img {
+    height: 280px;
+  }
+
+  .section-divider {
+    margin: 45px auto;
+  }
+}
+
+/* Tablet Landscape */
+@media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
+  .message-container, .connect-container {
+    gap: 80px;
+  }
+}
+
+/* ==================== PERFORMANCE & ACCESSIBILITY ==================== */
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .thin-teal-underline,
+  .md-profile-img,
+  .newsletter-send-btn,
+  .newsletter-input {
+    transition: none !important;
+  }
+
+  .md-profile-img:hover {
+    transform: none;
+  }
+
+  .newsletter-send-btn:hover {
+    transform: none;
+  }
+}
+
+/* High DPI Displays (Retina) - All Mac screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .section-heading-thin,
+  .teal-text-thin,
+  .message-text,
+  .connect-subtitle,
+  .md-name-label {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .md-profile-img {
+    image-rendering: -webkit-optimize-contrast;
+  }
+}
+
+/* Dark Mode Support - FIXED FOR MOBILE */
+@media (prefers-color-scheme: dark) {
+  /* Only apply dark mode on DESKTOP, not mobile */
+  @media (min-width: 768px) {
+    .unified-footer-section {
+      background: #1a1a1a !important;
+    }
+
+    .section-heading-thin {
+      color: #ffffff;
+    }
+
+    .message-text,
+    .connect-subtitle,
+    .md-name-label {
+      color: #e0e0e0;
+    }
+
+    .handwritten-signature {
+      color: #ffffff;
+    }
+
+    .section-divider {
+      background-color: #444;
+    }
+
+    .newsletter-input {
+      background: #2a2a2a;
+      color: #ffffff;
+      border-color: #555;
+    }
+
+    .newsletter-input::placeholder {
+      color: #888;
+    }
+  }
+
+  /* FORCE WHITE on mobile even in dark mode */
+  @media (max-width: 767px) {
+    .unified-footer-section {
+      background: #ffffff !important;
+    }
+
+    .section-heading-thin {
+      color: #131313 !important;
+    }
+
+    .message-text,
+    .connect-subtitle,
+    .md-name-label {
+      color: #3b3b3b !important;
+    }
+
+    .handwritten-signature {
+      color: #000000 !important;
+    }
+
+    .newsletter-input {
+      background: white !important;
+      color: #1e1d1d !important;
+    }
+  }
+}
+/* Print Styles */
+@media print {
+  .unified-footer-section {
+    page-break-inside: avoid;
+    background: #ffffff !important;
+  }
+
+  .newsletter-send-btn {
+    display: none;
+  }
+
+  .md-profile-img {
+    page-break-inside: avoid;
+  }
+}

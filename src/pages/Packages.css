@@ -1,0 +1,506 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.packages-page {
+  font-family: 'Montserrat', sans-serif;
+  color: #1f2937;
+  overflow-x: hidden;
+}
+
+/* ===========================================
+   HERO SECTION
+   ===========================================
+*/
+.packages-hero {
+  height: 40vh;
+  min-height: 350px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.159), rgba(0, 0, 0, 0.17)), url('../assets/packages.webp');
+  background-size: cover;
+  background-position: center 78%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 0px 0 120px 15%;
+  color: white;
+}
+.packages-hero-title {
+  margin: 0;
+  line-height: 1.1;
+}
+
+.packages-hero-small {
+     font-size: 1rem;
+  font-weight: 450;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+  letter-spacing: 0.3px;
+  font-family: "Montserrat", sans-serif;
+  opacity: 0.95;  
+}
+
+.packages-hero-large {
+  font-size: 2.8rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  font-family: "Montserrat", sans-serif;
+}
+
+/* ===========================================
+   BREADCRUMB SECTION
+   ===========================================
+*/
+.packages-breadcrumb-section {
+  padding: 45px 15%;
+  background: #ffffff;
+}
+
+.packages-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.packages-breadcrumb-home {
+  color: #80cbc4;
+  display: inline-flex;
+  align-items: center;
+}
+
+.packages-breadcrumb-separator {
+  color: #80cbc4; /* Teal color for slash */
+}
+
+.packages-breadcrumb-text {
+  color: #000000; /* Black color for PACKAGES */
+}
+
+/* ===========================================
+   INTRO SECTION
+   ===========================================
+*/
+.packages-intro-section {
+  padding: 40px 15%; /* Reduced from 60px */
+  background: #ffffff;
+  text-align: left;
+}
+
+.packages-intro-label {
+  font-size: 1.2rem; /* Reduced from 1.49rem */
+  color: #80cbc4;
+  font-weight: 450;
+  letter-spacing: 1px;
+  margin-bottom: 0rem;
+}
+
+.packages-intro-title {
+  font-size: 2rem; /* Reduced from 2.5rem */
+  font-weight: 300;
+  color: #2c2c2c;
+  margin: 0 0 15px 0; /* Reduced from 20px */
+  line-height: 1.2;
+}
+
+.packages-intro-line {
+  width: 60px; /* Reduced from 80px */
+  height: 8px; /* Reduced from 12px */
+  background: #80cbc4;
+  margin: -8px 0 20px 0; /* Reduced margins */
+}
+
+.packages-intro-desc {
+  font-size: 0.95rem; /* Slightly reduced */
+  line-height: 1.7;
+  color: #333;
+  max-width: 100%;
+}
+
+/* ===========================================
+   RESIDENTIAL & COMMERCIAL SECTIONS
+   ===========================================
+*/
+.packages-residential,
+.packages-commercial {
+  padding: 40px 15%; /* Reduced from 40px */
+  background: #ffffff;
+  margin-bottom: 40px; /* Reduced from 60px */
+}
+
+.packages-residential-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+.packages-residential-title {
+  background-color: #80cbc4;
+  color: white;
+  padding: 1rem 2rem; /* Reduced padding */
+  font-size: 1.1rem; /* Reduced from 1.5rem */
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.packages-residential-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem; /* Reduced from 1.5rem */
+}
+
+.packages-book-link,
+.packages-whatsapp-link {
+  color: #80cbc4;
+  font-size: 0.95rem; /* Reduced from 1rem */
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: color 0.3s ease;
+}
+
+.packages-book-link:hover,
+.packages-whatsapp-link:hover {
+  color: #5ab3ac;
+}
+
+.packages-whatsapp-icon-wrapper {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #25D366; /* WhatsApp green background */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.3s;
+}
+
+.packages-whatsapp-icon-wrapper:hover {
+  background: #1ea952; /* Darker green on hover */
+}
+
+.packages-whatsapp-icon-wrapper i {
+  font-size: 14px;
+  color: white;
+}
+
+.packages-whatsapp-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.packages-divider {
+  width: 1px;
+  height: 1.3rem; /* Reduced from 1.5rem */
+  background-color: #d1d5db;
+}
+
+/* ===========================================
+   PRICING CARDS GRID
+   ===========================================
+*/
+.packages-pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  grid-auto-rows: 1fr; /* Make all rows the same height */
+}
+
+.packages-pricing-card {
+  background-color: #80cbc4;
+  color: white;
+  padding: 2.5rem 1.8rem;
+  height: 100%; /* Fill the grid cell completely */
+  min-height: 280px; /* Minimum height for content */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1.3px solid rgba(255, 255, 255, 0.854);
+}
+
+.packages-card-title {
+  font-size: 2.3rem; /* Reduced from 3.5rem */
+  font-weight: 150;
+  margin-bottom: 1.2rem; /* Reduced from 1.5rem */
+  letter-spacing: 0.02em;
+}
+
+.packages-features-list {
+  list-style: none;
+  margin-bottom: auto;
+  margin-top: 0.3rem;
+  padding: 0;
+}
+
+.packages-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.packages-bullet {
+  font-size:2rem;
+  line-height: 1.1;
+  color: white;
+  flex-shrink: 0;
+ margin-top: -10px;
+}
+
+.packages-feature-text {
+  font-size: 0.9rem; /* Reduced from 0.95rem */
+  font-weight: 400;
+  line-height: 1.4;
+  margin-top: 0;
+}
+
+.packages-card-footer {
+  margin-top: 1.5rem; /* Reduced from 2rem */
+}
+
+.packages-price-box {
+  border: 2px solid white;
+  display: inline-block;
+  padding: 0.5rem 1rem; /* Reduced padding */
+  margin-bottom: 0.6rem;
+}
+
+.packages-price {
+  font-size: 1.2rem; /* Reduced from 1.8rem */
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.packages-minimum {
+  font-size: .8rem;
+  font-weight: 400;
+}
+
+.packages-minimum strong {
+  font-weight: 700;
+}
+
+/* ===========================================
+   TABLE SECTIONS (Deep Cleaning, Mattress, Sofa, Carpet)
+   ===========================================
+*/
+.packages-table-section {
+  padding: 60px 15%; /* Reduced from 80px */
+  background: #f5f5f5;
+  text-align: center;
+}
+
+.packages-table-header {
+  margin-bottom: 30px; /* Reduced from 40px */
+}
+
+.packages-table-label {
+  font-size: 1.2rem; /* Reduced from 1.49rem */
+  color: #80cbc4;
+  font-weight: 450;
+  margin-bottom: 0.3rem;
+}
+
+.packages-table-title {
+  font-size: 2rem; /* Reduced from 2.5rem */
+  font-weight: 300;
+  color: #2c2c2c;
+}
+
+/* Table Styling */
+.packages-table {
+  width: 100%;
+  max-width: 1200px; /* Restored to 1200px for consistency */
+  margin: 0 auto 30px; /* Centered with auto margins */
+  border-collapse: collapse;
+  background: #80cbc4;
+  color: white;
+}
+
+.packages-table thead th {
+  background: #80cbc4;
+  color: white;
+  padding: 1.2rem; /* Reduced from 1.5rem */
+  font-size: 1.3rem; /* Reduced from 1.5rem */
+  font-weight: 600;
+  text-align: center;
+  border: 1.5px solid rgba(255, 255, 255, 0.854);
+}
+
+.packages-table tbody td {
+  padding: 1rem; /* Reduced from 1.2rem */
+  font-size: 1rem; /* Reduced from 1.1rem */
+  text-align: center;
+  border: 1.5px solid rgba(255, 255, 255, 0.854);
+  font-weight: 400;
+}
+
+/* Table Subheader - Villa, L-Shaped sections */
+.packages-table-subheader td,
+.packages-table tbody .packages-table-subheader td,
+.packages-table-section .packages-table-subheader td {
+  background: rgba(255, 255, 255, 0.15) !important;
+  font-size: 1.6rem !important;
+  font-weight: 700 !important;
+  text-align: left !important;
+  padding: 1.2rem 2rem !important;
+  color: white !important;
+}
+
+/* Two Column Table */
+.packages-table-two-col {
+  max-width: 1200px; /* Same width as other tables for consistency */
+}
+
+/* Table Footer Actions */
+.packages-table-footer {
+  display: flex;
+  justify-content: flex-end; /* Changed from center to right */
+  align-items: center;
+  gap: 1.2rem; /* Reduced from 1.5rem */
+  margin-top: 25px; /* Reduced from 30px */
+}
+
+/* ===========================================
+   RESPONSIVE DESIGN
+   ===========================================
+*/
+
+/* Large Screens - 1440px */
+@media (max-width: 1440px) {
+  .packages-hero,
+  .packages-breadcrumb-section,
+  .packages-intro-section,
+  .packages-residential,
+  .packages-commercial,
+  .packages-table-section {
+    padding-left: 10% !important;
+    padding-right: 10% !important;
+  }
+}
+
+/* Tablets & Small Laptops - 1024px */
+@media (max-width: 1024px) {
+  .packages-hero,
+  .packages-breadcrumb-section,
+  .packages-intro-section,
+  .packages-residential,
+  .packages-commercial,
+  .packages-table-section {
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+  }
+
+  .packages-residential-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .packages-residential-title {
+    width: 100%;
+    text-align: center;
+  }
+
+  .packages-residential-actions {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Tablets Portrait - 768px */
+@media (max-width: 768px) {
+  .packages-hero,
+  .packages-breadcrumb-section,
+  .packages-intro-section,
+  .packages-residential,
+  .packages-commercial,
+  .packages-table-section {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  .packages-hero-large {
+    font-size: 2.5rem;
+  }
+
+  .packages-hero-small {
+    font-size: 1rem;
+  }
+
+  .packages-intro-title {
+    font-size: 1.8rem;
+  }
+
+  .packages-pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .packages-pricing-card {
+    min-height: 280px; /* Maintain consistent height on mobile */
+    padding: 2rem 1.5rem;
+  }
+
+  .packages-card-title {
+    font-size: 2.5rem;
+  }
+
+  .packages-table-title {
+    font-size: 2rem;
+  }
+
+  .packages-table thead th {
+    font-size: 1.2rem;
+    padding: 1rem;
+  }
+
+  .packages-table tbody td {
+    font-size: 0.9rem;
+    padding: 0.8rem;
+  }
+
+  .packages-table-footer {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* Mobile - 480px */
+@media (max-width: 480px) {
+  .packages-hero {
+    min-height: 300px;
+    padding-bottom: 80px;
+  }
+
+  .packages-hero-large {
+    font-size: 2rem;
+  }
+
+  .packages-intro-title {
+    font-size: 1.5rem;
+  }
+
+  .packages-card-title {
+    font-size: 2rem;
+  }
+
+  .packages-table-title {
+    font-size: 1.5rem;
+  }
+}

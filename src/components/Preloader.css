@@ -1,0 +1,509 @@
+/* ==================== PREMIUM PRELOADER STYLES ==================== */
+
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(135deg, #ffffff 0%, #e8f5f3 50%, #d4efeb 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  overflow: hidden;
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+              visibility 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.preloader.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* ==================== ANIMATED BACKGROUND ==================== */
+
+.preloader-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(115, 201, 193, 0.15) 0%, rgba(115, 201, 193, 0) 70%);
+  animation: floatCircle 20s ease-in-out infinite;
+}
+
+.circle-1 {
+  width: 400px;
+  height: 400px;
+  top: -200px;
+  left: -200px;
+  animation-delay: 0s;
+}
+
+.circle-2 {
+  width: 300px;
+  height: 300px;
+  bottom: -150px;
+  right: -150px;
+  animation-delay: 7s;
+}
+
+.circle-3 {
+  width: 250px;
+  height: 250px;
+  top: 50%;
+  right: -125px;
+  animation-delay: 14s;
+}
+
+@keyframes floatCircle {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -30px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+/* ==================== PRELOADER CONTENT ==================== */
+
+.preloader-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  animation: fadeInScale 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ==================== LOGO CONTAINER ==================== */
+
+.logo-container {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 90px;
+  height: 90px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 40px rgba(115, 201, 193, 0.2),
+              0 0 0 8px rgba(115, 201, 193, 0.05);
+  animation: logoFloat 3s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.preloader-logo-img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  animation: logoRotate 2s ease-in-out infinite;
+}
+
+@keyframes logoRotate {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(5deg) scale(1.05);
+  }
+}
+
+/* ==================== LOADING RING ==================== */
+
+.loading-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ring-segment {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  animation: rotateRing 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.segment-1 {
+  border-top-color: #73c9c1;
+  border-right-color: #73c9c1;
+  animation-delay: 0s;
+}
+
+.segment-2 {
+  border-bottom-color: rgba(115, 201, 193, 0.5);
+  border-left-color: rgba(115, 201, 193, 0.5);
+  animation-delay: 0.3s;
+}
+
+.segment-3 {
+  border-top-color: rgba(115, 201, 193, 0.3);
+  border-bottom-color: rgba(115, 201, 193, 0.3);
+  animation-delay: 0.6s;
+}
+
+@keyframes rotateRing {
+  0% {
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: rotate(360deg);
+    opacity: 1;
+  }
+}
+
+/* ==================== BRAND NAME ==================== */
+
+.brand-name {
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 34px;
+  font-weight: 400;
+  margin-bottom: 12px;
+  letter-spacing: 3px;
+  animation: fadeInUp 1s ease-out 0.3s both;
+}
+
+.brand-eco {
+  color: #73c9c1;
+  font-weight: 700;
+  text-shadow: 0 2px 10px rgba(115, 201, 193, 0.3);
+}
+
+.brand-glow {
+  color: #2d2d2d;
+  font-weight: 600;
+}
+
+/* ==================== TAGLINE ==================== */
+
+.preloader-tagline {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #666;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  animation: fadeInUp 1s ease-out 0.5s both;
+}
+
+/* ==================== LOADING DOTS ==================== */
+
+.loading-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  animation: fadeInUp 1s ease-out 0.7s both;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: #73c9c1;
+  border-radius: 50%;
+  animation: dotPulse 1.5s ease-in-out infinite;
+}
+
+.dot-1 {
+  animation-delay: 0s;
+}
+
+.dot-2 {
+  animation-delay: 0.2s;
+}
+
+.dot-3 {
+  animation-delay: 0.4s;
+}
+
+@keyframes dotPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.5;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==================== RESPONSIVE STYLES ==================== */
+
+/* Extra Small Mobile (320px - 374px) */
+@media (max-width: 374px) {
+  .logo-container {
+    width: 140px;
+    height: 140px;
+    margin-bottom: 25px;
+  }
+
+  .logo-wrapper {
+    width: 90px;
+    height: 90px;
+  }
+
+  .preloader-logo-img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .ring-segment {
+    border-width: 2px;
+  }
+
+  .brand-name {
+    font-size: 32px;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+
+  .preloader-tagline {
+    font-size: 10px;
+    margin-bottom: 25px;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .bg-circle {
+    opacity: 0.5;
+  }
+}
+
+/* Small Mobile (375px - 479px) */
+@media (min-width: 375px) and (max-width: 479px) {
+  .logo-container {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 28px;
+  }
+
+  .logo-wrapper {
+    width: 95px;
+    height: 95px;
+  }
+
+  .preloader-logo-img {
+    width: 65px;
+    height: 65px;
+  }
+
+  .brand-name {
+    font-size: 34px;
+    margin-bottom: 13px;
+  }
+
+  .preloader-tagline {
+    font-size: 11px;
+    margin-bottom: 26px;
+  }
+}
+
+/* Standard Mobile (480px - 639px) */
+@media (min-width: 480px) and (max-width: 639px) {
+  .logo-container {
+    width: 160px;
+    height: 160px;
+    margin-bottom: 30px;
+  }
+
+  .logo-wrapper {
+    width: 105px;
+    height: 105px;
+  }
+
+  .preloader-logo-img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .brand-name {
+    font-size: 38px;
+    margin-bottom: 14px;
+  }
+
+  .preloader-tagline {
+    font-size: 12px;
+    margin-bottom: 28px;
+  }
+}
+
+/* Tablet (640px - 1023px) */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .logo-container {
+    width: 170px;
+    height: 170px;
+    margin-bottom: 32px;
+  }
+
+  .logo-wrapper {
+    width: 115px;
+    height: 115px;
+  }
+
+  .preloader-logo-img {
+    width: 75px;
+    height: 75px;
+  }
+
+  .brand-name {
+    font-size: 40px;
+    margin-bottom: 14px;
+  }
+
+  .preloader-tagline {
+    font-size: 12px;
+  }
+}
+
+/* Desktop (1024px - 1439px) */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .logo-container {
+    width: 140px;
+    height: 140px;
+  }
+
+  .logo-wrapper {
+    width: 90px;
+    height: 90px;
+  }
+
+  .preloader-logo-img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .brand-name {
+    font-size: 34px;
+  }
+
+  .preloader-tagline {
+    font-size: 13px;
+  }
+}
+
+/* Large Desktop (1440px+) */
+@media (min-width: 1440px) {
+  .logo-container {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 32px;
+  }
+
+  .logo-wrapper {
+    width: 100px;
+    height: 100px;
+  }
+
+  .preloader-logo-img {
+    width: 68px;
+    height: 68px;
+  }
+
+  .ring-segment {
+    border-width: 3px;
+  }
+
+  .brand-name {
+    font-size: 36px;
+    margin-bottom: 14px;
+  }
+
+  .preloader-tagline {
+    font-size: 13px;
+    margin-bottom: 30px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    gap: 8px;
+  }
+}
+
+/* ==================== PERFORMANCE OPTIMIZATIONS ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .preloader-content,
+  .logo-wrapper,
+  .preloader-logo-img,
+  .ring-segment,
+  .bg-circle,
+  .dot {
+    animation: none !important;
+  }
+
+  .preloader {
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .preloader-logo-img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}

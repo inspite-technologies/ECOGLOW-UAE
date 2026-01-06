@@ -1,0 +1,1073 @@
+/* ==================== ADVANTAGES SECTION BASE STYLES ==================== */
+
+.advantages-section {
+  background: white;
+  padding: 50px 0 0;
+  overflow: visible;
+  position: relative;
+  z-index: 11;
+}
+
+.advantages-header {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.advantages-title {
+  font-size: 28px;
+  font-weight: 250;
+  line-height: 1.2;
+  color: #333;
+  margin-bottom: 15px;
+  letter-spacing: -0.5px;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.advantages-underline {
+  width: 55px;
+  height: 8px;
+  background: #73c9c1;
+  margin: 15px auto 0;
+  transition: width 0.3s ease;
+}
+
+/* Accordion Full Row with Centered Content */
+.advantages-accordion {
+  margin-bottom: 1px;
+}
+
+.advantage-item {
+  width: 100%;
+  border-bottom: 2px solid #ffffff;
+  background-color: #f5f5f5;
+  position: relative;
+  transition: background-color 0.4s ease;
+}
+
+.advantage-item:hover {
+  background-color: #73c9c1;
+}
+
+.advantage-item.active {
+  background-color: #73c9c1;
+}
+
+.advantage-wrapper {
+  max-width: 100%;
+  margin: 0 auto;
+  margin-left: 0;
+  padding: 0 25px;
+  position: relative;
+  padding-left: 25px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.advantage-icon-section {
+  width: 45px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 20px;
+  align-self: stretch;
+  transition: padding 0.5s ease;
+}
+
+.advantage-item.active .advantage-icon-section {
+  padding-top: 12px;
+  align-items: flex-start;
+}
+
+.advantage-icon-image {
+  width: 48px;
+  height: 70px;
+  object-fit: contain;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: brightness(0);
+  display: block;
+  transform-origin: top center;
+}
+
+.advantage-item.active .advantage-icon-image {
+  height: 118px;
+  width: 70px;
+  filter: brightness(0) invert(1);
+}
+
+.advantage-item:hover .advantage-icon-image {
+  filter: brightness(0) invert(1);
+}
+
+.advantage-content-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.advantage-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  cursor: pointer;
+}
+
+.advantage-title {
+  font-size: 22px;
+  font-weight: 230;
+  line-height: 1.3;
+  color: #141414;
+  margin: 0;
+  letter-spacing: -0.5px;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: color 0.3s ease;
+  flex: 1;
+  margin-top: -12px;
+  margin-left: 20px;
+  margin-bottom: -30px;
+}
+
+.advantage-item:hover .advantage-title,
+.advantage-item:hover .advantage-toggle {
+  color: white;
+}
+
+.advantage-item.active .advantage-title,
+.advantage-item.active .advantage-toggle {
+  color: white;
+}
+
+.advantage-toggle {
+  font-size: 26px;
+  font-weight: 100;
+  color: #333;
+  transition: color 0.3s ease, transform 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 12px;
+}
+
+.advantage-item.active .advantage-toggle {
+  transform: rotate(180deg);
+}
+
+/* Smooth Description Reveal */
+.advantage-description-container {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: max-height;
+}
+
+.advantage-description-container.show {
+  max-height: 500px;
+  transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.advantage-description-content {
+  padding: 0 0 25px 0;
+}
+
+.advantage-description-content p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #ffffff;
+  font-weight: 300;
+  max-width: 100%;
+  margin: 0;
+  letter-spacing: -0.5px;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin-left: 20px;
+}
+
+/* CTA Section */
+.advantages-cta {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  margin-top: 1px;
+  background-color: #f5f5f5;
+}
+
+.cta-left-full {
+  width: 100%;
+  height: 270px;
+  background-color: #f5f5f5;
+  overflow: hidden;
+}
+
+.cta-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.cta-photo:hover {
+  transform: scale(1.05);
+}
+
+.cta-right-content {
+  padding: 35px 25px;
+  background-color: #f5f5f5;
+  margin-left: 0;
+}
+
+.cta-title {
+  font-size: 24px;
+  font-weight: 350;
+  line-height: 1.3;
+  color: #333;
+  margin-bottom: 22px;
+  letter-spacing: -0.5px;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.cta-highlight-text {
+  color: #73c9c1;
+}
+
+.cta-button-group {
+  display: flex;
+  gap: 11px;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.cta-button-primary,
+.cta-button-whatsapp {
+  padding: 13px 22px;
+  border: none;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  width: 100%;
+  justify-content: center;
+}
+
+.cta-button-primary { 
+  background: #73c9c1; 
+}
+
+.cta-button-primary:hover {
+  background: #0f9b8c;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+}
+
+.cta-button-whatsapp { 
+  background: #73c9c1; 
+  display: flex; 
+  align-items: center; 
+  gap: 8px; 
+}
+
+.cta-button-whatsapp:hover {
+  background: #0f9b8c;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+}
+
+/* ==================== DESKTOP (1280px and above) - SIDE BY SIDE CTA ==================== */
+
+@media (min-width: 1280px) {
+  .advantages-section {
+    padding: 80px 0 0;
+  }
+
+  .advantages-header {
+    margin-bottom: 50px;
+  }
+
+  .advantages-title {
+    font-size: 43px;
+    margin-bottom: 15px;
+  }
+
+  .advantages-underline {
+    width: 70px;
+    height: 9px;
+    margin: 20px auto 0;
+  }
+
+  .advantage-wrapper {
+    max-width: 1200px;
+    margin-left: 200px;
+    padding: 0 60px;
+    padding-left: 190px;
+    gap: 40px;
+  }
+
+  .advantage-icon-section {
+    width: 60px;
+    padding-top: 30px;
+  }
+
+  .advantage-item.active .advantage-icon-section {
+    padding-top: 20px;
+  }
+
+  .advantage-icon-image {
+    width: 65px;
+    height: 95px;
+  }
+
+  .advantage-item.active .advantage-icon-image {
+    height: 160px;
+    width: 95px;
+  }
+
+  .advantage-header-row {
+    padding: 30px 0;
+  }
+
+  .advantage-title {
+    font-size: 36px;
+    margin-top: -20px;
+    margin-left: 60px;
+    margin-bottom: -50px;
+  }
+
+  .advantage-toggle {
+    font-size: 38px;
+    margin-left: 20px;
+  }
+
+  .advantage-description-content {
+    padding: 0 0 40px 0;
+  }
+
+  .advantage-description-content p {
+    font-size: 16px;
+    line-height: 1.7;
+    max-width: 900px;
+    margin-left: 60px;
+  }
+
+  /* CTA Section - SIDE BY SIDE LAYOUT */
+  .advantages-cta {
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 0;
+  }
+
+  .cta-left-full {
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    max-height: 350px;
+  }
+
+  .cta-right-content {
+    padding: 50px 80px 50px 60px;
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .cta-title {
+    font-size: 38px;
+    line-height: 1.3;
+    margin-bottom: 35px;
+  }
+
+  .cta-button-group {
+    gap: 15px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .cta-button-primary,
+  .cta-button-whatsapp {
+    padding: 14px 28px;
+    font-size: 11px;
+    width: auto;
+    flex: 1;
+    min-width: 150px;
+  }
+
+  .cta-button-whatsapp svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* ==================== TABLET LANDSCAPE (1024px - 1279px) ==================== */
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .advantages-section {
+    padding: 72px 0 0;
+  }
+
+  .advantages-header {
+    margin-bottom: 46px;
+  }
+
+  .advantages-title {
+    font-size: 40px;
+  }
+
+  .advantages-underline {
+    width: 66px;
+    height: 9px;
+  }
+
+  .advantage-wrapper {
+    max-width: 1000px;
+    margin-left: 0;
+    padding: 0 50px;
+    padding-left: 50px;
+    gap: 35px;
+  }
+
+  .advantage-icon-section {
+    width: 56px;
+    padding-top: 28px;
+  }
+
+  .advantage-item.active .advantage-icon-section {
+    padding-top: 19px;
+  }
+
+  .advantage-icon-image {
+    width: 60px;
+    height: 88px;
+  }
+
+  .advantage-item.active .advantage-icon-image {
+    height: 148px;
+    width: 88px;
+  }
+
+  .advantage-header-row {
+    padding: 28px 0;
+  }
+
+  .advantage-title {
+    font-size: 33px;
+    margin-top: -19px;
+    margin-left: 56px;
+    margin-bottom: -46px;
+  }
+
+  .advantage-toggle {
+    font-size: 35px;
+    margin-left: 19px;
+  }
+
+  .advantage-description-content {
+    padding: 0 0 37px 0;
+  }
+
+  .advantage-description-content p {
+    font-size: 15px;
+    max-width: 830px;
+    margin-left: 56px;
+  }
+
+  /* CTA Section - STACKED */
+  .advantages-cta {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-left-full {
+    width: 100%;
+    height: 420px;
+  }
+
+  .cta-right-content {
+    padding: 55px 50px;
+    margin-left: 0;
+  }
+
+  .cta-title {
+    font-size: 32px;
+    margin-bottom: 28px;
+  }
+
+  .cta-button-group {
+    gap: 14px;
+    flex-direction: column;
+  }
+
+  .cta-button-primary,
+  .cta-button-whatsapp {
+    padding: 12px 24px;
+    font-size: 10px;
+    width: 100%;
+  }
+}
+
+/* ==================== TABLET PORTRAIT (768px - 1023px) ==================== */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .advantages-section {
+    padding: 62px 0 0;
+  }
+
+  .advantages-header {
+    margin-bottom: 40px;
+  }
+
+  .advantages-title {
+    font-size: 36px;
+  }
+
+  .advantages-underline {
+    width: 62px;
+    height: 8px;
+  }
+
+  .advantage-wrapper {
+    padding: 0 42px;
+    padding-left: 42px;
+    gap: 30px;
+  }
+
+  .advantage-icon-section {
+    width: 52px;
+    padding-top: 26px;
+  }
+
+  .advantage-item.active .advantage-icon-section {
+    padding-top: 17px;
+  }
+
+  .advantage-icon-image {
+    width: 56px;
+    height: 82px;
+  }
+
+  .advantage-item.active .advantage-icon-image {
+    height: 137px;
+    width: 82px;
+  }
+
+  .advantage-header-row {
+    padding: 26px 0;
+  }
+
+  .advantage-title {
+    font-size: 29px;
+    margin-top: -17px;
+    margin-left: 52px;
+    margin-bottom: -40px;
+  }
+
+  .advantage-toggle {
+    font-size: 31px;
+    margin-left: 17px;
+  }
+
+  .advantage-description-content {
+    padding: 0 0 35px 0;
+  }
+
+  .advantage-description-content p {
+    font-size: 15px;
+    line-height: 1.65;
+    margin-left: 52px;
+  }
+
+  /* CTA Section */
+  .advantages-cta {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-left-full {
+    width: 100%;
+    height: 370px;
+  }
+
+  .cta-right-content {
+    padding: 48px 42px;
+    margin-left: 0;
+  }
+
+  .cta-title {
+    font-size: 29px;
+    margin-bottom: 26px;
+  }
+
+  .cta-button-group {
+    gap: 13px;
+    flex-direction: column;
+  }
+
+  .cta-button-primary,
+  .cta-button-whatsapp {
+    padding: 12px 24px;
+    font-size: 10px;
+    width: 100%;
+  }
+}
+
+/* ==================== MOBILE (640px - 767px) ==================== */
+
+@media (min-width: 640px) and (max-width: 767px) {
+  .advantages-section {
+    padding: 58px 0 0;
+  }
+
+  .advantages-header {
+    margin-bottom: 38px;
+  }
+
+  .advantages-title {
+    font-size: 34px;
+  }
+
+  .advantages-underline {
+    width: 60px;
+  }
+
+  .advantage-wrapper {
+    padding: 0 38px;
+    padding-left: 38px;
+    gap: 28px;
+  }
+
+  .advantage-icon-section {
+    width: 50px;
+    padding-top: 25px;
+  }
+
+  .advantage-item.active .advantage-icon-section {
+    padding-top: 16px;
+  }
+
+  .advantage-icon-image {
+    width: 54px;
+    height: 79px;
+  }
+
+  .advantage-item.active .advantage-icon-image {
+    height: 132px;
+    width: 79px;
+  }
+
+  .advantage-header-row {
+    padding: 25px 0;
+  }
+
+  .advantage-title {
+    font-size: 27px;
+    margin-top: -16px;
+    margin-left: 28px;
+    margin-bottom: -38px;
+  }
+
+  .advantage-toggle {
+    font-size: 30px;
+    margin-left: 16px;
+  }
+
+  .advantage-description-content {
+    padding: 0 0 32px 0;
+  }
+
+  .advantage-description-content p {
+    font-size: 15px;
+    line-height: 1.65;
+    margin-left: 28px;
+    font-weight: 300;
+  }
+
+  /* CTA Section */
+  .cta-left-full {
+    height: 350px;
+  }
+
+  .cta-right-content {
+    padding: 45px 38px;
+  }
+
+  .cta-title {
+    font-size: 28px;
+    margin-bottom: 24px;
+  }
+
+  .cta-button-group {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .cta-button-primary,
+  .cta-button-whatsapp {
+    width: 100%;
+    justify-content: center;
+    padding: 13px 26px;
+    font-size: 11px;
+  }
+}
+
+/* ==================== MOBILE (480px - 639px) ==================== */
+
+@media (min-width: 480px) and (max-width: 639px) {
+  .advantages-section {
+    padding: 52px 0 0;
+  }
+
+  .advantages-header {
+    margin-bottom: 34px;
+  }
+
+  .advantages-title {
+    font-size: 31px;
+    line-height: 1.2;
+  }
+
+  .advantages-underline {
+    width: 56px;
+    height: 8px;
+  }
+
+  .advantage-wrapper {
+    padding: 0 32px;
+    padding-left: 32px;
+    gap: 24px;
+  }
+
+  .advantage-icon-section {
+    width: 48px;
+    padding-top: 22px;
+  }
+
+  .advantage-item.active .advantage-icon-section {
+    padding-top: 14px;
+  }
+
+  .advantage-icon-image {
+    width: 51px;
+    height: 75px;
+  }
+
+  .advantage-item.active .advantage-icon-image {
+    height: 125px;
+    width: 75px;
+  }
+
+  .advantage-header-row {
+    padding: 22px 0;
+  }
+
+  .advantage-title {
+    font-size: 24px;
+    line-height: 1.3;
+    margin-top: -14px;
+    margin-left: 24px;
+    margin-bottom: -34px;
+  }
+
+  .advantage-toggle {
+    font-size: 28px;
+    margin-left: 14px;
+  }
+
+  .advantage-description-content {
+    padding: 0 0 28px 0;
+  }
+
+  .advantage-description-content p {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-left: 24px;
+    font-weight: 300;
+  }
+
+  /* CTA Section */
+  .cta-left-full {
+    height: 310px;
+  }
+
+  .cta-right-content {
+    padding: 40px 32px;
+  }
+
+  .cta-title {
+    font-size: 26px;
+    margin-bottom: 22px;
+  }
+
+  .cta-button-group {
+    flex-direction: column;
+    gap: 11px;
+  }
+
+  .cta-button-primary,
+  .cta-button-whatsapp {
+    width: 100%;
+    justify-content: center;
+    padding: 13px 24px;
+    font-size: 11px;
+  }
+
+  .cta-button-whatsapp svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* ==================== MOBILE (375px - 479px) ==================== */
+
+@media (min-width: 375px) and (max-width: 479px) {
+  .advantages-section {
+    padding: 48px 0 0;
+  }
+
+  .advantages-header {
+    margin-bottom: 32px;
+  }
+
+  .advantages-title {
+    font-size: 29px;
+    font-weight: 250;
+  }
+
+  .advantages-underline {
+    width: 54px;
+    height: 8px;
+  }
+
+  .advantage-wrapper {
+    padding: 0 28px;
+    padding-left: 28px;
+    gap: 22px;
+  }
+
+  .advantage-icon-section {
+    width: 46px;
+    padding-top: 21px;
+  }
+
+  .advantage-item.active .advantage-icon-section {
+    padding-top: 13px;
+  }
+
+  .advantage-icon-image {
+    width: 49px;
+    height: 72px;
+  }
+
+  .advantage-item.active .advantage-icon-image {
+    height: 120px;
+    width: 72px;
+  }
+
+  .advantage-header-row {
+    padding: 21px 0;
+  }
+
+  .advantage-title {
+    font-size: 22px;
+    line-height: 1.3;
+    margin-top: -13px;
+    margin-left: 22px;
+    margin-bottom: -32px;
+  }
+
+  .advantage-toggle {
+    font-size: 26px;
+    margin-left: 13px;
+  }
+
+  .advantage-description-content {
+    padding: 0 0 26px 0;
+  }
+
+  .advantage-description-content p {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-left: 22px;
+    font-weight: 300;
+  }
+
+  /* CTA Section */
+  .cta-left-full {
+    height: 280px;
+  }
+
+  .cta-right-content {
+    padding: 36px 28px;
+  }
+
+  .cta-title {
+    font-size: 24px;
+    margin-bottom: 21px;
+  }
+
+  .cta-button-group {
+    flex-direction: column;
+    gap: 11px;
+  }
+
+  .cta-button-primary,
+  .cta-button-whatsapp {
+    width: 100%;
+    justify-content: center;
+    padding: 13px 22px;
+    font-size: 11px;
+  }
+
+  .cta-button-whatsapp svg {
+    width: 17px;
+    height: 17px;
+  }
+}
+
+/* ==================== SMALL MOBILE (320px - 374px) ==================== */
+
+@media (min-width: 320px) and (max-width: 374px) {
+  .advantages-section {
+    padding: 45px 0 0;
+  }
+
+  .advantages-header {
+    margin-bottom: 30px;
+  }
+
+  .advantages-title {
+    font-size: 27px;
+    font-weight: 250;
+  }
+
+  .advantages-underline {
+    width: 50px;
+    height: 7px;
+  }
+
+  .advantage-wrapper {
+    padding: 0 25px;
+    padding-left: 25px;
+    gap: 20px;
+  }
+
+  .advantage-icon-section {
+    width: 44px;
+    padding-top: 20px;
+  }
+
+  .advantage-item.active .advantage-icon-section {
+    padding-top: 12px;
+  }
+
+  .advantage-icon-image {
+    width: 47px;
+    height: 69px;
+  }
+
+  .advantage-item.active .advantage-icon-image {
+    height: 115px;
+    width: 69px;
+  }
+
+  .advantage-header-row {
+    padding: 20px 0;
+  }
+
+  .advantage-title {
+    font-size: 21px;
+    line-height: 1.3;
+    margin-top: -12px;
+    margin-left: 20px;
+    margin-bottom: -30px;
+  }
+
+  .advantage-toggle {
+    font-size: 25px;
+    margin-left: 12px;
+  }
+
+  .advantage-description-content {
+    padding: 0 0 24px 0;
+  }
+
+  .advantage-description-content p {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-left: 20px;
+    font-weight: 300;
+  }
+
+  /* CTA Section */
+  .cta-left-full {
+    height: 260px;
+  }
+
+  .cta-right-content {
+    padding: 34px 25px;
+  }
+
+  .cta-title {
+    font-size: 23px;
+    margin-bottom: 20px;
+  }
+
+  .cta-button-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cta-button-primary,
+  .cta-button-whatsapp {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 20px;
+    font-size: 10px;
+  }
+
+  .cta-button-whatsapp svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* ==================== PERFORMANCE & ACCESSIBILITY ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .advantage-item,
+  .advantage-icon-image,
+  .advantage-toggle,
+  .advantage-description-container,
+  .cta-photo,
+  .cta-button-primary,
+  .cta-button-whatsapp,
+  .advantages-underline {
+    transition: none !important;
+  }
+
+  .advantage-item.active .advantage-toggle {
+    transform: none;
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .advantages-title,
+  .advantage-title,
+  .advantage-description-content p,
+  .cta-title {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .advantage-icon-image,
+  .cta-photo {
+    image-rendering: -webkit-optimize-contrast;
+  }
+}

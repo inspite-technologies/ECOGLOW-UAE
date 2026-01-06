@@ -1,0 +1,881 @@
+/* ==================== ABOUT SECTION BASE STYLES (MOBILE-FIRST) ==================== */
+
+.about-section {
+  min-height: auto;
+  background: white;
+  padding: 50px 0;
+  color: #333;
+  position: relative;
+  z-index: 10;
+  isolation: isolate;
+  overflow: visible;
+}
+
+.about-image-column {
+  will-change: transform;
+}
+
+.accordion-content {
+  overflow: hidden;
+  transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+}
+
+/* First Row - Two Column Text Layout */
+.about-text-row {
+  max-width: 1600px;
+  margin: 0 auto 35px;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 22px;
+  align-items: start;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.about-text-left {
+  padding-right: 0;
+  width: 100%;
+}
+
+.about-main-title {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #333;
+  margin-bottom: 15px;
+  letter-spacing: -0.5px;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin-left: 0;
+  max-width: 100%;
+  word-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
+}
+
+.luxury-text {
+  color: #73c9c1;
+  font-weight: 600;
+}
+
+.about-text-right {
+  padding-left: 0;
+  width: 100%;
+}
+
+.about-text-right p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #323232;
+  margin-bottom: 14px;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  word-wrap: break-word;
+}
+
+.know-more-secondary-btn {
+  background: #73c9c1;
+  color: white;
+  border: none;
+  padding: 12px 26px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: all 0.3s ease;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  width: auto;
+  display: inline-block;
+}
+
+.know-more-secondary-btn:hover {
+  background: #0f9b8c;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+}
+
+/* Second Row - Image Left, Accordion Right */
+.about-content-row {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+  align-items: start;
+  overflow: visible;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.about-image-column {
+  position: relative;
+  margin-left: 0;
+  width: 100%;
+  order: 1;
+}
+
+.about-accordion-column {
+  order: 2;
+  width: 100%;
+}
+
+.about-image-wrapper {
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  border-radius: 0;
+  margin-left: 0;
+  will-change: transform;
+  transform: translateZ(0);
+  position: relative;
+}
+
+.about-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+/* Accordion Styles */
+.about-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 0;
+  margin-left: 0;
+  width: 100%;
+}
+
+.accordion-item {
+  border-bottom: 1px solid #2d2d2d;
+  width: 100%;
+}
+
+.accordion-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 0;
+  gap: 12px;
+}
+
+.accordion-header:hover {
+  opacity: 0.7;
+}
+
+.accordion-title {
+  text-align: left;
+  font-size: 26px;
+  font-weight: 250;
+  line-height: 1.3;
+  color: #000000;
+  letter-spacing: 1.2px;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  backface-visibility: hidden;
+  flex: 1;
+  word-wrap: break-word;
+}
+
+.accordion-icon {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #73c9c1;
+  color: black;
+  font-size: 19px;
+  font-weight: 300;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  border-radius: 0;
+}
+
+.accordion-header:hover .accordion-icon {
+  background: #73c9c1;
+  transform: rotate(90deg);
+}
+
+.accordion-content {
+  max-height: 0;
+  padding: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+  max-width: 100%;
+  will-change: max-height;
+  transform: translateZ(0);
+}
+
+.accordion-content.expanded {
+  max-height: 800px;
+  padding: 0 0 16px 0;
+}
+
+.accordion-content p {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #161616;
+  margin: 0;
+  padding-top: 0;
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  word-wrap: break-word;
+}
+
+/* ==================== MOBILE (375px - 479px) ==================== */
+
+@media (min-width: 375px) and (max-width: 479px) {
+  .about-section {
+    padding: 55px 0;
+  }
+
+  .about-text-row {
+    padding: 0 22px;
+    gap: 24px;
+    margin-bottom: 38px;
+  }
+
+  .about-main-title {
+    font-size: 21px;
+  }
+
+  .about-content-row {
+    padding: 0 22px;
+    gap: 35px;
+  }
+
+  .about-image-wrapper {
+    height: 260px;
+  }
+
+  .accordion-title {
+    font-size: 28px;
+    letter-spacing: 1.3px;
+  }
+
+  .accordion-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+  }
+
+  .accordion-header {
+    padding: 16px 0;
+  }
+
+  .accordion-content.expanded {
+    padding: 0 0 18px 0;
+  }
+}
+
+/* ==================== STANDARD MOBILE (480px - 639px) ==================== */
+
+@media (min-width: 480px) and (max-width: 639px) {
+  .about-section {
+    padding: 60px 0;
+  }
+
+  .about-text-row {
+    padding: 0 25px;
+    gap: 26px;
+    margin-bottom: 42px;
+  }
+
+  .about-main-title {
+    font-size: 23px;
+  }
+
+  .about-content-row {
+    padding: 0 25px;
+    gap: 40px;
+  }
+
+  .about-image-wrapper {
+    height: 280px;
+  }
+
+  .accordion-title {
+    font-size: 32px;
+    letter-spacing: 1.5px;
+  }
+
+  .accordion-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 21px;
+  }
+
+  .accordion-header {
+    padding: 17px 0;
+  }
+
+  .accordion-content.expanded {
+    padding: 0 0 20px 0;
+  }
+}
+
+/* ==================== LARGE MOBILE (640px - 767px) ==================== */
+
+@media (min-width: 640px) and (max-width: 767px) {
+  .about-section {
+    padding: 65px 0;
+  }
+
+  .about-text-row {
+    padding: 0 28px;
+    gap: 30px;
+    margin-bottom: 45px;
+  }
+
+  .about-main-title {
+    font-size: 25px;
+  }
+
+  .about-text-right p {
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  .know-more-secondary-btn {
+    padding: 13px 26px;
+    font-size: 12px;
+  }
+
+  .about-content-row {
+    padding: 0 28px;
+    gap: 45px;
+  }
+
+  .about-image-wrapper {
+    height: 320px;
+  }
+
+  .accordion-title {
+    font-size: 36px;
+    letter-spacing: 1.7px;
+  }
+
+  .accordion-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 22px;
+  }
+
+  .accordion-header {
+    padding: 18px 0;
+  }
+
+  .accordion-content p {
+    font-size: 15px;
+  }
+
+  .accordion-content.expanded {
+    padding: 0 0 22px 0;
+  }
+}
+
+/* ==================== TABLET PORTRAIT (768px - 1023px) ==================== */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .about-section {
+    padding: 75px 0;
+  }
+
+  .about-text-row {
+    grid-template-columns: 1fr;
+    max-width: 750px;
+    margin: 0 auto 55px;
+    padding: 0 32px;
+    gap: 35px;
+  }
+
+  .about-main-title {
+    font-size: 26px;
+    line-height: 1.3;
+  }
+
+  .about-text-right p {
+    font-size: 15px;
+    line-height: 1.75;
+    margin-bottom: 16px;
+  }
+
+  .know-more-secondary-btn {
+    padding: 13px 28px;
+    font-size: 12px;
+  }
+
+  .about-content-row {
+    grid-template-columns: 1fr;
+    max-width: 750px;
+    padding: 0 32px;
+    gap: 50px;
+  }
+
+  .about-image-wrapper {
+    height: 380px;
+  }
+
+  .accordion-title {
+    font-size: 42px;
+    letter-spacing: 2px;
+  }
+
+  .accordion-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+  }
+
+  .accordion-header {
+    padding: 20px 0;
+  }
+
+  .accordion-content.expanded {
+    padding: 0 0 25px 0;
+  }
+
+  .accordion-content p {
+    font-size: 15px;
+    line-height: 1.75;
+  }
+}
+
+/* ==================== TABLET LANDSCAPE (1024px - 1279px) ==================== */
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .about-section {
+    padding: 90px 0;
+    min-height: 100vh;
+  }
+
+  .about-text-row {
+    grid-template-columns: 1fr;
+    max-width: 1000px;
+    margin: 0 auto 70px;
+    padding: 0 40px;
+    gap: 40px;
+  }
+
+  .about-main-title {
+    font-size: 28px;
+  }
+
+  .about-text-right p {
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 18px;
+  }
+
+  .know-more-secondary-btn {
+    padding: 13px 28px;
+    font-size: 12px;
+  }
+
+  .about-content-row {
+    grid-template-columns: 1.1fr 0.9fr;
+    max-width: 1000px;
+    padding: 0 40px;
+    gap: 60px;
+  }
+
+  .about-image-column {
+    margin-left: 0;
+    width: 100%;
+    order: 0;
+  }
+
+  .about-accordion-column {
+    order: 0;
+  }
+
+  .about-image-wrapper {
+    height: 480px;
+    width: 100%;
+  }
+
+  .about-accordion {
+    margin-top: -35px;
+    margin-left: 0;
+  }
+
+  .accordion-item {
+    width: 100%;
+  }
+
+  .accordion-title {
+    font-size: 52px;
+    letter-spacing: 2.5px;
+  }
+
+  .accordion-icon {
+    width: 46px;
+    height: 46px;
+    font-size: 28px;
+  }
+
+  .accordion-header {
+    padding: 22px 0;
+  }
+
+  .accordion-content.expanded {
+    padding: 0 0 28px 0;
+  }
+
+  .accordion-content p {
+    font-size: 15px;
+  }
+}
+
+/* ==================== DESKTOP (1280px - 1439px) ==================== */
+
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .about-section {
+    padding: 100px 0;
+    min-height: 100vh;
+  }
+
+  .about-text-row {
+    grid-template-columns: 1fr 1fr;
+    max-width: 1240px;
+    margin: 0 auto 85px;
+    padding: 0 45px;
+    gap: 85px;
+  }
+
+  .about-text-left {
+    padding-right: 20px;
+  }
+
+  .about-text-right {
+    padding-left: 20px;
+  }
+
+  .about-main-title {
+    font-size: 28px;
+    margin-left: 80px;
+    max-width: 480px;
+  }
+
+  .about-text-right p {
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+
+  .know-more-secondary-btn {
+    padding: 14px 30px;
+    font-size: 12px;
+    margin-top: 20px;
+  }
+
+  .about-content-row {
+    grid-template-columns: 1.15fr 0.85fr;
+    max-width: 1400px;
+    padding: 0 45px 0 0;
+    gap: 85px;
+    margin-left: 0;
+    margin-right: auto;
+  }
+
+  .about-image-column {
+    margin-left: 0;
+    width: 100%;
+    order: 0;
+  }
+
+  .about-accordion-column {
+    order: 0;
+    padding-right: 45px;
+  }
+
+  .about-image-wrapper {
+    height: 480px;
+    width: 100%;
+    margin-left: 0;
+  }
+  
+  .about-image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  .about-accordion {
+    margin-top: -45px;
+    margin-left: 0;
+  }
+
+  .accordion-item {
+    width: 100%;
+  }
+
+  .accordion-title {
+    font-size: 63px;
+    letter-spacing: 3px;
+  }
+
+  .accordion-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 32px;
+  }
+
+  .accordion-header {
+    padding: 25px 0;
+  }
+
+  .accordion-content.expanded {
+    padding: 0 0 30px 0;
+    max-width: 100%;
+  }
+
+  .accordion-content p {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+}
+
+/* ==================== LARGE DESKTOP (1440px - 1535px) ==================== */
+
+@media (min-width: 1440px) and (max-width: 1535px) {
+  .about-section {
+    padding: 100px 0;
+    min-height: 100vh;
+  }
+
+  .about-text-row {
+    grid-template-columns: 1fr 1fr;
+    max-width: 1400px;
+    margin: 0 auto 90px;
+    padding: 0 52px;
+    gap: 90px;
+  }
+
+  .about-text-left {
+    padding-right: 20px;
+  }
+
+  .about-text-right {
+    padding-left: 20px;
+  }
+
+  .about-main-title {
+    font-size: 30px;
+    margin-left: 90px;
+    max-width: 500px;
+  }
+
+  .about-text-right p {
+    font-size: 15px;
+    line-height: 1.85;
+    margin-bottom: 22px;
+  }
+
+  .know-more-secondary-btn {
+    padding: 15px 32px;
+    font-size: 13px;
+    margin-top: 22px;
+  }
+
+  .about-content-row {
+    grid-template-columns: 1.2fr 0.8fr;
+    max-width: 1650px;
+    padding: 0 52px 0 0;
+    gap: 90px;
+    margin-left: 0;
+    margin-right: auto;
+  }
+
+  .about-image-column {
+    margin-left: 0;
+    width: 100%;
+    order: 0;
+  }
+
+  .about-accordion-column {
+    order: 0;
+    padding-right: 52px;
+  }
+
+  .about-image-wrapper {
+    height: 510px;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .about-accordion {
+    margin-top: -48px;
+    margin-left: 0;
+  }
+
+  .accordion-item {
+    width: 100%;
+  }
+
+  .accordion-title {
+    font-size: 66px;
+    letter-spacing: 3.3px;
+  }
+
+  .accordion-icon {
+    width: 55px;
+    height: 55px;
+    font-size: 36px;
+  }
+
+  .accordion-header {
+    padding: 28px 0;
+  }
+
+  .accordion-content.expanded {
+    padding: 0 0 34px 0;
+    max-width: 100%;
+  }
+
+  .accordion-content p {
+    font-size: 15px;
+    line-height: 1.85;
+  }
+}
+
+/* ==================== EXTRA LARGE DESKTOP (1536px+) ==================== */
+
+@media (min-width: 1536px) {
+  .about-section {
+    padding: 110px 0;
+    min-height: 100vh;
+  }
+
+  .about-text-row {
+    grid-template-columns: 1fr 1fr;
+    max-width: 1600px;
+    margin: 0 auto 100px;
+    padding: 0 60px;
+    gap: 100px;
+  }
+
+  .about-text-left {
+    padding-right: 20px;
+  }
+
+  .about-text-right {
+    padding-left: 20px;
+  }
+
+  .about-main-title {
+    font-size: 34px;
+    margin-left: 100px;
+    max-width: 560px;
+  }
+
+  .about-text-right p {
+    font-size: 16px;
+    line-height: 1.9;
+    margin-bottom: 24px;
+  }
+
+  .know-more-secondary-btn {
+    padding: 16px 36px;
+    font-size: 14px;
+    margin-top: 24px;
+  }
+
+  .about-content-row {
+    grid-template-columns: 1.25fr 0.75fr;
+    max-width: 1700px;
+    padding: 0 60px 0 0;
+    gap: 100px;
+    margin-left: 0;
+    margin-right: auto;
+  }
+
+  .about-image-column {
+    margin-left: 0;
+    width: 100%;
+    order: 0;
+  }
+
+  .about-accordion-column {
+    order: 0;
+    padding-right: 60px;
+  }
+
+  .about-image-wrapper {
+    height: 540px;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .about-accordion {
+    margin-top: -55px;
+    margin-left: 0;
+  }
+
+  .accordion-item {
+    width: 100%;
+  }
+
+  .accordion-title {
+    font-size: 75px;
+    letter-spacing: 3.8px;
+  }
+
+  .accordion-icon {
+    width: 62px;
+    height: 62px;
+    font-size: 40px;
+  }
+
+  .accordion-header {
+    padding: 32px 0;
+  }
+
+  .accordion-content.expanded {
+    padding: 0 0 38px 0;
+    max-width: 100%;
+  }
+
+  .accordion-content p {
+    font-size: 16px;
+    line-height: 1.9;
+  }
+}
+
+/* ==================== PERFORMANCE & ACCESSIBILITY ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .accordion-content,
+  .accordion-icon,
+  .know-more-secondary-btn {
+    transition: none !important;
+  }
+}
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .about-main-title,
+  .accordion-title,
+  .about-text-right p,
+  .accordion-content p {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .about-image {
+    image-rendering: -webkit-optimize-contrast;
+  }
+}
