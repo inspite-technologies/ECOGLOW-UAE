@@ -14,23 +14,24 @@ import AboutUs from './pages/AboutUs';
 import Contact from './pages/Contact';
 import Services from './pages/Services';
 import FAQ from './pages/FAQ';
-import PrivacyPolicy from './pages/PrivacyPolicy';
+import PrivacyPolicy from './pages/Privacy';
 import Packages from './pages/Packages';
 import BookService from './pages/BookService';
 import TermsConditions from './pages/TermsConditions';
 import ProtectedAdminRoute from './components/protectedAdminRoutes';
+import Commercial from './pages/Commercial';
 
-// 2. LAZY IMPORTS (Admin) - This is the secret fix. 
-// This prevents Admin CSS from loading on the Home page.
+// 2. LAZY IMPORTS (Admin)
 const AdminDashboard = lazy(() => import('./components/adminDashboard/adminDashboard'));
 const AdminLogin = lazy(() => import('./components/adminDashboard/AdminLogin'));
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Layout for Public Pages
+// --- PUBLIC LAYOUT ---
 const PublicLayout = ({ children }) => {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
+
   return (
     <>
       {!isHomePage && <PageHeader />}
@@ -48,39 +49,40 @@ function App() {
       setLoading(false);
       ScrollTrigger.refresh();
     }, 2000);
+
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <Router>
-      {loading && <Preloader />}
+      {loading && <Preloader loading={loading} />}
 
       <div className={loading ? 'app-content hidden' : 'app-content visible'}>
         <ScrollToTop />
-        
-        {/* Suspense is required for Lazy Loading */}
+
         <Suspense fallback={<Preloader />}>
           <Routes>
-            {/* 🔐 ADMIN ROUTES - CSS only loads when these are visited */}
+            {/* 🔐 ADMIN ROUTES */}
             <Route path="/admin/login" element={<AdminLogin />} />
-            <Route 
-              path="/admin" 
+            <Route
+              path="/admin"
               element={
                 <ProtectedAdminRoute>
                   <AdminDashboard />
                 </ProtectedAdminRoute>
-              } 
+              }
             />
 
-            {/* 🌐 PUBLIC PAGES */}
-            <Route 
-              path="/*" 
+            {/* 🌐 PUBLIC ROUTES */}
+            <Route
+              path="/*"
               element={
                 <PublicLayout>
                   <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/about" element={<AboutUs />} />
                     <Route path="/services" element={<Services />} />
+                    <Route path="/services/commercial" element={<Commercial />} />
                     <Route path="/packages" element={<Packages />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/faq" element={<FAQ />} />
@@ -89,7 +91,7 @@ function App() {
                     <Route path="/terms-conditions" element={<TermsConditions />} />
                   </Routes>
                 </PublicLayout>
-              } 
+              }
             />
           </Routes>
         </Suspense>

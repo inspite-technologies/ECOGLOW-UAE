@@ -2,7 +2,7 @@ import { BANNER_INSTANCE } from "./axiosInstance";
 
 export const fetchBanner = async () => {
   try {
-    const response = await BANNER_INSTANCE.get("/");
+    const response = await BANNER_INSTANCE.get("/");    
     return response.data;
   } catch (error) {
     console.error("Error fetching banner data:", error);
@@ -12,8 +12,6 @@ export const fetchBanner = async () => {
 
 export const updateBanner = async (formData) => {
   try {
-    console.log("Updating banner with:", formData);
-
     const response = await BANNER_INSTANCE.put("/", formData, {
       headers: {
         "Content-Type": "multipart/form-data" // Important for file upload

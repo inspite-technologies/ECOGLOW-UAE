@@ -26,6 +26,9 @@ export const upsertContactSettings = async (settingsData, file) => {
     formData.append("phone", settingsData.phone);
     formData.append("email", settingsData.email);
 
+    // 3. Append Contact Email for Form Submissions
+    formData.append("contactEmail", settingsData.contactEmail);
+
     if (file) {
       formData.append("bannerImage", file);
     }

@@ -23,7 +23,7 @@ const setupInterceptors = (instance) => {
     (config) => {
       const token = localStorage.getItem("token");
       if (token) {
-        config.headers.token = `${token}`; 
+        config.headers.token = `${token}`;
       }
       return config;
     },
@@ -38,8 +38,6 @@ const setupInterceptors = (instance) => {
     },
     (error) => {
       if (error.response && error.response.status === 401) {
-        console.log("Unauthorized, logging out...");
-
         localStorage.clear();
         window.location.href = "/admin/login";
         // redirect to login page
@@ -90,3 +88,6 @@ setupInterceptors(BOOKING_INSTANCE)
 
 export const FOOTER_INSTANCE = createAxiosInstance(`${baseURL}/footer`)
 setupInterceptors(FOOTER_INSTANCE)
+
+export const HEADER_INSTANCE = createAxiosInstance(`${baseURL}/header`)
+setupInterceptors(HEADER_INSTANCE)

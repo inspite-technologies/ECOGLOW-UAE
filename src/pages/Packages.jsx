@@ -1,26 +1,167 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Home } from "lucide-react";
+import { fetchPackages } from "../services/packageAPI"; // Ensure this path is correct
 import "./Packages.css";
 
+// --- HELPER: Resolve Image URL ---
+const SERVER_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+const getImageUrl = (imagePath) => {
+  if (!imagePath) return null;
+  if (imagePath.startsWith("blob:") || imagePath.startsWith("http")) return imagePath;
+  // Fix Windows backslashes and prepend server URL
+  return `${SERVER_URL}/${imagePath.replace(/\\/g, "/")}`;
+};
+
+// --- HELPER: Format Phone Numbers for Links ---
+const formatWA = (num) => num ? `https://wa.me/${num.replace(/\D/g, "")}` : '#';
+const formatTel = (num) => num ? `tel:${num.replace(/\D/g, "")}` : '#';
+
 const Packages = () => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // --- 1. FETCH DATA ---
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const response = await fetchPackages();
+        // Handle varied response structures (array vs object)
+        let result = response.data || response;
+        if (Array.isArray(result)) result = result[0];
+        setData(result);
+      } catch (error) {
+        console.error("Error fetching packages:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadData();
+  }, []);
+
+  // --- HELPER: Render Feature List ---
+  const renderFeatures = (featuresString) => {
+    if (!featuresString) return null;
+    
+    return featuresString
+      .split('\n')                  // 1. Split by new line
+      .map(f => f.trim())           // 2. Remove extra spaces from start/end
+      .filter(f => f.length > 0)    // 3. Remove empty lines
+      .map((feature, index) => (
+        <li key={index} className="packages-feature-item">
+          <span className="packages-bullet">•</span>
+          <span className="packages-feature-text">{feature}</span>
+        </li>
+      ));
+  };
+
+  // --- HELPER: Render Feature List Without Bullets ---
+  const renderFeaturesNoBullets = (featuresString) => {
+    if (!featuresString) return null;
+    
+    return featuresString
+      .split('\n')                  // 1. Split by new line
+      .map(f => f.trim())           // 2. Remove extra spaces from start/end
+      .filter(f => f.length > 0)    // 3. Remove empty lines
+      .map((feature, index) => (
+        <li key={index} className="packages-feature-item">
+          <span className="packages-feature-text">{feature}</span>
+        </li>
+      ));
+  };
+
+  // --- HELPER: Render Pricing Card (Standard) ---
+  const renderCard = (cardData) => {
+    if (!cardData) return null;
+    return (
+      <div className="packages-pricing-card">
+        <h3 className="packages-card-title">{cardData.title}</h3>
+        <ul className="packages-features-list">
+          {renderFeatures(cardData.features)}
+        </ul>
+        <div className="packages-card-footer">
+          <div className="packages-price-box">
+            <div className="packages-price">{cardData.price}</div>
+          </div>
+          <div className="packages-minimum">
+            {cardData.min}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // --- HELPER: Render Common Info (Small Box, Full Width) ---
+  const renderCommon = (commonData) => {
+    if (!commonData || (!commonData.title && !commonData.features)) return null;
+
+    return (
+      <div 
+        className="packages-pricing-card" 
+        style={{ 
+            // ✅ Full Width
+            gridColumn: "1 / -1", 
+            
+            // ✅ Height depends STRICTLY on content (starts small)
+            height: "fit-content", 
+            minHeight: "0",
+            alignSelf: "start",
+
+            // ✅ Visual adjustments
+            padding: "1.5rem",
+            display: "block" // Removes flex stretching behavior
+        }}
+      >
+        {/* ✅ Smaller Title */}
+        <h5 
+            className="packages-card-title" 
+            style={{ 
+                fontSize: "1rem",   // Much smaller than main cards
+                marginBottom: "0.5rem",
+                color: "#64748b",
+                textTransform: "uppercase",
+                letterSpacing: "0.5px"
+            }}
+        >
+            {commonData.title}
+        </h5>
+        
+        {/* Content */}
+        <ul className="packages-features-list" style={{ marginTop: 0 }}>
+            {renderFeatures(commonData.features)}
+        </ul>
+      </div>
+    );
+  };
+
+  if (loading) return <div style={{height:'100vh', display:'flex', alignItems:'center', justifyContent:'center'}}>Loading Packages...</div>;
+  if (!data) return null;
+
   return (
     <div className="packages-page">
       {/* FontAwesome CDN */}
-      <link
-        rel="stylesheet"
+      <link 
+        rel="stylesheet" 
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
       />
-
-      {/* Hero Section */}
-      <section className="packages-hero">
+      
+      {/* 1. HERO SECTION */}
+      <section 
+        className="packages-hero"
+        style={{ 
+            backgroundImage: data.heroBannerImg ? `url(${getImageUrl(data.heroBannerImg)})` : 'none',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+        }}
+      >
         <h1 className="packages-hero-title">
-          <span className="packages-hero-small">Premium Service</span>
+          <span className="packages-hero-small">{data.heroSmall || "Premium Service"}</span>
           <br />
-          <span className="packages-hero-large">Packages</span>
+          <span className="packages-hero-large">{data.heroLarge || "Packages"}</span>
         </h1>
       </section>
 
-      {/* Breadcrumb Section */}
+      {/* 2. BREADCRUMB */}
       <section className="packages-breadcrumb-section">
         <div className="packages-breadcrumb">
           <span className="packages-breadcrumb-home">
@@ -31,432 +172,171 @@ const Packages = () => {
         </div>
       </section>
 
-      {/* Info / Intro Section */}
+      {/* 3. INTRO SECTION */}
       <section className="packages-intro-section">
-        <div className="packages-intro-label">EcoGlow</div>
-        <h2 className="packages-intro-title">Luxury Cleaning Packages</h2>
+        <div className="packages-intro-label">{data.introLabel}</div>
+        <h2 className="packages-intro-title">{data.introTitle}</h2>
         <div className="packages-intro-line"></div>
         <p className="packages-intro-desc">
-          Experience a new standard of clean — where meticulous attention to detail meets eco-conscious luxury. Our premium packages are designed for discerning homes and offices, offering deep cleaning, specialty services, and the finest eco-friendly products.
-          Each service is tailored to your space, ensuring a spotless, serene environment that reflects sophistication and care.
+          {data.introDesc}
         </p>
       </section>
 
-      {/* Residential Section */}
-      <section className="packages-residential">
-        <div className="packages-residential-header">
-          <div className="packages-residential-title">Residential</div>
-          <div className="packages-residential-actions">
-            <a href="#" className="packages-book-link">
-              Book Now
-            </a>
+      {/* 4. RESIDENTIAL SECTION */}
+      {data.residential && (
+        <section className="packages-residential">
+          <div className="packages-residential-header">
+            <div className="packages-residential-title">{data.residential.heading}</div>
+            <div className="packages-residential-actions">
+              <a 
+                href={formatTel(data.residential.card1?.bookNow || data.residential.card2?.bookNow)} 
+                className="packages-book-link"
+              >
+                Book Now
+              </a>
+              <div className="packages-divider"></div>
+              <a 
+                href={formatWA(data.residential.card2?.whatsappNow || data.residential.card1?.whatsappNow)} 
+                className="packages-whatsapp-link" 
+                target="_blank" 
+                rel="noreferrer"
+              >
+                <span className="packages-whatsapp-icon-wrapper">
+                  <i className="fa-brands fa-whatsapp"></i>
+                </span>
+                Whatsapp Now
+              </a>
+            </div>
+          </div>
+
+          <div className="packages-pricing-grid">
+            {renderCard(data.residential.card1)}
+            {renderCard(data.residential.card2)}
+            {/* ✅ Full Width, Small Box Common Card */}
+            {renderCommon(data.residential.common)}
+          </div>
+        </section>
+      )}
+
+      {/* 5. COMMERCIAL SECTION */}
+      {data.commercial && (
+        <section className="packages-commercial">
+          <div className="packages-residential-header">
+            <div className="packages-residential-title">{data.commercial.heading}</div>
+            <div className="packages-residential-actions">
+              <a 
+                href={formatTel(data.commercial.card1?.bookNow || data.commercial.card2?.bookNow)} 
+                className="packages-book-link"
+              >
+                Book Now
+              </a>
+              <div className="packages-divider"></div>
+              <a 
+                href={formatWA(data.commercial.card2?.whatsappNow || data.commercial.card1?.whatsappNow)} 
+                className="packages-whatsapp-link"
+                target="_blank" 
+                rel="noreferrer"
+              >
+                <span className="packages-whatsapp-icon-wrapper">
+                  <i className="fa-brands fa-whatsapp"></i>
+                </span>
+                Whatsapp Now
+              </a>
+            </div>
+          </div>
+
+          <div className="packages-pricing-grid">
+            {renderCard(data.commercial.card1)}
+            {renderCard(data.commercial.card2)}
+            {/* ✅ Full Width, Small Box Common Card - No Bullets */}
+            {data.commercial.common && (
+              <div 
+                className="packages-pricing-card" 
+                style={{ 
+                    gridColumn: "1 / -1", 
+                    height: "fit-content", 
+                    minHeight: "0",
+                    alignSelf: "start",
+                    padding: "1.5rem",
+                    display: "block"
+                }}
+              >
+                <h5 
+                    className="packages-card-title" 
+                    style={{ 
+                        fontSize: "1rem",
+                        marginBottom: "0.5rem",
+                        color: "#ffffff",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.5px"
+                    }}
+                >
+                    {data.commercial.common.title}
+                </h5>
+                
+                <ul className="packages-features-list" style={{ marginTop: 0 }}>
+                    {renderFeatures(data.commercial.common.features)}
+                </ul>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      {/* 6. DYNAMIC TABLES SECTION */}
+      {data.tables && data.tables.map((table) => (
+        <section key={table._id || table.id} className="packages-table-section">
+          <div className="packages-table-header">
+            <div className="packages-table-label">{table.sectionLabel}</div>
+            <h2 className="packages-table-title">{table.title}</h2>
+          </div>
+
+          <table className="packages-table">
+            <thead>
+              <tr>
+                {table.columns.map((col, index) => (
+                  <th key={index}>{col}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {table.rows.map((row, rIdx) => {
+                if (row.isSubheader) {
+                  return (
+                    <tr key={rIdx} className="packages-table-subheader">
+                      <td colSpan={table.columns.length}>{row.cells[0]}</td>
+                    </tr>
+                  );
+                }
+                return (
+                  <tr key={rIdx}>
+                    {row.cells.map((cell, cIdx) => (
+                      <td key={cIdx}>{cell}</td>
+                    ))}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+
+          <div className="packages-table-footer">
+            <a href={formatTel(table.bookNow)} className="packages-book-link">Book Now</a>
             <div className="packages-divider"></div>
-            <a href="#" className="packages-whatsapp-link">
+            <a 
+                href={formatWA(table.whatsappNow)} 
+                className="packages-whatsapp-link"
+                target="_blank" 
+                rel="noreferrer"
+            >
               <span className="packages-whatsapp-icon-wrapper">
                 <i className="fa-brands fa-whatsapp"></i>
               </span>
               Whatsapp Now
             </a>
           </div>
-        </div>
+        </section>
+      ))}
 
-        <div className="packages-pricing-grid">
-          {/* With Materials Card */}
-          <div className="packages-pricing-card">
-            <h3 className="packages-card-title">With Materials</h3>
-            <ul className="packages-features-list">
-              <li className="packages-feature-item">
-                <span className="packages-bullet">•</span>
-                <span className="packages-feature-text">
-                  Complete cleaning materials will be provided
-                  <br />
-                  (Karcher Brand).
-                </span>
-              </li>
-              <li className="packages-feature-item">
-                <span className="packages-bullet">•</span>
-                <span className="packages-feature-text">
-                  Complete set of rooted regimen - eco friendly products.
-                </span>
-              </li>
-              <li className="packages-feature-item">
-                <span className="packages-bullet">•</span>
-                <span className="packages-feature-text">
-                  Includes floor and kitchen steaming.
-                </span>
-              </li>
-              <li className="packages-feature-item">
-                <span className="packages-bullet">•</span>
-                <span className="packages-feature-text">
-                  well trained Filipina staff.
-                </span>
-              </li>
-            </ul>
-            <div className="packages-card-footer">
-              <div className="packages-price-box">
-                <div className="packages-price">65 AED / Hour</div>
-              </div>
-              <div className="packages-minimum">
-                <strong>3hours</strong> Minimum Per Visit.
-              </div>
-            </div>
-          </div>
-
-          {/* Without Materials Card */}
-          <div className="packages-pricing-card">
-            <h3 className="packages-card-title">Without Materials</h3>
-            <ul className="packages-features-list">
-              <li className="packages-feature-item">
-                <span className="packages-bullet">•</span>
-                <span className="packages-feature-text">
-                  Using products and tools already available in your home
-                </span>
-              </li>
-              
-            </ul>
-            <div className="packages-card-footer">
-              <div className="packages-price-box">
-                <div className="packages-price">50 AED / Hour</div>
-              </div>
-              <div className="packages-minimum">
-                <strong>3hours</strong> Minimum Per Visit.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Commercial Section */}
-      <section className="packages-commercial">
-        <div className="packages-residential-header">
-          <div className="packages-residential-title">Commercial</div>
-          <div className="packages-residential-actions">
-            <a href="#" className="packages-book-link">
-              Book Now
-            </a>
-            <div className="packages-divider"></div>
-            <a href="#" className="packages-whatsapp-link">
-              <span className="packages-whatsapp-icon-wrapper">
-                <i className="fa-brands fa-whatsapp"></i>
-              </span>
-              Whatsapp Now
-            </a>
-          </div>
-        </div>
-
-        <div className="packages-pricing-grid">
-          {/* With Materials Card */}
-          <div className="packages-pricing-card">
-            <h3 className="packages-card-title">With Materials</h3>
-            <ul className="packages-features-list">
-              <li className="packages-feature-item">
-                <span className="packages-bullet">•</span>
-                <span className="packages-feature-text">
-                  Complete cleaning materials will be provided (Karcher Brand).
-                </span>
-              </li>
-              <li className="packages-feature-item">
-                <span className="packages-bullet">•</span>
-                <span className="packages-feature-text">
-                  Complete set of rooted regimen - eco friendly products.
-                </span>
-              </li>
-              <li className="packages-feature-item">
-                <span className="packages-bullet">•</span>
-                <span className="packages-feature-text">
-                  Well trained Filipina staff.
-                </span>
-              </li>
-            </ul>
-            <div className="packages-card-footer">
-              <div className="packages-price-box">
-                <div className="packages-price">70 AED / Hour</div>
-              </div>
-              <div className="packages-minimum">
-                <strong>3hours</strong> Minimum Per Visit.
-              </div>
-            </div>
-          </div>
-
-          {/* Without Materials Card */}
-          <div className="packages-pricing-card">
-            <h3 className="packages-card-title">Without Materials</h3>
-            <ul className="packages-features-list">
-              <li className="packages-feature-item">
-                <span className="packages-bullet">•</span>
-                <span className="packages-feature-text">
-                  Using products and tools already available in your home
-                </span>
-              </li>
-            </ul>
-            <div className="packages-card-footer">
-              <div className="packages-price-box">
-                <div className="packages-price">55 AED / Hour</div>
-              </div>
-              <div className="packages-minimum">
-                <strong>3hours</strong> Minimum Per Visit.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Deep Cleaning - Interior Section */}
-      <section className="packages-table-section">
-        <div className="packages-table-header">
-          <div className="packages-table-label">EcoGlow</div>
-          <h2 className="packages-table-title">Deep Cleaning - Interior</h2>
-        </div>
-
-        <table className="packages-table">
-          <thead>
-            <tr>
-              <th>Size</th>
-              <th>Price</th>
-              <th>No. of Staff / Hour</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Studio</td>
-              <td>335</td>
-              <td>2 / 2hours each</td>
-            </tr>
-            <tr>
-              <td>1 Bedroom</td>
-              <td>580</td>
-              <td>3 / 3hours each or less</td>
-            </tr>
-            <tr>
-              <td>2 Bedroom</td>
-              <td>775</td>
-              <td>3-4 / 3-4hours each</td>
-            </tr>
-            <tr>
-              <td>3 Bedroom</td>
-              <td>1050</td>
-              <td>4 / 4-5hours each</td>
-            </tr>
-            <tr>
-              <td>4 Bedroom</td>
-              <td>1350</td>
-              <td>4-5 / 5-6hours each</td>
-            </tr>
-            <tr className="packages-table-subheader">
-              <td colSpan="3">Villa</td>
-            </tr>
-            <tr>
-              <td>1 Bedroom</td>
-              <td>775</td>
-              <td>3 / 3hours each or less</td>
-            </tr>
-            <tr>
-              <td>2 Bedroom</td>
-              <td>1050</td>
-              <td>3 / 3-4hours each</td>
-            </tr>
-            <tr>
-              <td>3 Bedroom</td>
-              <td>1350</td>
-              <td>4 / 4-5hours each</td>
-            </tr>
-            <tr>
-              <td>4 Bedroom</td>
-              <td>1650</td>
-              <td>4-5 / 5-6hours each</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div className="packages-table-footer">
-          <a href="#" className="packages-book-link">
-            Book Now
-          </a>
-          <div className="packages-divider"></div>
-          <a href="#" className="packages-whatsapp-link">
-            <span className="packages-whatsapp-icon-wrapper">
-              <i className="fa-brands fa-whatsapp"></i>
-            </span>
-            Whatsapp Now
-          </a>
-        </div>
-      </section>
-
-      {/* Mattress Section */}
-      <section className="packages-table-section">
-        <div className="packages-table-header">
-          <div className="packages-table-label">EcoGlow</div>
-          <h2 className="packages-table-title">Mattress</h2>
-        </div>
-
-        <table className="packages-table packages-table-two-col">
-          <thead>
-            <tr>
-              <th>Size</th>
-              <th>Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Baby</td>
-              <td>95</td>
-            </tr>
-            <tr>
-              <td>Single</td>
-              <td>115</td>
-            </tr>
-            <tr>
-              <td>Queen</td>
-              <td>150</td>
-            </tr>
-            <tr>
-              <td>King</td>
-              <td>160</td>
-            </tr>
-            <tr>
-              <td>California King</td>
-              <td>170</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div className="packages-table-footer">
-          <a href="#" className="packages-book-link">
-            Book Now
-          </a>
-          <div className="packages-divider"></div>
-          <a href="#" className="packages-whatsapp-link">
-            <span className="packages-whatsapp-icon-wrapper">
-              <i className="fa-brands fa-whatsapp"></i>
-            </span>
-            Whatsapp Now
-          </a>
-        </div>
-      </section>
-
-      {/* Sofa Section */}
-      <section className="packages-table-section">
-        <div className="packages-table-header">
-          <div className="packages-table-label">EcoGlow</div>
-          <h2 className="packages-table-title">Sofa</h2>
-        </div>
-
-        <table className="packages-table packages-table-two-col">
-          <thead>
-            <tr>
-              <th>Size</th>
-              <th>Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1 seater</td>
-              <td>100</td>
-            </tr>
-            <tr>
-              <td>2 seater</td>
-              <td>160</td>
-            </tr>
-            <tr>
-              <td>3 seater</td>
-              <td>195</td>
-            </tr>
-            <tr>
-              <td>4 seater</td>
-              <td>235</td>
-            </tr>
-            <tr>
-              <td>5 seater</td>
-              <td>255</td>
-            </tr>
-            <tr>
-              <td>7 seater</td>
-              <td>275</td>
-            </tr>
-            <tr className="packages-table-subheader">
-              <td colSpan="2">L-Shaped</td>
-            </tr>
-            <tr>
-              <td>3 seater</td>
-              <td>225</td>
-            </tr>
-            <tr>
-              <td>4 seater</td>
-              <td>235</td>
-            </tr>
-            <tr>
-              <td>5 seater</td>
-              <td>255</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div className="packages-table-footer">
-          <a href="#" className="packages-book-link">
-            Book Now
-          </a>
-          <div className="packages-divider"></div>
-          <a href="#" className="packages-whatsapp-link">
-            <span className="packages-whatsapp-icon-wrapper">
-              <i className="fa-brands fa-whatsapp"></i>
-            </span>
-            Whatsapp Now
-          </a>
-        </div>
-      </section>
-
-      {/* Carpet Section - CORRECTED */}
-      <section className="packages-table-section">
-        <div className="packages-table-header">
-          <div className="packages-table-label">EcoGlow</div>
-          <h2 className="packages-table-title">Carpet</h2>
-        </div>
-
-        <table className="packages-table packages-table-two-col">
-          <thead>
-            <tr>
-              <th>Size</th>
-              <th>Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Small</td>
-              <td>175</td>
-            </tr>
-            <tr>
-              <td>Medium</td>
-              <td>195</td>
-            </tr>
-            <tr>
-              <td>Large (up to 25 sq. ft)</td>
-              <td>315</td>
-            </tr>
-            <tr>
-              <td>XL</td>
-              <td>415</td>
-            </tr>
-            {/* CORRECTED: Last row with 2 separate columns instead of 2 separate rows */}
-            <tr>
-              <td>More than – fully carpeted</td>
-              <td>Inspection - charge 10-15/sqm</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div className="packages-table-footer">
-          <a href="#" className="packages-book-link">
-            Book Now
-          </a>
-          <div className="packages-divider"></div>
-          <a href="#" className="packages-whatsapp-link">
-            <span className="packages-whatsapp-icon-wrapper">
-              <i className="fa-brands fa-whatsapp"></i>
-            </span>
-            Whatsapp Now
-          </a>
-        </div>
-      </section>
     </div>
   );
 };

@@ -1,46 +1,93 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
 import './Preloader.css';
 import logo from '../assets/eco.png';
 
-const Preloader = () => {
-  return (
-    <div className="preloader">
-      <div className="preloader-background">
-        {/* Animated Background Circles */}
-        <div className="bg-circle circle-1"></div>
-        <div className="bg-circle circle-2"></div>
-        <div className="bg-circle circle-3"></div>
-      </div>
+const Preloader = ({ loading, onComplete }) => {
+  const preloaderRef = useRef(null);
+  const logoWrapperRef = useRef(null);
 
+  useEffect(() => {
+    if (!loading) {
+      const tl = gsap.timeline({
+        onComplete: onComplete
+      });
+
+      // 1. Fade out text and ring immediately
+      tl.to('.brand-name, .loading-ring', {
+        opacity: 0,
+        duration: 0.3,
+        ease: 'power2.in'
+      });
+
+      // 2. Get target position (Header Logo)
+      const targetLogo = document.querySelector('.header-logo-img');
+
+      if (targetLogo && logoWrapperRef.current) {
+        const targetRect = targetLogo.getBoundingClientRect();
+        const currentRect = logoWrapperRef.current.getBoundingClientRect();
+
+        // Calculate deltas to match centers
+        const targetCenterX = targetRect.left + targetRect.width / 2;
+        const targetCenterY = targetRect.top + targetRect.height / 2;
+
+        const currentCenterX = currentRect.left + currentRect.width / 2;
+        const currentCenterY = currentRect.top + currentRect.height / 2;
+
+        const xDiff = targetCenterX - currentCenterX;
+        const yDiff = targetCenterY - currentCenterY;
+
+        // Scale: Match heights (approximate)
+        const scale = targetRect.height / currentRect.height;
+
+        // Stop CSS animation on the image
+        gsap.set('.preloader-logo-img', { animation: 'none' });
+
+        // Animate Logo Wrapper
+        tl.to(logoWrapperRef.current, {
+          x: xDiff,
+          y: yDiff,
+          scale: scale,
+          backgroundColor: 'transparent',
+          boxShadow: 'none',
+          duration: 1.5,
+          ease: 'power4.inOut'
+        }, "<");
+
+        // Fade out main background
+        tl.to(preloaderRef.current, {
+          backgroundColor: 'rgba(255,255,255,0)',
+          duration: 1.2,
+          ease: 'power2.inOut'
+        }, "<+=0.2");
+
+      } else {
+        // Fallback
+        tl.to(preloaderRef.current, {
+          opacity: 0,
+          duration: 0.5
+        });
+      }
+    }
+  }, [loading, onComplete]);
+
+  return (
+    <div className="preloader" ref={preloaderRef}>
       <div className="preloader-content">
         {/* Logo Container with Animation */}
         <div className="logo-container">
-          <div className="logo-wrapper">
+          <div className="logo-wrapper" ref={logoWrapperRef}>
             <img src={logo} alt="EcoGlow" className="preloader-logo-img" />
           </div>
-          
+
           {/* Elegant Loading Ring */}
-          <div className="loading-ring">
-            <div className="ring-segment segment-1"></div>
-            <div className="ring-segment segment-2"></div>
-            <div className="ring-segment segment-3"></div>
-          </div>
+          <div className="loading-ring"></div>
         </div>
 
         {/* Premium Brand Name */}
         <div className="brand-name">
           <span className="brand-eco">Eco</span>
           <span className="brand-glow">Glow</span>
-        </div>
-
-        {/* Elegant Tagline */}
-        <p className="preloader-tagline">Premium Cleaning Services</p>
-
-        {/* Animated Loading Dots */}
-        <div className="loading-dots">
-          <span className="dot dot-1"></span>
-          <span className="dot dot-2"></span>
-          <span className="dot dot-3"></span>
         </div>
       </div>
     </div>

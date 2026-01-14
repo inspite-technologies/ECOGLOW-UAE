@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 // 1. Add this import
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
+  PanelTop,
   Briefcase,
   Info,
   MessageSquare,
@@ -14,6 +15,7 @@ import {
   PanelBottom,
   Users,
   Activity,
+  Building2,
   Home as HomeIcon,
 } from "lucide-react";
 import "./AdminDashboard.css";
@@ -21,24 +23,26 @@ import "./AdminDashboard.css";
 import Home from "./Home";
 import AboutUsManager from "./AboutUsManager";
 import Service from "./Service";
+import Commercial from "./CommercialManager";
 import PackagesManager from "./PackagesManager";
 import FAQManager from "./FAQManager";
 import ContactManager from "./contactManager";
 import Booking from "./bookingServices";
 import Footer from "./FooterManagement";
+import Header from "./headerManager"
 
 // 2. Remove 'navigate' from the props here
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("home");
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  
+
   // 3. Initialize the hook here
   const navigate = useNavigate();
 
   const handleLogout = () => {
     // Clear the token
-    localStorage.removeItem("token"); 
-    navigate("/admin/login"); 
+    localStorage.removeItem("token");
+    navigate("/admin/login");
   };
 
   return (
@@ -69,7 +73,14 @@ const AdminDashboard = () => {
             className={`nav-item ${activeTab === "service" ? "active" : ""}`}
             onClick={() => setActiveTab("service")}
           >
-            <Briefcase size={20} /> <span>Service Page</span>
+            <Briefcase size={20} /> <span>Residential Page</span>
+          </button>
+          <button
+            className={`nav-item ${activeTab === "commercial" ? "active" : ""}`}
+            onClick={() => setActiveTab("commercial")}
+          >
+            <Building2 size={20} />
+            <span>Commercial Page</span>
           </button>
 
           <button
@@ -97,6 +108,13 @@ const AdminDashboard = () => {
           >
             <Calendar size={20} /> <span>Booking Settings</span>
           </button>
+           <button
+            className={`nav-item ${activeTab === "header" ? "active" : ""}`}
+            onClick={() => setActiveTab("header")}
+          >
+           <PanelTop size={20} />
+            <span>Header Settings</span>
+          </button>
           <button
             className={`nav-item ${activeTab === "footer" ? "active" : ""}`}
             onClick={() => setActiveTab("footer")}
@@ -107,10 +125,7 @@ const AdminDashboard = () => {
         </nav>
 
         <div className="sidebar-footer">
-          <button
-            className="nav-item logout-btn"
-            onClick={handleLogout}
-          >
+          <button className="nav-item logout-btn" onClick={handleLogout}>
             <LogOut size={20} /> <span>Back to Website</span>
           </button>
         </div>
@@ -136,10 +151,12 @@ const AdminDashboard = () => {
           {activeTab === "home" && <Home />}
           {activeTab === "aboutUs" && <AboutUsManager />}
           {activeTab === "service" && <Service />}
+          {activeTab === "commercial" && <Commercial />}
           {activeTab === "packages" && <PackagesManager />}
           {activeTab === "faq" && <FAQManager />}
           {activeTab === "contact" && <ContactManager />}
           {activeTab === "booking" && <Booking />}
+          {activeTab === 'header' && <Header/>}
           {activeTab === "footer" && <Footer />}
         </div>
       </main>

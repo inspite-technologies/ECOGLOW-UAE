@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { 
-  Save, Layout, Info, Calendar, 
-  ImageIcon, Loader2 
+import {
+  Save, Layout, Info, Calendar,
+  ImageIcon, Loader2, AtSign
 } from 'lucide-react';
 import { fetchBookingPage, updateBookingPage } from '../../services/bookingAPI';
 
@@ -20,6 +20,7 @@ const BookServiceAdmin = () => {
     sectionSmallLabel: "",
     sectionMainTitle: "",
     sectionSubtitle: "",
+    contactEmail: ""
   });
 
   const fileRef = useRef(null);
@@ -39,10 +40,10 @@ const BookServiceAdmin = () => {
       try {
         const response = await fetchBookingPage();
         let data = response;
-        
+
         // Handle nested data structures if applicable
-        if (data.data) data = data.data; 
-        if (Array.isArray(data)) data = data[0]; 
+        if (data.data) data = data.data;
+        if (Array.isArray(data)) data = data[0];
 
         if (data) {
           setFormData({
@@ -53,6 +54,7 @@ const BookServiceAdmin = () => {
             sectionSmallLabel: data.sectionSmallLabel || "",
             sectionMainTitle: data.sectionMainTitle || "",
             sectionSubtitle: data.sectionSubtitle || "",
+            contactEmail: data.contactEmail || ""
           });
         }
       } catch (err) {
@@ -75,39 +77,40 @@ const BookServiceAdmin = () => {
     }
   };
 
- const handlePublish = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  const data = new FormData();
-  
-  // 1. Append all text fields
-  data.append("heroSmallText", formData.heroSmallText);
-  data.append("heroLargeText", formData.heroLargeText);
-  data.append("topLabel", formData.topLabel);
-  data.append("sectionMainTitle", formData.sectionMainTitle);
-  data.append("sectionSubtitle", formData.sectionSubtitle);
+  const handlePublish = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const data = new FormData();
 
-  // 2. Handle the Image logic carefully
-  if (bannerFile) {
-    // If there is a NEW file, append it to the key multer is watching
-    data.append("heroBannerImage", bannerFile);
-  } else {
-    // If NO new file, send the current path as a regular text field
-    // Your backend controller should check for this if heroBannerImage is undefined
-    data.append("existingImagePath", formData.heroBannerImage || "");
-  }
+    // 1. Append all text fields
+    data.append("heroSmallText", formData.heroSmallText);
+    data.append("heroLargeText", formData.heroLargeText);
+    data.append("topLabel", formData.topLabel);
+    data.append("sectionMainTitle", formData.sectionMainTitle);
+    data.append("sectionSubtitle", formData.sectionSubtitle);
+    data.append("contactEmail", formData.contactEmail);
 
-  try {
-    await updateBookingPage(data);
-    setMessage("✅ Booking page updated!");
-    setTimeout(() => setMessage(""), 3000);
-  } catch (err) {
-    console.error("Update failed:", err);
-    setMessage("❌ Server Error (500). Check Backend Console.");
-  } finally {
-    setLoading(false);
-  }
-};
+    // 2. Handle the Image logic carefully
+    if (bannerFile) {
+      // If there is a NEW file, append it to the key multer is watching
+      data.append("heroBannerImage", bannerFile);
+    } else {
+      // If NO new file, send the current path as a regular text field
+      // Your backend controller should check for this if heroBannerImage is undefined
+      data.append("existingImagePath", formData.heroBannerImage || "");
+    }
+
+    try {
+      await updateBookingPage(data);
+      setMessage("✅ Booking page updated!");
+      setTimeout(() => setMessage(""), 3000);
+    } catch (err) {
+      console.error("Update failed:", err);
+      setMessage("❌ Server Error (500). Check Backend Console.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const styles = {
     container: { padding: '40px', maxWidth: '1100px', margin: '0 auto', fontFamily: 'Inter, sans-serif', backgroundColor: '#f8fafc' },
@@ -131,7 +134,7 @@ const BookServiceAdmin = () => {
           <p style={{ margin: 0, color: '#64748b', fontSize: '0.9rem' }}>Live control over the service booking page appearance.</p>
         </div>
         <button style={styles.publishBtn} onClick={handlePublish} disabled={loading}>
-          {loading ? <Loader2 className="animate-spin" size={20}/> : <Save size={20} />} 
+          {loading ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
           {loading ? " Saving..." : " Save & Publish"}
         </button>
       </div>
@@ -141,56 +144,70 @@ const BookServiceAdmin = () => {
       <div style={styles.grid}>
         <div style={styles.card}>
           <div style={styles.sectionHeader}>
-            <Layout size={18} color="#14b8a6" /> 
-            <h3 style={{margin: 0, fontSize: '1.1rem'}}>1. Hero Content</h3>
+            <Layout size={18} color="#14b8a6" />
+            <h3 style={{ margin: 0, fontSize: '1.1rem' }}>1. Hero Content</h3>
           </div>
-          
+
           <label style={styles.label}>Hero Titles (Top / Bottom)</label>
           <div style={{ display: 'flex', gap: '10px' }}>
             <input name="heroSmallText" style={styles.input} value={formData.heroSmallText} onChange={handleChange} />
             <input name="heroLargeText" style={styles.input} value={formData.heroLargeText} onChange={handleChange} />
           </div>
 
-          <div style={{...styles.sectionHeader, marginTop: '20px'}}>
-            <Info size={18} color="#14b8a6" /> 
-            <h3 style={{margin: 0, fontSize: '1.1rem'}}>2. Form Labels</h3>
+          <div style={{ ...styles.sectionHeader, marginTop: '20px' }}>
+            <Info size={18} color="#14b8a6" />
+            <h3 style={{ margin: 0, fontSize: '1.1rem' }}>2. Form Labels</h3>
           </div>
 
           <label style={styles.label}>Accent Label</label>
-          <input name="topLabel" style={{...styles.input, color: '#14b8a6', fontWeight: 'bold'}} value={formData.topLabel} onChange={handleChange} />
+          <input name="topLabel" style={{ ...styles.input, color: '#14b8a6', fontWeight: 'bold' }} value={formData.topLabel} onChange={handleChange} />
 
           <label style={styles.label}>Main Title</label>
           <input name="sectionMainTitle" style={styles.input} value={formData.sectionMainTitle} onChange={handleChange} />
 
           <label style={styles.label}>Subtitle</label>
           <input name="sectionSubtitle" style={styles.input} value={formData.sectionSubtitle} onChange={handleChange} />
+
+          <label style={styles.label}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <AtSign size={14} /> Contact Email (Receives Form Submissions)
+            </div>
+          </label>
+          <input
+            type="email"
+            name="contactEmail"
+            style={styles.input}
+            value={formData.contactEmail}
+            onChange={handleChange}
+            placeholder="bookings@ecoglow.ae"
+          />
         </div>
 
-        <div style={{...styles.card, flex: '0.7'}}>
+        <div style={{ ...styles.card, flex: '0.7' }}>
           <div style={styles.sectionHeader}>
-            <Calendar size={18} color="#14b8a6" /> 
-            <h3 style={{margin: 0, fontSize: '1.1rem'}}>Banner Preview</h3>
+            <Calendar size={18} color="#14b8a6" />
+            <h3 style={{ margin: 0, fontSize: '1.1rem' }}>Banner Preview</h3>
           </div>
 
           <div style={{ marginBottom: '20px' }}>
-             <p style={styles.label}>Live Header Preview</p>
-             <div 
-               style={{ 
-                 ...styles.miniHero,
-                 backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${getImageUrl(formData.heroBannerImage)})` 
-               }}
-             >
-               <span style={{fontSize: '0.9rem'}}>{formData.heroSmallText}</span>
-               <h4 style={{margin: 0, fontSize: '1.5rem'}}>{formData.heroLargeText}</h4>
-             </div>
+            <p style={styles.label}>Live Header Preview</p>
+            <div
+              style={{
+                ...styles.miniHero,
+                backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${getImageUrl(formData.heroBannerImage)})`
+              }}
+            >
+              <span style={{ fontSize: '0.9rem' }}>{formData.heroSmallText}</span>
+              <h4 style={{ margin: 0, fontSize: '1.5rem' }}>{formData.heroLargeText}</h4>
+            </div>
           </div>
 
           <label style={{ cursor: 'pointer' }}>
-             <input type="file" ref={fileRef} onChange={handleImageUpload} hidden accept="image/*" />
-             <div style={styles.uploadBox} onClick={() => fileRef.current.click()}>
-               <ImageIcon size={24} />
-               <span style={{ fontWeight: '600' }}>Change Banner Image</span>
-             </div>
+            <input type="file" ref={fileRef} onChange={handleImageUpload} hidden accept="image/*" />
+            <div style={styles.uploadBox} onClick={() => fileRef.current.click()}>
+              <ImageIcon size={24} />
+              <span style={{ fontWeight: '600' }}>Change Banner Image</span>
+            </div>
           </label>
         </div>
       </div>

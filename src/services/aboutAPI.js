@@ -3,7 +3,6 @@ import { ABOUT_INSTANCE } from "./axiosInstance";
 export const fetchAboutUs = async () => {
   try {    
     const response = await ABOUT_INSTANCE.get("/");
-    console.log("response from ",response.data);
     
     return response.data;
   } catch (error) {

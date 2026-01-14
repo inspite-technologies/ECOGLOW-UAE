@@ -3,11 +3,12 @@
 .unified-footer-section {
   position: relative;
   z-index: 500;
-  background: #ffffff !important;
+  background: #ffffff !important; /* Force White Background Always */
   padding: 80px 0;
   width: 100%;
   overflow: hidden;
-  display: block; /* Ensures it takes up space in the document flow */
+  display: block;
+  color: #3b3b3b; /* Ensure default text color is dark */
 }
 
 .message-container, .connect-container {
@@ -29,7 +30,7 @@
   font-size: 36px;
   font-weight: 300;
   line-height: 1.1;
-  color: #131313;
+  color: #131313; /* Dark Black for Headings */
   margin-bottom: 15px;
   letter-spacing: -0.5px;
   font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -58,7 +59,7 @@
   font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #3b3b3b;
+  color: #3b3b3b; /* Dark Gray for Body Text */
   max-width: 500px;
 }
 
@@ -84,7 +85,7 @@
   font-family: 'Allura', cursive;
   font-size: 26px;
   font-weight: 600;
-  color: #000000;
+  color: #000000; /* Pure Black for Signature */
   margin-top: 5px;
 }
 
@@ -1879,69 +1880,6 @@
   }
 }
 
-/* Dark Mode Support - FIXED FOR MOBILE */
-@media (prefers-color-scheme: dark) {
-  /* Only apply dark mode on DESKTOP, not mobile */
-  @media (min-width: 768px) {
-    .unified-footer-section {
-      background: #1a1a1a !important;
-    }
-
-    .section-heading-thin {
-      color: #ffffff;
-    }
-
-    .message-text,
-    .connect-subtitle,
-    .md-name-label {
-      color: #e0e0e0;
-    }
-
-    .handwritten-signature {
-      color: #ffffff;
-    }
-
-    .section-divider {
-      background-color: #444;
-    }
-
-    .newsletter-input {
-      background: #2a2a2a;
-      color: #ffffff;
-      border-color: #555;
-    }
-
-    .newsletter-input::placeholder {
-      color: #888;
-    }
-  }
-
-  /* FORCE WHITE on mobile even in dark mode */
-  @media (max-width: 767px) {
-    .unified-footer-section {
-      background: #ffffff !important;
-    }
-
-    .section-heading-thin {
-      color: #131313 !important;
-    }
-
-    .message-text,
-    .connect-subtitle,
-    .md-name-label {
-      color: #3b3b3b !important;
-    }
-
-    .handwritten-signature {
-      color: #000000 !important;
-    }
-
-    .newsletter-input {
-      background: white !important;
-      color: #1e1d1d !important;
-    }
-  }
-}
 /* Print Styles */
 @media print {
   .unified-footer-section {
@@ -1956,4 +1894,32 @@
   .md-profile-img {
     page-break-inside: avoid;
   }
+}
+.signature-area {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.md-name-label {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--text-dark);
+}
+
+.md-signature-img {
+  width: 180px;      /* Adjust based on your preference */
+  height: auto;
+  max-height: 80px;
+  object-fit: contain;
+  margin-left: -10px; /* Moves signature slightly left to overlap naturally if desired */
+  filter: contrast(1.1); /* Makes the signature "pop" more */
+}
+
+/* Fallback handwritten font if no image is present */
+.handwritten-signature {
+  font-family: 'Cursive', 'Brush Script MT', sans-serif;
+  font-size: 1.5rem;
+  color: var(--primary-teal);
 }

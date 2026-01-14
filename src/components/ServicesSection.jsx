@@ -1,53 +1,33 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { fetchHomeServices } from '../services/homeServices';
 import './ServicesSection.css';
 
 // Asset Imports (Fallbacks)
-import commercialImgFallback from '../assets/A6.webp';
-import residentialImgFallback from '../assets/A7.webp';
+import commercialImgFallback from '../assets/A6.avif';
+import residentialImgFallback from '../assets/A7.avif';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// --- HELPER: Resolve Image URL ---
 const SERVER_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const getImageUrl = (imagePath) => {
   if (!imagePath) return null;
   if (imagePath.startsWith("blob:") || imagePath.startsWith("http")) return imagePath;
-  // Fix Windows backslashes and prepend server URL
   return `${SERVER_URL}/${imagePath.replace(/\\/g, "/")}`;
 };
 
-function ServicesSection() {
-  const [data, setData] = useState(null);
-
+function ServicesSection({ data }) {
   const sectionRef = useRef(null);
   const textContentRef = useRef(null);
   const card1Ref = useRef(null);
   const card2Ref = useRef(null);
 
-  // 1. FETCH DATA
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const response = await fetchHomeServices();
-        // Handle varied response structures
-        let result = response.data || response;
-        if (Array.isArray(result)) result = result[0];
-        
-        setData(result);
-      } catch (error) {
-        console.error("Error fetching home services:", error);
-      }
-    };
-    loadData();
-  }, []);
+  // Extract data from array if necessary
+  const content = Array.isArray(data) ? data[0] : data;
 
-  // 2. ANIMATIONS (Run only after data is loaded)
   useEffect(() => {
-    if (!data) return; // Wait for data
+    if (!content) return;
 
     let ctx = gsap.context(() => {
       // 1. Animate Text Content Group
@@ -86,9 +66,8 @@ function ServicesSection() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [data]);
+  }, [content]);
 
-  // Helper to split title for styling (e.g. "Our Services" -> "Our" <br/> "Services")
   const renderTitle = (title) => {
     if (!title) return <>Our<br />Services</>;
     const parts = title.split(' ');
@@ -98,7 +77,15 @@ function ServicesSection() {
     return title;
   };
 
-  if (!data) return null; // or a loading spinner
+  // Helper for Link attributes
+  const getLinkProps = (url) => ({
+    href: url || "#",
+    target: url?.startsWith("http") ? "_blank" : "_self",
+    rel: "noopener noreferrer",
+    className: "service-link-wrapper" 
+  });
+
+  if (!content) return null;
 
   return (
     <section className="services-section-replica" ref={sectionRef}>
@@ -107,43 +94,55 @@ function ServicesSection() {
         {/* Column 1: Text Content */}
         <div className="services-text-col" ref={textContentRef}>
           <h2 className="services-main-title">
-            {renderTitle(data.mainTitle)}
+            {renderTitle(content.mainTitle)}
           </h2>
           <div className="services-accent-line" />
           <p className="services-description-text">
-            {data.mainDescription}
+            {content.mainDescription}
           </p>
-          <button className="services-know-more-btn">Know More</button>
+          
+          {/* IMPLEMENTED: Main Link */}
+          <a {...getLinkProps(content.mainLink)} style={{ textDecoration: 'none' }}>
+            <button className="services-know-more-btn">Know More</button>
+          </a>
         </div>
 
         {/* Column 2: Card 1 (Commercial) */}
         <div className="service-card-item" ref={card1Ref}>
-          <div className="service-card-img-wrapper">
-            <img 
-                src={getImageUrl(data.card1Image) || commercialImgFallback} 
-                alt={data.card1Title} 
-            />
-            <div className="service-card-info">
-              <h3 className="service-card-name">{data.card1Title}</h3>
-              <p className="service-card-detail">{data.card1Subtitle}</p>
-              <div className="service-card-arrow">→</div>
+          {/* IMPLEMENTED: Card 1 Link */}
+          <a {...getLinkProps(content.card1Link)}>
+            <div className="service-card-img-wrapper">
+              <img 
+                src={getImageUrl(content.card1Image) || commercialImgFallback} 
+                alt={content.card1Title || "Commercial Services"}
+                loading="lazy"
+              />
+              <div className="service-card-info">
+                <h3 className="service-card-name">{content.card1Title}</h3>
+                <p className="service-card-detail">{content.card1Subtitle}</p>
+                <div className="service-card-arrow">→</div>
+              </div>
             </div>
-          </div>
+          </a>
         </div>
 
-        {/* Column 3: Card 2 (Residential - Bleed Effect) */}
+        {/* Column 3: Card 2 (Residential) */}
         <div className="service-card-item bleed-to-edge" ref={card2Ref}>
-          <div className="service-card-img-wrapper">
-            <img 
-                src={getImageUrl(data.card2Image) || residentialImgFallback} 
-                alt={data.card2Title} 
-            />
-            <div className="service-card-info">
-              <h3 className="service-card-name">{data.card2Title}</h3>
-              <p className="service-card-detail">{data.card2Subtitle}</p>
-              <div className="service-card-arrow">→</div>
+          {/* IMPLEMENTED: Card 2 Link */}
+          <a {...getLinkProps(content.card2Link)}>
+            <div className="service-card-img-wrapper">
+              <img 
+                src={getImageUrl(content.card2Image) || residentialImgFallback} 
+                alt={content.card2Title || "Residential Services"}
+                loading="lazy"
+              />
+              <div className="service-card-info">
+                <h3 className="service-card-name">{content.card2Title}</h3>
+                <p className="service-card-detail">{content.card2Subtitle}</p>
+                <div className="service-card-arrow">→</div>
+              </div>
             </div>
-          </div>
+          </a>
         </div>
 
       </div>

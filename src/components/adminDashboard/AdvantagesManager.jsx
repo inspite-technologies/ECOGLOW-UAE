@@ -1,9 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Save, Edit2, Star, Layout, X, Upload, Check, Trash2, Plus, Image as ImageIcon } from 'lucide-react';
+import { Save, Edit2, Star, Layout, X, Upload, Check, Trash2, Plus, Image as ImageIcon, Link, MessageCircle } from 'lucide-react';
 import { fetchAdvantages, updateAdvantages } from '../../services/advantageAPI';
 import './AdminStyles.css';
 
-const API_BASE_URL = "http://localhost:5000"; // Make sure this points to your backend
+const API_BASE_URL = "http://localhost:5000"; 
+
+// --- HELPER TO FIX IMAGE URLs ---
+const getImageUrl = (path) => {
+  if (!path) return null;
+  // If it's already an external link (Cloudinary) or a local preview (blob), return as is
+  if (path.startsWith('http') || path.startsWith('https') || path.startsWith('blob:')) {
+    return path;
+  }
+  // Otherwise, assume it's a local server file
+  return `${API_BASE_URL}/${path.replace(/\\/g, '/')}`;
+};
 
 const AdvantagesManager = () => {
   // --- STATE ---
@@ -12,7 +23,9 @@ const AdvantagesManager = () => {
     ctaTitleLine1: "",
     ctaTitleLine2: "",
     ctaButtonText: "",
+    ctaButtonLink: "",
     ctaWhatsappText: "",
+    ctaWhatsappLink: "",
     ctaImage: null
   });
 
@@ -31,13 +44,14 @@ const AdvantagesManager = () => {
         if (res.success) {
           const data = res.data;
 
-          // ... (image path formatting) ...
-          const formattedCtaImage = data.ctaImage ? `${API_BASE_URL}/${data.ctaImage.replace(/\\/g, '/')}` : null;
+          // 1. USE HELPER FOR CTA IMAGE
+          const formattedCtaImage = getImageUrl(data.ctaImage);
 
           const formattedItems = data.items.map(item => ({
             ...item,
-            id: item._id, // 👈 THIS IS THE KEY FIX: Map _id to id
-            icon: item.icon ? `${API_BASE_URL}/${item.icon.replace(/\\/g, '/')}` : null
+            id: item._id, 
+            // 2. USE HELPER FOR ICONS
+            icon: getImageUrl(item.icon)
           }));
 
           setGeneralContent({
@@ -45,8 +59,10 @@ const AdvantagesManager = () => {
             ctaTitleLine1: data.ctaTitleLine1 || "",
             ctaTitleLine2: data.ctaTitleLine2 || "",
             ctaButtonText: data.ctaButtonText || "",
+            ctaButtonLink: data.ctaButtonLink || "", 
             ctaWhatsappText: data.ctaWhatsappText || "",
-            ctaImage: formattedCtaImage
+            ctaWhatsappLink: data.ctaWhatsappLink || "", 
+            ctaImage: formattedCtaImage // Set the fixed URL
           });
 
           setAdvantages(formattedItems);
@@ -69,8 +85,8 @@ const AdvantagesManager = () => {
     if (file) {
       setGeneralContent(prev => ({
         ...prev,
-        ctaImage: URL.createObjectURL(file),
-        _file: file // keep the file to send later
+        ctaImage: URL.createObjectURL(file), // Create blob preview
+        _file: file 
       }));
     }
   };
@@ -80,7 +96,7 @@ const AdvantagesManager = () => {
     if (file) {
       setEditingItem(prev => ({
         ...prev,
-        icon: URL.createObjectURL(file),
+        icon: URL.createObjectURL(file), // Create blob preview
         _file: file
       }));
     }
@@ -120,30 +136,32 @@ const AdvantagesManager = () => {
     try {
       const formData = new FormData();
 
-      // ... (Append General Fields) ...
+      // Append General Fields
       formData.append("sectionTitle", generalContent.sectionTitle);
       formData.append("ctaTitleLine1", generalContent.ctaTitleLine1);
       formData.append("ctaTitleLine2", generalContent.ctaTitleLine2);
+      
       formData.append("ctaButtonText", generalContent.ctaButtonText);
-      formData.append("ctaWhatsappText", generalContent.ctaWhatsappText);
+      formData.append("ctaButtonLink", generalContent.ctaButtonLink);
 
+      formData.append("ctaWhatsappText", generalContent.ctaWhatsappText);
+      formData.append("ctaWhatsappLink", generalContent.ctaWhatsappLink); 
+
+      // Only append image if a NEW file was selected
       if (generalContent._file) {
         formData.append("ctaImage", generalContent._file);
       }
 
-      // 3. Advantages Items Logic
+      // Advantages Items Logic
       const itemsToSend = advantages.map((item, index) => {
-        // If this item has a NEW file uploaded locally
         if (item._file) {
-          // Append file with unique key based on index
           formData.append(`itemIcon_${index}`, item._file);
         }
-
         return {
           title: item.title,
           description: item.description,
-          // IMPORTANT: Send null if we are uploading a new file, 
-          // otherwise keep the existing icon string
+          // IMPORTANT: If uploading new file, send null for icon string
+          // If keeping old image, send the original URL string
           icon: item._file ? null : item.icon 
         };
       });
@@ -152,8 +170,6 @@ const AdvantagesManager = () => {
 
       await updateAdvantages(formData);
       alert("Advantages section updated successfully!");
-      
-      // Reload to ensure IDs and Paths are synced with DB
       window.location.reload(); 
 
     } catch (error) {
@@ -161,6 +177,7 @@ const AdvantagesManager = () => {
       alert("Failed to update advantages section");
     }
   };
+
   return (
     <div className="admin-container fade-in">
       {/* HEADER */}
@@ -176,14 +193,15 @@ const AdvantagesManager = () => {
 
       {/* SECTION GRID */}
       <div className="admin-grid-2" style={{ alignItems: 'start' }}>
-        {/* CTA Image */}
+        
+        {/* LEFT COLUMN: CTA Image */}
         <div className="admin-card">
           <div className="section-header">
             <ImageIcon size={18} /> CTA Banner Image
           </div>
-          <div className="upload-box" style={{ height: '200px' }} onClick={() => ctaFileInputRef.current.click()}>
+          <div className="upload-box" style={{ height: '100%', minHeight: '300px' }} onClick={() => ctaFileInputRef.current.click()}>
             {generalContent.ctaImage ? (
-              <img src={generalContent.ctaImage} alt="CTA" className="preview-img" />
+              <img src={generalContent.ctaImage} alt="CTA" className="preview-img" style={{objectFit: 'cover'}} />
             ) : (
               <div style={{ textAlign: 'center', color: '#94a3b8' }}>
                 <Upload size={32} style={{ opacity: 0.5, marginBottom: '10px' }} />
@@ -194,23 +212,57 @@ const AdvantagesManager = () => {
           </div>
         </div>
 
-        {/* Text Fields */}
+        {/* RIGHT COLUMN: Text Configuration */}
         <div className="admin-card">
           <div className="section-header">
             <Layout size={18} /> Text Configuration
           </div>
+          
           <div className="input-group">
             <label className="input-label">Main Section Title</label>
             <input type="text" className="form-input" name="sectionTitle" value={generalContent.sectionTitle} onChange={handleGeneralChange} />
           </div>
-          <div className="input-group">
-            <label className="input-label">Promise Banner Line 1</label>
-            <input type="text" className="form-input" name="ctaTitleLine1" value={generalContent.ctaTitleLine1} onChange={handleGeneralChange} />
+
+          <div style={{ borderTop: '1px solid #e2e8f0', margin: '20px 0' }}></div>
+          <h4 style={{ margin: '0 0 15px 0', color: '#0f766e', fontSize: '0.9rem' }}>Promise Banner Content</h4>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '15px' }}>
+            <div className="input-group">
+                <label className="input-label">Banner Line 1</label>
+                <input type="text" className="form-input" name="ctaTitleLine1" value={generalContent.ctaTitleLine1} onChange={handleGeneralChange} />
+            </div>
+            <div className="input-group">
+                <label className="input-label">Banner Line 2</label>
+                <input type="text" className="form-input" name="ctaTitleLine2" value={generalContent.ctaTitleLine2} onChange={handleGeneralChange} />
+            </div>
           </div>
-          <div className="input-group">
-            <label className="input-label">Promise Banner Line 2</label>
-            <input type="text" className="form-input" name="ctaTitleLine2" value={generalContent.ctaTitleLine2} onChange={handleGeneralChange} />
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '15px' }}>
+            <div className="input-group">
+                <label className="input-label">Button Text</label>
+                <input type="text" className="form-input" name="ctaButtonText" value={generalContent.ctaButtonText} onChange={handleGeneralChange} placeholder="e.g. Book Now" />
+            </div>
+            <div className="input-group">
+                <label className="input-label" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                   <Link size={12} /> Button Link
+                </label>
+                <input type="text" className="form-input" name="ctaButtonLink" value={generalContent.ctaButtonLink} onChange={handleGeneralChange} placeholder="e.g. /book or tel:12345" />
+            </div>
           </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+            <div className="input-group">
+                <label className="input-label">WhatsApp Text</label>
+                <input type="text" className="form-input" name="ctaWhatsappText" value={generalContent.ctaWhatsappText} onChange={handleGeneralChange} placeholder="e.g. Chat on WhatsApp" />
+            </div>
+            <div className="input-group">
+                <label className="input-label" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                   <MessageCircle size={12} /> WhatsApp Link
+                </label>
+                <input type="text" className="form-input" name="ctaWhatsappLink" value={generalContent.ctaWhatsappLink} onChange={handleGeneralChange} placeholder="e.g. 971501234567" />
+            </div>
+          </div>
+
         </div>
       </div>
 

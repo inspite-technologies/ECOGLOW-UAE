@@ -1,77 +1,73 @@
 import React, { useEffect, useState } from "react";
 import { Home, Plus, Minus } from "lucide-react";
-
+import { fetchFAQs } from "../services/faqAPI";
 import "./FAQ.css";
+
+// Helper to construct image URL
+const SERVER_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+const getImageUrl = (path) => {
+  if (!path) return null;
+  if (path.startsWith('blob:') || path.startsWith('http')) return path;
+  // Replace Windows backslashes with forward slashes and prepend server URL
+  return `${SERVER_URL}/${path.replace(/\\/g, '/')}`;
+};
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(null);
+  const [faqData, setFaqData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const faqs = [
-    {
-      question: "Why is it called an estimate?",
-      answer:
-        "An estimate is not a guaranteed final price. The estimate provides you with an approximate idea of how much our service costs. During their visit our housekeepers will spend the amount of time specified in the estimate by performing the level of service you selected. The actual final price will not be known until after the housekeeper completes the job. To accurately quote a price, a housekeeper would need to see the home first. However, we know how valuable your time is and we didn't want to add another appointment for you. Most people prefer to receive an estimate over the phone and then simply have the housekeeper start their very first visit. Pricing shown does not include state sales tax (where applicable) or gratuity for your housekeeper.",
-    },
-    {
-      question: "Why is it called an estimate?",
-      answer:
-        "An estimate is not a guaranteed final price. The estimate provides you with an approximate idea of how much our service costs. During their visit our housekeepers will spend the amount of time specified in the estimate by performing the level of service you selected.",
-    },
-    {
-      question: "What areas does ExcelClean serve?",
-      answer:
-        "ExcelClean serves the greater metropolitan area and surrounding regions. Please contact us to confirm service availability in your specific location.",
-    },
-    {
-      question: "How long does an estimate last?",
-      answer:
-        "Our estimates are typically valid for 30 days from the date of issue. Prices may be subject to change after this period due to market conditions.",
-    },
-    {
-      question: "How does ExcelClean verify and hire its cleaners?",
-      answer:
-        "All our cleaners undergo thorough background checks, verification of references, and comprehensive training before joining our team.",
-    },
-    {
-      question: "What if I'm not satisfied with the cleaning service?",
-      answer:
-        "We offer a satisfaction guarantee. If you're not happy with our service, please contact us within 24 hours and we'll make it right.",
-    },
-    {
-      question: "What is RealPrice Guarantee policy?",
-      answer:
-        "Our RealPrice Guarantee ensures that the final price matches your estimate, provided the job specifications remain unchanged.",
-    },
-    {
-      question: "What payment options do you accept?",
-      answer:
-        "We accept all major credit cards, debit cards, and digital payment methods for your convenience.",
-    },
-    {
-      question:
-        "What is the difference between standard cleaning and deep cleaning?",
-      answer:
-        "Standard cleaning covers regular maintenance tasks, while deep cleaning includes more intensive work like baseboards, inside appliances, and hard-to-reach areas.",
-    },
-  ];
+  // --- FETCH DATA ---
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const response = await fetchFAQs();
+        // Handle if response is wrapped in { data: ... } or is the array directly
+        const result = response.data || response;
+        
+        // The API likely returns an array (or a single object). 
+        // Based on your previous patterns, we take the first item if it's an array.
+        const data = Array.isArray(result) ? result[0] : result;
+        
+        setFaqData(data);
+      } catch (error) {
+        console.error("Failed to fetch FAQs:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadData();
+  }, []);
 
   const toggleFAQ = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  if (loading) return <div style={{height: '100vh', display:'flex', justifyContent:'center', alignItems:'center'}}>Loading FAQs...</div>;
+  if (!faqData) return null;
+
   return (
     <div className="faq-page">
 
-      {/* Hero Section - UPDATED CLASS NAMES */}
-      <section className="faq-hero">
+      {/* Hero Section - UPDATED WITH DYNAMIC DATA & IMAGE */}
+      <section 
+        className="faq-hero"
+        style={{
+            backgroundImage: faqData.heroBannerImg ? `url(${getImageUrl(faqData.heroBannerImg)})` : 'none',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+        }}
+      >
         <h1 className="faq-hero-title">
-          <span className="faq-hero-small">EcoGlow</span>
+          <span className="faq-hero-small">{faqData.heroSmall || "EcoGlow"}</span>
           <br />
-          <span className="faq-hero-large">FAQs</span>
+          <span className="faq-hero-large">{faqData.heroLarge || "FAQs"}</span>
         </h1>
       </section>
 
-      {/* Breadcrumb Section - UPDATED CLASS NAMES */}
+      {/* Breadcrumb Section */}
       <section className="faq-breadcrumb-section" style={{ paddingBottom: "10px" }}>
         <div className="faq-breadcrumb" style={{ marginTop: "20px" }}>
           <span
@@ -92,8 +88,10 @@ const FAQ = () => {
       <section className="faq-section">
         <div className="container">
           <div className="content">
-            <div className="section-labels">FAQs</div>
-            <h4 className="titles">Before you choose a Cleaning Service</h4>
+            {/* Dynamic Label */}
+            <div className="section-labels">{faqData.sectionLabel || "FAQs"}</div>
+            {/* Dynamic Title */}
+            <h4 className="titles">{faqData.sectionTitle || "Frequently Asked Questions"}</h4>
             <div className="title-underline"></div>
 
             <div
@@ -103,9 +101,10 @@ const FAQ = () => {
                 width: "100%",
               }}
             >
-              {faqs.map((faq, index) => (
+              {/* Dynamic FAQ List Loop */}
+              {faqData.faqs && faqData.faqs.map((faq, index) => (
                 <div
-                  key={index}
+                  key={faq._id || index}
                   style={{
                     borderBottom: "1px solid #e0e0e0",
                     backgroundColor: "white",

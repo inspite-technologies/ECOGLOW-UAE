@@ -1,185 +1,317 @@
-import React, { useEffect } from "react";
-import { Home, MessageCircle } from "lucide-react";
-
-import "./Services.css";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom"; // 1. Added Link import
+import { Home } from "lucide-react";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { fetchServices } from '../services/serviceAPI';
+import "./Services.css";
 
-// Import all service images
+// Import local images as Fallbacks
 import service1 from '../assets/service1.webp';
 import service2 from '../assets/service2.webp';
-import service3 from '../assets/service3.webp';
-import service4 from '../assets/service4.webp';
-import service5 from '../assets/service5.webp';
-import service6 from '../assets/service6.webp';
-import service7 from '../assets/service7.webp';
+
+const SERVER_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+// --- HELPER 1: IMAGE URL FIXER ---
+const getImageUrl = (path, fallback) => {
+  if (!path) return fallback;
+  if (path.startsWith('blob:') || path.startsWith('http')) return path;
+  return `${SERVER_URL}/${path.replace(/\\/g, '/')}`;
+};
+
+// --- HELPER 2: WHATSAPP LINK FIXER (STRICT HTTPS) ---
+const getWhatsAppLink = (input) => {
+  if (!input || input.trim() === "") return "https://wa.me/971585766424";
+  if (input.startsWith('http')) return input;
+  const cleanNumber = input.replace(/[^\d]/g, '');
+  return `https://wa.me/${cleanNumber}`;
+};
+
+// --- HELPER 3: BOOK BUTTON CONFIGURATOR ---
+const getButtonConfig = (input) => {
+  // 1. If empty -> Internal Link to '/book-service' (Prevents 404)
+  if (!input) {
+    return {
+      type: 'internal',
+      props: { to: "/book-service", className: "btn btn-book" },
+      text: "Book Now"
+    };
+  }
+
+  // 2. If website URL -> External Link
+  if (input.startsWith('http') || input.startsWith('www')) {
+    return {
+      type: 'external',
+      props: {
+        href: input.startsWith('www') ? `https://${input}` : input,
+        target: "_blank",
+        rel: "noopener noreferrer",
+        className: "btn btn-book"
+      },
+      text: "Book Now"
+    };
+  }
+
+  // 3. PRIORITY: Phone Number -> Tel Link
+  const cleanNumber = input.replace(/[^\d+]/g, '');
+  return {
+    type: 'external',
+    props: {
+      href: `tel:${cleanNumber}`,
+      className: "btn btn-book"
+    },
+    text: "Book Now"
+  };
+};
 
 const Services = () => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // --- FETCH DATA ---
   useEffect(() => {
-    // AOS init would go here if you have it installed
-    // AOS.init({ duration: 1000, once: true });
+    const loadData = async () => {
+      try {
+        const response = await fetchServices();
+        const result = response.data || response;
+        const serviceData = Array.isArray(result) ? result[0] : result;
+        setData(serviceData);
+      } catch (error) {
+        console.error("Error fetching services page data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadData();
   }, []);
 
-  const servicesData = [
-    {
-      id: 1,
-      title: "Luxury Cleaning",
-      subtitle: "Complete Area and Corner Cleaning",
-      description: "Experience premium cleaning services that cover every corner of your space. Our meticulous approach ensures no detail is overlooked, leaving your home spotless and refreshed with our eco-friendly solutions.Ideal for ongoing maintenance of homes and workspaces",
-      image: service3
-    },
-    {
-      id: 2,
-      title: "Deep Cleaning",
-      subtitle: "Aircon & AC Duct Cleaning",
-      description: "Designed to restore ",
-      image: service4
-    },
-    {
-      id: 3,
-      title: "Mattress Cleaning",
-      subtitle: "We offer expert mattress cleaning services",
-      description: "Sleep better with our professional mattress cleaning that eliminates dust mites, allergens, and stains. Our deep-cleaning process restores freshness and hygiene to your mattress for healthier, more restful sleep.",
-      image: service5
-    },
-    {
-      id: 4,
-      title: "Sofa Cleaning",
-      subtitle: "Our upholstery cleaning services",
-      description: "Revitalize your furniture with our expert upholstery cleaning services. We carefully treat all fabric types, removing dirt, stains, and odors while protecting the material's integrity and extending its lifespan.",
-      image: service6
-    },
-    {
-      id: 5,
-      title: "Disinfection & Sanitization",
-      subtitle: "Our disinfection services provide comprehensive sanitation and disinfection",
-      description: "Ensure a safe and healthy environment with our comprehensive disinfection and sanitization services. We use hospital-grade solutions to eliminate harmful bacteria, viruses, and germs from all surfaces.",
-      image: service7
-    }
-  ];
+  if (loading) return <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Loading...</div>;
+  if (!data) return null;
 
   return (
     <div className="service-page">
-      {/* Hero Section with Background */}
-      <section className="service-hero" style={{ backgroundImage: `url(${service1})` }}>
+
+      {/* 1. HERO SECTION */}
+      <section
+        className="service-hero"
+        style={{
+          backgroundImage: `url(${getImageUrl(data.bannerImage, service1)})`
+        }}
+      >
         <h1 className="hero-title">
-          <span className="service-text">All</span>
-          <span className="brand-text">Services</span>
+          <span className="service-text">{data.heroTitlePart1 || "All"}</span>
+          <span className="brand-text">{data.heroTitlePart2 || "Services"}</span>
         </h1>
       </section>
 
-      {/* Breadcrumb Section */}
+      {/* 2. BREADCRUMB SECTION */}
       <section className="service-intro">
         <div className="hero-breadcrumb">
           <span style={{ display: "flex", alignItems: "center", gap: "5px" }}>
             <Home size={16} /> HOME
           </span>
           <span style={{ color: "#80cbc4" }}>/</span>
-          <span>ALL SERVICES</span>
+          <span>{(data.introLabel || "ALL SERVICES").toUpperCase()}</span>
         </div>
       </section>
 
-      {/* Residential Services Section */}
+      {/* 3. RESIDENTIAL INTRO SECTION */}
       <section className="residential-section">
         <div className="container">
           <div className="content">
-            <div className="section-label">All Services</div>
-            <h4 className="title">Residential</h4>
+            <div className="section-label">{data.introLabel || "All Services"}</div>
+            <h4 className="title">
+              {(() => {
+                const title = data.introMainTitle || "Residential";
+                const parts = title.split(' ');
+                if (parts.length >= 2) {
+                  return <>{parts.slice(0, -1).join(' ')} <span className="teal-text-thin">{parts[parts.length - 1]}</span></>;
+                }
+                return title;
+              })()}
+            </h4>
             <div className="title-underline"></div>
 
             <p className="description">
-              In a world where sustainability often comes at the cost of performance, EcoGlow was created to prove that the two can coexist beautifully. Our team is trained to deliver exceptional results using eco-friendly products and thoughtful methods that are
-              safe for people, pets, and the planet.
+              {data.introDescription || "At EcoGlow, we deliver luxury-standard cleaning experiences designed for conscious living."}
             </p>
 
             <p className="lorem-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-              tristique malesuada sem quis condimentum. Nam consectetur enim
-              justo, quis pharetra tortor accumsan at. Vestibulum lacinia
-              interdum nulla, et eleifend ex. Sed vel urna bibendum, varius
-              lorem at molestie libero. Praesent laoreet finibus sem et rutrum.
-              Cras luctus finibus leo ullamcorper tempus. Donec volutpat justo
-              vitae lorem porta consequat. Vivamus nisl tellus, tincidunt ac
-              tristique eget, bibendum nec leo. Nullam hendrerit aliquet massa,
-              in fermentum purus ullamcorper vel. Suspendisse consequat varius
-              dictum.
+              {data.introLongText}
             </p>
           </div>
 
           <div className="image-container">
-            <img src={service2} alt="Residential Cleaning" />
+            <img
+              src={getImageUrl(data.introSideImage, service2)}
+              alt="Intro Side"
+            />
           </div>
         </div>
       </section>
 
-      {/* Trusted Section */}
+      {/* 4. TRUST BADGE */}
       <section className="trust-section">
         <div className="trust-badge">
-          <h2 className="trusted-outline-text">Trusted by 100+ Clients</h2>
+          <h2 className="trusted-outline-text">{data.trustedText || "Trusted by 100+ Clients"}</h2>
         </div>
       </section>
 
+      {/* 5. DYNAMIC SERVICES GRID */}
       <section className="residential-luxury-section">
         <div className="section-header">
-          <h1>Residential</h1>
-          <p>At EcoGlow, we deliver luxury-standard cleaning experiences designed for conscious living.</p>
+          <h1>{data.gridMainHeading || "Residential"}</h1>
+          <p>{data.gridSubheading || "Our premium cleaning services."}</p>
         </div>
 
-        {servicesData.map((service, index) => (
-          <div
-            key={service.id}
-            className={`content-grid ${index % 2 !== 0 ? "row-reverse" : ""}`}
-          >
-            <div className="image-side">
-              <img src={service.image} alt={service.title} />
-            </div>
+        {data.servicesList && data.servicesList.map((service, index) => {
 
-            <div className="text-side">
-              <h2>{service.title}</h2>
-              <h3>{service.subtitle}</h3>
-              <p>{service.description}</p>
+          // Fix: Hide empty cards
+          if (!service.title && !service.description) return null;
 
-              <div className="buttons">
-                <button className="btn btn-book">Book Now</button>
-                <button className="btn btn-whatsapp">
-                  <span className="whatsapp-icon-circle">
-                    <FontAwesomeIcon icon={faWhatsapp} />
-                  </span>
-                  Whatsapp Now
-                </button>
+          // Logic: Get configs for buttons
+          const buttonConfig = getButtonConfig(service.phoneNumber);
+          const whatsappLink = getWhatsAppLink(service.whatsappNumber);
+
+          return (
+            <div
+              key={service._id || index}
+              className={`content-grid ${index % 2 !== 0 ? "row-reverse" : ""}`}
+            >
+              <div className="image-side">
+                <img
+                  src={getImageUrl(service.image, service2)}
+                  alt={service.title}
+                />
+              </div>
+
+              <div className="text-side">
+                <h2>{service.title}</h2>
+                {service.subtitle && <h3>{service.subtitle}</h3>}
+                <p>{service.desc || service.description}</p>
+
+                <div className="buttons">
+
+                  {/* DYNAMIC BOOK BUTTON */}
+                  {buttonConfig.type === 'internal' ? (
+                    <Link {...buttonConfig.props}>
+                      {buttonConfig.text}
+                    </Link>
+                  ) : (
+                    <a {...buttonConfig.props}>
+                      {buttonConfig.text}
+                    </a>
+                  )}
+
+                  {/* WHATSAPP BUTTON */}
+                  <a
+                    href={whatsappLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-whatsapp"
+                  >
+                    <span className="whatsapp-icon-circle">
+                      <FontAwesomeIcon icon={faWhatsapp} />
+                    </span>
+                    Whatsapp Now
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </section>
 
+      {/* 6. NEWSLETTER SECTION */}
       <section className="newsletter-section">
         <div className="newsletter-container">
           <div className="left-content">
             <h2 className="title">
-              <span className="lets">LET'S </span>
-              <span className="connect">CONNECT</span>
+              {(() => {
+                const title = data.newsletterTitle || "LET'S CONNECT";
+                const parts = title.split(' ');
+                if (parts.length >= 2) {
+                  return <>{parts.slice(0, -1).join(' ')} <span className="teal-text-thin">{parts[parts.length - 1]}</span></>;
+                }
+                return title;
+              })()}
             </h2>
             <p className="subtitle">
-              Stay updated with upcoming EcoGlow events and news or simply get in touch.
+              {data.newsletterSubtitle || "Stay updated with upcoming EcoGlow events and news."}
             </p>
           </div>
 
           <div className="right-content">
             <p className="newsletter-label">You will get monthly newsletter</p>
-            <form className="email-form" onSubmit={(e) => e.preventDefault()}>
-              <input
-                type="email"
-                className="email-input"
-                placeholder="Enter your email ID"
-                required
-              />
-              <button type="submit" className="send-button">Send</button>
-            </form>
+            <NewsletterForm contactEmail={data.contactEmail} />
           </div>
         </div>
       </section>
     </div>
+  );
+};
+
+// Newsletter Form Component
+const NewsletterForm = ({ contactEmail }) => {
+  const [subscriberEmail, setSubscriberEmail] = React.useState("");
+  const [sending, setSending] = React.useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!subscriberEmail) return;
+
+    const adminEmail = contactEmail || "residential@ecoglow.ae";
+
+    try {
+      setSending(true);
+
+      const response = await fetch(`${SERVER_URL}/message/send-newsletter`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userEmail: subscriberEmail,
+          adminEmail: adminEmail
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        alert("✅ Subscribed successfully! Check your email for confirmation.");
+        setSubscriberEmail("");
+      } else {
+        alert("❌ Failed to subscribe. Please try again.");
+        console.error(result.message);
+      }
+    } catch (error) {
+      console.error("Network Error:", error);
+      alert("❌ Error connecting to server.");
+    } finally {
+      setSending(false);
+    }
+  };
+
+  return (
+    <form className="email-form" onSubmit={handleSubmit}>
+      <input
+        type="email"
+        className="email-input"
+        placeholder="Enter your email ID"
+        value={subscriberEmail}
+        onChange={(e) => setSubscriberEmail(e.target.value)}
+        required
+      />
+      <button
+        type="submit"
+        className="send-button"
+        disabled={sending}
+        style={{ opacity: sending ? 0.7 : 1, cursor: sending ? 'wait' : 'pointer' }}
+      >
+        {sending ? "Sending..." : "Send"}
+      </button>
+    </form>
   );
 };
 

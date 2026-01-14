@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { 
-  Save, Layout, Info, Mail, Phone, MapPin, 
-  ImageIcon, Loader2, X, Globe, MessageSquare 
+import {
+  Save, Layout, Info, Mail, Phone, MapPin,
+  ImageIcon, Loader2, X, Globe, MessageSquare, AtSign
 } from 'lucide-react';
 import { getContactSettings, upsertContactSettings } from '../../services/contactAPI';
 
@@ -21,7 +21,8 @@ const ContactAdmin = () => {
     address: "",
     phone: "",
     email: "",
-    mapEmbedUrl: ""
+    mapEmbedUrl: "",
+    contactEmail: ""
   });
 
   const fileRef = useRef(null);
@@ -51,7 +52,8 @@ const ContactAdmin = () => {
             address: apiData.contactInfo?.address || "",
             phone: apiData.contactInfo?.phone || "",
             email: apiData.contactInfo?.email || "",
-            mapEmbedUrl: apiData.mapEmbedUrl || ""
+            mapEmbedUrl: apiData.mapEmbedUrl || "",
+            contactEmail: apiData.contactEmail || ""
           });
         }
       } catch (error) {
@@ -100,7 +102,7 @@ const ContactAdmin = () => {
 
   return (
     <div style={{ padding: '40px', maxWidth: '1100px', margin: '0 auto', fontFamily: 'Inter, sans-serif', backgroundColor: '#f8fafc' }}>
-      
+
       {/* HEADER (Identical to FAQ) */}
       <div style={headerStyle}>
         <div>
@@ -108,7 +110,7 @@ const ContactAdmin = () => {
           <p style={{ margin: 0, color: '#64748b', fontSize: '0.9rem' }}>Manage company details, map locations, and contact forms.</p>
         </div>
         <button style={publishBtn} onClick={handlePublish} disabled={loading}>
-          {loading ? <Loader2 className="animate-spin" size={20}/> : <Save size={20} />} 
+          {loading ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
           {loading ? " Saving..." : " Save & Publish"}
         </button>
       </div>
@@ -162,62 +164,81 @@ const ContactAdmin = () => {
         </section>
 
         {/* 3. CONTACT INFORMATION */}
-     {/* 3. CONTACT INFORMATION */}
-<section style={cardStyle}>
-  <div style={sectionHeader}><Info size={18} color="#14b8a6" /> <h3>3. Business Information</h3></div>
-  <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-    <div>
-      <label style={labelStyle}>Physical Address (Supports Multi-line)</label>
-      <div style={iconInputWrapper}>
-        {/* Adjusted icon position for the taller box */}
-        <MapPin size={16} style={{ ...inputIcon, top: '20px', transform: 'none' }} />
-        <textarea 
-          name="address" 
-          style={{ 
-            ...inputStyle, 
-            paddingLeft: '40px', 
-            paddingTop: '12px',
-            minHeight: '100px', // Gives space for 3+ lines
-            resize: 'vertical', // Allows you to pull the corner to see more
-            fontFamily: 'inherit' 
-          }} 
-          value={data.address} 
-          onChange={handleTextChange}
-          placeholder="Enter address...&#10;Line 2&#10;Line 3"
-        />
-      </div>
-    </div>
-    
-    {/* Phone and Email remain as inputs */}
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
-      <div>
-        <label style={labelStyle}>Phone Number</label>
-        <div style={iconInputWrapper}>
-          <Phone size={16} style={inputIcon} />
-          <input name="phone" style={{ ...inputStyle, paddingLeft: '40px' }} value={data.phone} onChange={handleTextChange} />
-        </div>
-      </div>
-      <div>
-        <label style={labelStyle}>Email Address</label>
-        <div style={iconInputWrapper}>
-          <Mail size={16} style={inputIcon} />
-          <input name="email" style={{ ...inputStyle, paddingLeft: '40px' }} value={data.email} onChange={handleTextChange} />
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+        {/* 3. CONTACT INFORMATION */}
+        <section style={cardStyle}>
+          <div style={sectionHeader}><Info size={18} color="#14b8a6" /> <h3>3. Business Information</h3></div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+            <div>
+              <label style={labelStyle}>Physical Address (Supports Multi-line)</label>
+              <div style={iconInputWrapper}>
+                {/* Adjusted icon position for the taller box */}
+                <MapPin size={16} style={{ ...inputIcon, top: '20px', transform: 'none' }} />
+                <textarea
+                  name="address"
+                  style={{
+                    ...inputStyle,
+                    paddingLeft: '40px',
+                    paddingTop: '12px',
+                    minHeight: '100px', // Gives space for 3+ lines
+                    resize: 'vertical', // Allows you to pull the corner to see more
+                    fontFamily: 'inherit'
+                  }}
+                  value={data.address}
+                  onChange={handleTextChange}
+                  placeholder="Enter address...&#10;Line 2&#10;Line 3"
+                />
+              </div>
+            </div>
+
+            {/* Phone and Email remain as inputs */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
+              <div>
+                <label style={labelStyle}>Phone Number</label>
+                <div style={iconInputWrapper}>
+                  <Phone size={16} style={inputIcon} />
+                  <input name="phone" style={{ ...inputStyle, paddingLeft: '40px' }} value={data.phone} onChange={handleTextChange} />
+                </div>
+              </div>
+              <div>
+                <label style={labelStyle}>Email Address</label>
+                <div style={iconInputWrapper}>
+                  <Mail size={16} style={inputIcon} />
+                  <input name="email" style={{ ...inputStyle, paddingLeft: '40px' }} value={data.email} onChange={handleTextChange} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 3.5. FORM NOTIFICATION EMAIL */}
+        <section style={cardStyle}>
+          <div style={sectionHeader}><AtSign size={18} color="#14b8a6" /> <h3>3.5 Form Notification Email</h3></div>
+          <div>
+            <label style={labelStyle}>Contact Email (Receives Form Submissions)</label>
+            <div style={iconInputWrapper}>
+              <Mail size={16} style={inputIcon} />
+              <input
+                type="email"
+                name="contactEmail"
+                style={{ ...inputStyle, paddingLeft: '40px' }}
+                value={data.contactEmail}
+                onChange={handleTextChange}
+                placeholder="contact@ecoglow.ae"
+              />
+            </div>
+          </div>
+        </section>
 
         {/* 4. MAP EMBED */}
         <section style={cardStyle}>
           <div style={sectionHeader}><Globe size={18} color="#14b8a6" /> <h3>4. Map Integration</h3></div>
           <div>
             <label style={labelStyle}>Google Maps Embed URL (Iframe Src)</label>
-            <textarea 
-              name="mapEmbedUrl" 
-              style={{ ...inputStyle, minHeight: '80px', resize: 'vertical' }} 
-              value={data.mapEmbedUrl} 
-              onChange={handleTextChange} 
+            <textarea
+              name="mapEmbedUrl"
+              style={{ ...inputStyle, minHeight: '80px', resize: 'vertical' }}
+              value={data.mapEmbedUrl}
+              onChange={handleTextChange}
               placeholder="Paste the src link from Google Maps embed code here..."
             />
           </div>

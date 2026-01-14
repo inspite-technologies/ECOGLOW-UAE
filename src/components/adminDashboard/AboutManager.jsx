@@ -1,14 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
   Save,
-  Edit2,
-  Trash2,
-  Plus,
-  X,
-  Image as ImageIcon,
+  ImageIcon,
   FileText,
   Layers,
-  Loader2
+  Loader2,
+  Plus,
+  Trash2,
+  Link2
 } from 'lucide-react';
 import { fetchHomeAbout, updateHomeAbout } from '../../services/homeAboutAPI';
 import './AdminStyles.css';
@@ -18,19 +17,22 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 const AboutManager = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [compressing, setCompressing] = useState(false);
   const [aboutDocId, setAboutDocId] = useState(null);
-
-  // Modal
-  const [showModal, setShowModal] = useState(false);
-  const [editingItem, setEditingItem] = useState(null);
 
   const valuesImageRef = useRef(null);
 
-  /* 🔥 GENERAL ABOUT STATE — SCHEMA ALIGNED */
   const [aboutGeneral, setAboutGeneral] = useState({
     heroHighlightText: '',
     heroTitle: '',
-    heroParagraphs: ['']
+    heroParagraphs: [''],
+    aboutLink: '' 
+  });
+
+  const [cards, setCards] = useState({
+    vision: { title: 'Our Vision', content: '' },
+    mission: { title: 'Our Mission', content: '' },
+    values: { title: 'Our Values', content: '' }
   });
 
   const [valuesSection, setValuesSection] = useState({
@@ -38,13 +40,10 @@ const AboutManager = () => {
     newFile: null
   });
 
-  const [aboutItems, setAboutItems] = useState([]);
-
   useEffect(() => {
     loadData();
   }, []);
 
-  /* LOAD DATA */
   const loadData = async () => {
     try {
       setLoading(true);
@@ -53,21 +52,21 @@ const AboutManager = () => {
 
       if (data) {
         setAboutDocId(data._id);
-
         setAboutGeneral({
           heroHighlightText: data.heroHighlightText || '',
           heroTitle: data.heroTitle || '',
-          heroParagraphs: data.heroParagraphs?.length
-            ? data.heroParagraphs
-            : ['']
+          aboutLink: data.aboutLink || '', 
+          heroParagraphs: data.heroParagraphs?.length ? data.heroParagraphs : ['']
         });
-
         setValuesSection({
           commonImage: data.valuesCommonImage || null,
           newFile: null
         });
-
-        setAboutItems(data.items || []);
+        setCards({
+          vision: data.vision || { title: 'Our Vision', content: '' },
+          mission: data.mission || { title: 'Our Mission', content: '' },
+          values: data.values || { title: 'Our Values', content: '' }
+        });
       }
     } catch (err) {
       console.error('Failed to load about data', err);
@@ -76,16 +75,48 @@ const AboutManager = () => {
     }
   };
 
+  const compressAsWebP = (canvas, originalFile) => {
+    return new Promise((resolve) => {
+      canvas.toBlob((blob) => {
+        const compressedFile = new File([blob], originalFile.name.replace(/\.[^/.]+$/, '.webp'), {
+          type: 'image/webp',
+          lastModified: Date.now()
+        });
+        resolve(compressedFile);
+      }, 'image/webp', 0.80);
+    });
+  };
+
+  const compressImage = async (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target.result;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          let width = img.width;
+          let height = img.height;
+          const MAX_W = 1920; 
+          const MAX_H = 1080;
+          if (width > MAX_W) { height *= MAX_W / width; width = MAX_W; }
+          canvas.width = width; canvas.height = height;
+          ctx.drawImage(img, 0, 0, width, height);
+          compressAsWebP(canvas, file).then(resolve);
+        };
+      };
+    });
+  };
+
   const getImageUrl = (imagePath) => {
     if (!imagePath) return null;
     if (imagePath.startsWith('blob:')) return imagePath;
     const formatted = imagePath.replace(/\\/g, '/');
-    return formatted.startsWith('http')
-      ? formatted
-      : `${API_BASE_URL}/${formatted}`;
+    return formatted.startsWith('http') ? formatted : `${API_BASE_URL}/${formatted}`;
   };
 
-  /* GENERAL HANDLERS */
   const handleGeneralChange = (e) => {
     const { name, value } = e.target;
     setAboutGeneral((prev) => ({ ...prev, [name]: value }));
@@ -97,309 +128,154 @@ const AboutManager = () => {
     setAboutGeneral((prev) => ({ ...prev, heroParagraphs: updated }));
   };
 
-  const handleValuesImageUpload = (e) => {
+  const removeParagraph = (index) => {
+    const updated = aboutGeneral.heroParagraphs.filter((_, i) => i !== index);
+    setAboutGeneral((prev) => ({ ...prev, heroParagraphs: updated }));
+  };
+
+  const handleCardChange = (cardKey, field, value) => {
+    setCards(prev => ({ ...prev, [cardKey]: { ...prev[cardKey], [field]: value } }));
+  };
+
+  const handleValuesImageUpload = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setValuesSection({
-        commonImage: URL.createObjectURL(file),
-        newFile: file
-      });
-    }
+    if (!file) return;
+    try {
+      setCompressing(true);
+      const finalFile = file.size > 500000 ? await compressImage(file) : file;
+      setValuesSection({ commonImage: URL.createObjectURL(finalFile), newFile: finalFile });
+    } catch (error) {
+      alert('Image error');
+    } finally { setCompressing(false); }
   };
 
-  /* ITEM MODAL */
-  const openEditModal = (item = null) => {
-    setEditingItem(item ? { ...item } : { id: null, title: '', content: '' });
-    setShowModal(true);
-  };
-
-  const saveAboutItem = () => {
-    if (!editingItem.title.trim() || !editingItem.content.trim()) {
-      alert('Title and Content are required');
-      return;
-    }
-
-    if (editingItem._id || editingItem.id) {
-      setAboutItems((prev) =>
-        prev.map((item) =>
-          item._id === editingItem._id || item.id === editingItem.id
-            ? editingItem
-            : item
-        )
-      );
-    } else {
-      setAboutItems((prev) => [...prev, { ...editingItem, id: Date.now() }]);
-    }
-
-    setShowModal(false);
-  };
-
-  const deleteAboutItem = (id) => {
-    if (window.confirm('Delete this item?')) {
-      setAboutItems((prev) =>
-        prev.filter((item) => (item._id || item.id) !== id)
-      );
-    }
-  };
-
-  /* SAVE ALL */
   const handleSaveAll = async () => {
     try {
       setSaving(true);
       const formData = new FormData();
-
       if (aboutDocId) formData.append('_id', aboutDocId);
-
       formData.append('heroHighlightText', aboutGeneral.heroHighlightText);
       formData.append('heroTitle', aboutGeneral.heroTitle);
-      formData.append(
-        'heroParagraphs',
-        JSON.stringify(aboutGeneral.heroParagraphs)
-      );
-
-      if (valuesSection.newFile) {
-        formData.append('valuesCommonImage', valuesSection.newFile);
-      }
-
-      formData.append(
-        'items',
-        JSON.stringify(
-          aboutItems.map((item) => ({
-            title: item.title,
-            content: item.content,
-            _id: item._id
-          }))
-        )
-      );
-
+      formData.append('aboutLink', aboutGeneral.aboutLink);
+      formData.append('heroParagraphs', JSON.stringify(aboutGeneral.heroParagraphs));
+      formData.append('vision', JSON.stringify(cards.vision));
+      formData.append('mission', JSON.stringify(cards.mission));
+      formData.append('values', JSON.stringify(cards.values));
+      if (valuesSection.newFile) formData.append('valuesCommonImage', valuesSection.newFile);
       await updateHomeAbout(formData);
-      alert('✅ Changes Saved');
+      alert('✅ Saved Successfully');
       loadData();
     } catch (err) {
-      console.error('Save failed', err);
       alert('Save failed');
-    } finally {
-      setSaving(false);
-    }
+    } finally { setSaving(false); }
   };
 
-  if (loading)
-    return (
-      <div className="flex justify-center p-10">
-        <Loader2 className="animate-spin text-teal-600" size={40} />
-      </div>
-    );
+  if (loading) return <div className="flex justify-center p-10"><Loader2 className="animate-spin text-teal-600" size={40} /></div>;
 
   return (
     <div className="admin-container fade-in">
-      {/* HEADER */}
-      <div className="admin-header-row">
+      {/* Header Section */}
+      <div className="admin-header-row" style={{ marginBottom: '30px' }}>
         <div>
-          <h2>About Us Manager</h2>
-          <p>Manage hero content and core values.</p>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: '700' }}>About Us Manager</h2>
+          <p style={{ color: '#64748b' }}>Manage section content and the global action link.</p>
         </div>
-        <button className="btn btn-primary" onClick={handleSaveAll} disabled={saving}>
+        <button className="btn btn-primary" onClick={handleSaveAll} disabled={saving || compressing} style={{ padding: '10px 24px', display: 'flex', gap: '8px', alignItems: 'center' }}>
           {saving ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />}
-          {saving ? ' Saving...' : ' Save Changes'}
+          {saving ? ' Saving...' : ' Save All Changes'}
         </button>
       </div>
 
-      {/* HERO SECTION */}
-      <div className="admin-card">
-        <div className="section-header">
-          <FileText size={18} /> About Hero Content
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+      <div className="admin-grid-layout" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
+        
+        {/* Left Column: Hero Content */}
+        <div className="admin-card" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <div className="section-header" style={{ marginBottom: '5px' }}><FileText size={18} /> Hero Content</div>
+          
           <div className="input-group">
             <label className="input-label">Highlight Text</label>
-            <input
-              className="form-input"
-              name="heroHighlightText"
-              value={aboutGeneral.heroHighlightText}
-              onChange={handleGeneralChange}
-              placeholder="Luxury standard"
-            />
+            <input className="form-input" name="heroHighlightText" value={aboutGeneral.heroHighlightText} onChange={handleGeneralChange} />
           </div>
 
           <div className="input-group">
             <label className="input-label">Main Heading</label>
-            <input
-              className="form-input"
-              name="heroTitle"
-              value={aboutGeneral.heroTitle}
-              onChange={handleGeneralChange}
-              placeholder="cleaning service born in Dubai..."
-            />
+            <input className="form-input" name="heroTitle" value={aboutGeneral.heroTitle} onChange={handleGeneralChange} />
           </div>
 
-          {aboutGeneral.heroParagraphs.map((para, index) => (
-            <div className="input-group" key={index}>
-              <label className="input-label">Paragraph {index + 1}</label>
-              <textarea
-                className="form-input"
-                rows={3}
-                value={para}
-                onChange={(e) => handleParagraphChange(index, e.target.value)}
-              />
-            </div>
-          ))}
-
-          <button
-            className="btn btn-secondary"
-            onClick={() =>
-              setAboutGeneral((prev) => ({
-                ...prev,
-                heroParagraphs: [...prev.heroParagraphs, '']
-              }))
-            }
-          >
-            <Plus size={14} /> Add Paragraph
-          </button>
-        </div>
-      </div>
-      {/* CORE VALUES SECTION */}
-      <div className="admin-card" style={{ marginTop: '30px' }}>
-        <div className="section-header">
-          <Layers size={18} /> Core Values & Items
-        </div>
-        
-        {/* LAYOUT: Image Left, Cards Right */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '40px', alignItems: 'start' }}>
-          
-          {/* LEFT: IMAGE */}
-          <div>
-            <label className="input-label">Common Values Image</label>
-            <div 
-              className="upload-box" 
-              style={{ height: '300px', width: '100%', overflow: 'hidden', borderRadius: '12px' }}
-              onClick={() => valuesImageRef.current.click()}
-            >
-              {valuesSection.commonImage ? (
-                <img 
-                    src={getImageUrl(valuesSection.commonImage)} 
-                    alt="Values Common" 
-                    className="preview-img" 
-                    style={{width: '100%', height: '100%', objectFit: 'cover'}}
-                />
-              ) : (
-                <div style={{ textAlign: 'center', color: '#94a3b8' }}>
-                  <ImageIcon size={32} style={{ marginBottom: '10px', opacity: 0.5 }} />
-                  <span style={{ fontSize: '0.9rem' }}>Upload Common Image</span>
+          <div className="paragraph-manager">
+            <label className="input-label">Hero Paragraphs</label>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {aboutGeneral.heroParagraphs.map((para, index) => (
+                <div key={index} style={{ display: 'flex', gap: '10px' }}>
+                  <textarea className="form-input" rows={3} value={para} onChange={(e) => handleParagraphChange(index, e.target.value)} />
+                  <button className="btn-icon text-red" onClick={() => removeParagraph(index)} style={{ marginTop: '5px' }}><Trash2 size={16}/></button>
                 </div>
-              )}
+              ))}
             </div>
-            <input type="file" ref={valuesImageRef} hidden accept="image/*" onChange={handleValuesImageUpload} />
-          </div>
-
-          {/* RIGHT: SEPARATED CARDS GRID */}
-          <div>
-            <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom: '20px'}}>
-                <label className="input-label" style={{margin:0, fontSize: '1.1rem'}}>Value Items (Vision, Mission, Values)</label>
-                <button className="btn btn-secondary" style={{padding:'8px 16px', fontSize:'0.9rem'}} onClick={() => openEditModal(null)}>
-                    <Plus size={16}/> Add New
-                </button>
-            </div>
-            
-            {/* GRID CONTAINER: Forces 3 distinct columns */}
-            <div style={{ 
-                display: 'grid', 
-                gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', 
-                gap: '20px',
-                alignItems: 'stretch'
-            }}> 
-              
-              {aboutItems.length === 0 && (
-                  <div style={{textAlign:'center', padding:'30px', color:'#94a3b8', border:'2px dashed #cbd5e1', borderRadius:'12px', gridColumn: '1 / -1'}}>
-                      No items added yet. Click "Add New".
-                  </div>
-              )}
-
-             {aboutItems.map((item, index) => (
-  <div
-    key={item._id || item.id || index}
-    className="vmv-card"
-  >
-    {/* CONTENT */}
-    <div>
-      <h4 className="vmv-title">
-        {item.title}
-      </h4>
-
-      <p className="vmv-content">
-        {item.content && item.content.length > 80
-          ? item.content.substring(0, 80) + '...'
-          : item.content}
-      </p>
-    </div>
-
-    {/* ACTION BUTTONS */}
-    <div className="vmv-actions">
-      <button
-        className="vmv-btn edit"
-        onClick={() => openEditModal(item)}
-      >
-        <Edit2 size={14} /> Edit
-      </button>
-
-      <button
-        className="vmv-btn delete"
-        onClick={() => deleteAboutItem(item._id || item.id)}
-      >
-        <Trash2 size={14} /> Delete
-      </button>
-    </div>
-  </div>
-))}
-
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      {/* EDIT MODAL */}
-      {showModal && editingItem && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-              <h3 style={{ margin: 0, fontSize: '1.25rem', color: '#1e293b' }}>
-                {editingItem.id || editingItem._id ? 'Edit Item' : 'Add New Item'}
-              </h3>
-              <button className="close-btn" onClick={() => setShowModal(false)}>
-                <X size={24} />
-              </button>
-            </div>
-            
-            <div className="input-group">
-                <label className="input-label">Title</label>
-                <input
-                    type="text"
-                    className="form-input"
-                    style={{ fontWeight: 'bold' }} 
-                    value={editingItem.title}
-                    onChange={(e) => setEditingItem({ ...editingItem, title: e.target.value })}
-                    placeholder="e.g. Vision"
-                />
-            </div>
-            
-            <div className="input-group">
-              <label className="input-label">Content</label>
-              <textarea
-                className="form-input"
-                rows="5"
-                value={editingItem.content}
-                onChange={(e) => setEditingItem({ ...editingItem, content: e.target.value })}
-                placeholder="Write the description here..."
-              />
-            </div>
-            
-            <button className="btn btn-primary full-width" onClick={saveAboutItem}>
-              {editingItem.id || editingItem._id ? 'Update Item' : 'Create Item'}
+            <button className="btn btn-secondary btn-sm" onClick={() => setAboutGeneral(prev => ({ ...prev, heroParagraphs: [...prev.heroParagraphs, ''] }))} style={{ marginTop: '12px' }}>
+              <Plus size={14} /> Add Paragraph
             </button>
           </div>
+
+          {/* Separated Link Section for clarity */}
+          <div className="input-group" style={{ 
+            backgroundColor: '#f0fdfa', 
+            padding: '16px', 
+            borderRadius: '12px', 
+            border: '1px solid #ccfbf1',
+            marginTop: '10px'
+          }}>
+            <label className="input-label" style={{ color: '#0f766e', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+              <Link2 size={18} /> Global "Know More" Link
+            </label>
+            <input 
+              className="form-input" 
+              name="aboutLink" 
+              placeholder="e.g. /about or https://wa.me/..."
+              value={aboutGeneral.aboutLink} 
+              onChange={handleGeneralChange}
+              style={{ borderColor: '#5eead4', backgroundColor: '#fff' }}
+            />
+          </div>
         </div>
-      )}
+
+        {/* Right Column: Side Image */}
+        <div className="admin-card">
+          <div className="section-header" style={{ marginBottom: '15px' }}><ImageIcon size={18} /> Section Side Image</div>
+          <div className="upload-box" style={{ height: '400px', cursor: 'pointer', borderRadius: '12px' }} onClick={() => valuesImageRef.current.click()}>
+            {valuesSection.commonImage ? (
+              <img src={getImageUrl(valuesSection.commonImage)} alt="Common" className="preview-img" style={{ objectFit: 'cover', borderRadius: '8px' }} />
+            ) : (
+              <div className="text-center" style={{ color: '#94a3b8' }}>
+                <Plus size={40} />
+                <p style={{ marginTop: '10px' }}>Upload Side Image</p>
+              </div>
+            )}
+          </div>
+          <input type="file" ref={valuesImageRef} hidden onChange={handleValuesImageUpload} />
+        </div>
+      </div>
+
+      {/* Core Pillars Section */}
+      <div className="section-header" style={{ marginTop: '50px', marginBottom: '25px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <Layers size={20} /> <span style={{ fontSize: '1.25rem', fontWeight: '600' }}>Core Pillars</span>
+      </div>
+
+      <div className="vmv-grid-three" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginBottom: '40px' }}>
+        {['vision', 'mission', 'values'].map((key) => (
+          <div key={key} className="admin-card pillar-card" style={{ transition: 'all 0.3s ease' }}>
+            <h3 style={{ textTransform: 'capitalize', color: 'var(--primary-teal)', marginBottom: '15px', borderBottom: '1px solid #f1f5f9', paddingBottom: '10px' }}>{key}</h3>
+            <div className="input-group" style={{ marginBottom: '15px' }}>
+              <label className="input-label">Title</label>
+              <input className="form-input" value={cards[key].title} onChange={(e) => handleCardChange(key, 'title', e.target.value)} />
+            </div>
+            <div className="input-group">
+              <label className="input-label">Content</label>
+              <textarea className="form-input" rows={6} value={cards[key].content} onChange={(e) => handleCardChange(key, 'content', e.target.value)} />
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

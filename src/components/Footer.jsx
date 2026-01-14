@@ -71,8 +71,6 @@ function Footer() {
     };
   }, [footerData]);
 
-  // Function to split links into groups of 2 for your 4-column layout
-  // Each column will display its links vertically
   const chunkLinks = (links, size) => {
     if (!links) return [];
     const result = [];
@@ -86,6 +84,9 @@ function Footer() {
 
   const linkGroups = chunkLinks(footerData.usefulLinks, 2);
 
+  // Style for gap between icon and text
+  const iconStyle = { marginRight: '12px' };
+
   return (
     <footer className="main-footer">
       <link 
@@ -97,25 +98,47 @@ function Footer() {
         
         {/* TOP ROW: Contact Information */}
         <div className="footer-contact-row" ref={contactRowRef}>
-          <div className="contact-item address">
-            <i className="fas fa-map-marker-alt"></i>
-            <span>{footerData.officeAddress}</span>
+          
+          {/* Address: Use visibility to hide but keep space if empty */}
+          <div 
+            className="contact-item address" 
+            style={{ visibility: footerData.officeAddress ? 'visible' : 'hidden' }}
+          >
+            <i className="fas fa-map-marker-alt" style={iconStyle}></i>
+            <span>{footerData.officeAddress || 'Placeholder'}</span>
           </div>
+
           <div className="contact-details-group">
-            <div className="contact-item phone">
-              <i className="fas fa-phone"></i>
-              <a href={`tel:${footerData.phone}`}>{footerData.phone}</a>
+            
+            {/* Phone */}
+            <div 
+              className="contact-item phone"
+              style={{ visibility: footerData.phone ? 'visible' : 'hidden' }}
+            >
+              <i className="fas fa-phone" style={iconStyle}></i>
+              <a href={`tel:${footerData.phone}`}>{footerData.phone || '000'}</a>
             </div>
-            <div className="contact-item whatsapp">
-              <i className="fab fa-whatsapp"></i>
+
+            {/* WhatsApp */}
+            <div 
+              className="contact-item whatsapp"
+              style={{ visibility: footerData.whatsapp ? 'visible' : 'hidden' }}
+            >
+              <i className="fab fa-whatsapp" style={iconStyle}></i>
               <a href={`https://wa.me/${footerData.whatsapp?.replace(/\s/g, '')}`} target="_blank" rel="noopener noreferrer">
-                {footerData.whatsapp}
+                {footerData.whatsapp || '000'}
               </a>
             </div>
-            <div className="contact-item email">
-              <i className="far fa-envelope"></i>
-              <a href={`mailto:${footerData.email}`}>{footerData.email}</a>
+
+            {/* Email */}
+            <div 
+              className="contact-item email"
+              style={{ visibility: footerData.email ? 'visible' : 'hidden' }}
+            >
+              <i className="far fa-envelope" style={iconStyle}></i>
+              <a href={`mailto:${footerData.email}`}>{footerData.email || 'mail@example.com'}</a>
             </div>
+
           </div>
         </div>
 
@@ -123,7 +146,6 @@ function Footer() {
         <div className="footer-links-row" ref={linksRowRef}>
           <div className="useful-links-label">USEFUL LINKS</div>
           <div className="links-grid">
-            {/* Each column displays its links vertically - one link per row */}
             {linkGroups.map((group, index) => (
               <div className="link-column" key={index}>
                 {group.map((link) => (

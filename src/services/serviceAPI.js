@@ -5,7 +5,6 @@ export const fetchServices = async () => {
   try {
     
     const response = await SERVICES_INSTANCE.get("/");
-    console.log("fetching data...", response.data);
 
     return response.data;
   }

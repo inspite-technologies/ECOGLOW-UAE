@@ -1,7 +1,7 @@
 /* ==================== FOOTER BASE STYLES ==================== */
 
 .main-footer {
-  position: relative; 
+  position: relative;
   z-index: 10000;
   background-color: #80cbc4;
   color: #ffffff;
@@ -394,7 +394,7 @@
   }
 
   .link-column a {
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .footer-book-btn {
@@ -534,6 +534,7 @@
   }
 
   .footer-book-btn {
+    min-height: 46px;
     width: 100%;
   }
 
@@ -582,6 +583,7 @@
     align-items: flex-start;
     gap: 16px;
     padding-bottom: 35px;
+    width: 100%;
   }
 
   .contact-item.address {
@@ -614,13 +616,15 @@
   }
 
   .link-column a {
-    font-size: 12px;
+    font-size: 15px;
     line-height: 1.8;
   }
 
   .footer-book-btn {
     width: 100%;
+    min-height: 46px;
     margin-top: 20px;
+    font-size: 14px;
   }
 
   .social-follow {
@@ -628,10 +632,21 @@
     gap: 12px;
   }
 
+  .social-follow span {
+    font-size: 14px;
+  }
+
+  .social-icons a {
+    width: 42px;
+    height: 42px;
+    font-size: 16px;
+  }
+
   .legal-row {
     flex-direction: column;
     text-align: center;
     gap: 10px;
+    font-size: 13px;
   }
 }
 
@@ -681,6 +696,9 @@
 
   .contact-item i {
     font-size: 13px;
+    width: 22px;
+    display: inline-flex;
+    justify-content: center;
   }
 
   .contact-item.address {
@@ -702,6 +720,7 @@
     align-items: flex-start;
     gap: 18px;
     padding-bottom: 35px;
+    width: 100%;
   }
 
   .contact-details-group {
@@ -731,12 +750,13 @@
   }
 
   .link-column a {
-    font-size: 11px;
+    font-size: 15px;
     line-height: 1.8;
   }
 
   .footer-book-btn {
-    font-size: 11px;
+    font-size: 13px;
+    min-height: 46px;
     padding: 12px 22px;
     margin-top: 20px;
     width: 100%;
@@ -753,7 +773,7 @@
   }
 
   .social-follow span {
-    font-size: 11px;
+    font-size: 13px;
   }
 
   .social-icons {
@@ -761,13 +781,13 @@
   }
 
   .social-icons a {
-    width: 36px;
-    height: 36px;
-    font-size: 14px;
+    width: 40px;
+    height: 40px;
+    font-size: 15px;
   }
 
   .legal-row {
-    font-size: 10px;
+    font-size: 12px;
     flex-direction: column;
     gap: 12px;
     text-align: center;
@@ -821,6 +841,9 @@
 
   .contact-item i {
     font-size: 12px;
+    width: 20px;
+    display: inline-flex;
+    justify-content: center;
   }
 
   .contact-item.address {
@@ -842,6 +865,7 @@
     align-items: flex-start;
     gap: 16px;
     padding-bottom: 32px;
+    width: 100%;
   }
 
   .contact-details-group {
@@ -871,12 +895,13 @@
   }
 
   .link-column a {
-    font-size: 10px;
+    font-size: 12.5px;
     line-height: 1.8;
   }
 
   .footer-book-btn {
-    font-size: 10px;
+    font-size: 12px;
+    min-height: 46px;
     padding: 11px 20px;
     margin-top: 18px;
     width: 100%;
@@ -893,7 +918,7 @@
   }
 
   .social-follow span {
-    font-size: 10px;
+    font-size: 12px;
   }
 
   .social-icons {
@@ -901,13 +926,13 @@
   }
 
   .social-icons a {
-    width: 34px;
-    height: 34px;
-    font-size: 13px;
+    width: 38px;
+    height: 38px;
+    font-size: 14px;
   }
 
   .legal-row {
-    font-size: 9px;
+    font-size: 11px;
     flex-direction: column;
     gap: 10px;
     text-align: center;
@@ -956,12 +981,15 @@
 
   .contact-item span,
   .contact-item a {
-    font-size: 10px;
+    font-size: 13px;
     line-height: 1.7;
   }
 
   .contact-item i {
     font-size: 11px;
+    width: 18px;
+    display: inline-flex;
+    justify-content: center;
   }
 
   .contact-item.address {
@@ -983,6 +1011,7 @@
     align-items: flex-start;
     gap: 14px;
     padding-bottom: 28px;
+    width: 100%;
   }
 
   .contact-details-group {
@@ -1012,14 +1041,15 @@
   }
 
   .link-column a {
-    font-size: 9px;
+    font-size: 12px;
     line-height: 1.8;
   }
 
   .footer-book-btn {
-    font-size: 9px;
+    font-size: 11px;
     padding: 10px 18px;
     margin-top: 16px;
+    min-height: 46px;
     width: 100%;
   }
 
@@ -1034,7 +1064,7 @@
   }
 
   .social-follow span {
-    font-size: 9px;
+    font-size: 11px;
   }
 
   .social-icons {
@@ -1042,13 +1072,13 @@
   }
 
   .social-icons a {
-    width: 32px;
-    height: 32px;
-    font-size: 12px;
+    width: 36px;
+    height: 36px;
+    font-size: 13px;
   }
 
   .legal-row {
-    font-size: 8px;
+    font-size: 10px;
     flex-direction: column;
     gap: 9px;
     text-align: center;
@@ -1058,6 +1088,7 @@
 /* ==================== PERFORMANCE & ACCESSIBILITY ==================== */
 
 @media (prefers-reduced-motion: reduce) {
+
   .contact-item a,
   .link-column a,
   .footer-book-btn,
@@ -1073,7 +1104,9 @@
   }
 }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+
   .newsletter-title,
   .newsletter-subtitle,
   .contact-item,

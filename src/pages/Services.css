@@ -92,9 +92,9 @@
   max-width: 1400px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1.2fr 1fr; 
-  gap: 60px; 
-  align-items: center; 
+  grid-template-columns: 1.2fr 1fr;
+  gap: 60px;
+  align-items: center;
 }
 
 .residential-section .content {
@@ -142,8 +142,8 @@
 
 .residential-section .image-container {
   width: 100%;
-  height: 500px; 
-  border-radius: 8px; 
+  height: 500px;
+  border-radius: 8px;
   overflow: hidden;
 }
 
@@ -160,21 +160,21 @@
   .residential-section {
     padding: 60px 5%;
   }
-  
+
   .residential-section .container {
-    gap: 30px; 
-    grid-template-columns: 1fr 1fr; 
+    gap: 30px;
+    grid-template-columns: 1fr 1fr;
   }
-  
+
   .residential-section .title {
     font-size: 42px;
   }
-  
+
   .service-hero {
     padding-left: 10%;
     padding-right: 10%;
   }
-  
+
   .service-intro {
     padding: 45px 10%;
   }
@@ -183,33 +183,33 @@
 /* --- MOBILE VIEW (STACK TO 1 COLUMN) --- */
 @media (max-width: 768px) {
   .residential-section .container {
-    grid-template-columns: 1fr; 
+    grid-template-columns: 1fr;
     gap: 40px;
   }
 
   .residential-section .content {
     padding-right: 0;
-    order: 1; 
+    order: 1;
   }
-  
+
   .residential-section .image-container {
     height: 350px;
-    order: 2; 
+    order: 2;
   }
-  
+
   .title-underline {
-   margin-top: 10px !important;
+    margin-top: 10px !important;
   }
-  
+
   .service-hero {
     min-height: 300px;
     padding: 0 20px 80px 20px;
   }
-  
+
   .service-hero .brand-text {
     font-size: 2.5rem;
   }
-  
+
   .service-intro {
     padding: 35px 20px;
   }
@@ -220,11 +220,11 @@
     min-height: 280px;
     padding-bottom: 70px;
   }
-  
+
   .service-hero .brand-text {
     font-size: 2rem;
   }
-  
+
   .service-text {
     font-size: 0.9rem;
   }
@@ -233,9 +233,9 @@
 /* --- FORCE CENTER TRUST SECTION --- */
 .trust-section {
   width: 100% !important;
-  max-width: 100% !important; 
+  max-width: 100% !important;
   margin: 0 auto !important;
-  padding: 60px 0 !important; 
+  padding: 60px 0 !important;
   overflow: hidden;
   display: flex !important;
   justify-content: center !important;
@@ -259,7 +259,7 @@
   -webkit-text-stroke: 0.5px #333;
   margin: 0 !important;
   padding: 0 !important;
-  white-space: nowrap; 
+  white-space: nowrap;
   display: inline-block;
   transform: scaleX(1);
   transform-origin: center !important;
@@ -269,7 +269,7 @@
 @media (min-width: 1200px) {
   .trust-badge .trusted-outline-text {
     -webkit-text-stroke: 0.5px #333;
-    padding-right: 140px !important; 
+    padding-right: 140px !important;
     transform: scaleX(1.2) !important;
   }
 }
@@ -282,23 +282,24 @@
 
   .trust-badge .trusted-outline-text {
     transform: scaleX(1) !important;
-    font-size: 9vw !important; 
+    font-size: 9vw !important;
   }
 }
 
 @media (max-width: 500px) {
   .trust-section {
     padding: 30px 0 !important;
-    overflow: visible !important; 
+    overflow: visible !important;
   }
-  
+
   .trust-badge .trusted-outline-text {
-    font-size: 7vw !important; 
-    padding-right: 60px !important; 
+    font-size: 7vw !important;
+    padding-right: 60px !important;
     transform: scaleX(1) !important;
-    white-space: nowrap; 
+    white-space: nowrap;
   }
 }
+
 /* --- LUXURY SECTION --- */
 .residential-luxury-section {
   background: #7dd3c0;
@@ -316,9 +317,12 @@
   color: white;
   margin-bottom: 20px;
   letter-spacing: 0.02em;
-  text-align: center !important; /* Added !important to force center */
-  width: 100%; /* Ensure full width */
-  display: block; /* Ensure block display */
+  text-align: center !important;
+  /* Added !important to force center */
+  width: 100%;
+  /* Ensure full width */
+  display: block;
+  /* Ensure block display */
 }
 
 .section-header p {
@@ -327,12 +331,13 @@
   font-weight: 300;
   max-width: 800px;
   margin: 0 auto;
-  text-align: center !important; /* Added !important to force center */
+  text-align: center !important;
+  /* Added !important to force center */
 }
 
 .content-grid {
   max-width: 1400px;
-  margin: 0 auto 30px auto; 
+  margin: 0 auto 30px auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0;
@@ -352,7 +357,7 @@
 @media (max-width: 768px) {
   .content-grid {
     margin-bottom: 40px;
-    padding-left: 0; 
+    padding-left: 0;
   }
 }
 
@@ -375,7 +380,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: -20px; 
+  margin-left: -20px;
 }
 
 .text-side h2 {
@@ -407,7 +412,7 @@
 }
 
 .btn {
-  padding: 8px 20px; 
+  padding: 8px 20px;
   font-size: 0.9rem;
   font-weight: 500;
   border: none;
@@ -416,6 +421,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  text-decoration: none;
 }
 
 .btn-book {
@@ -441,24 +447,24 @@
 .whatsapp-icon-circle {
   background: #25d366;
   color: white;
-  width: 20px; 
-  height: 20px; 
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0; 
+  flex-shrink: 0;
 }
 
 .whatsapp-icon-circle svg {
-  font-size: 10px !important; 
-  width: 10px !important; 
-  height: 10px !important; 
+  font-size: 10px !important;
+  width: 10px !important;
+  height: 10px !important;
 }
 
 .btn-whatsapp svg {
-  background: transparent; 
-  padding: 0; 
+  background: transparent;
+  padding: 0;
   border-radius: 0;
   width: auto;
   height: auto;
@@ -470,15 +476,15 @@
     padding-left: 0;
     gap: 30px;
   }
-  
+
   .content-grid.row-reverse .text-side {
     padding-left: 0;
   }
-  
+
   .service-hero {
     padding-left: 10%;
   }
-  
+
   .service-intro {
     padding: 45px 10%;
   }
@@ -495,7 +501,7 @@
     padding: 50px 40px;
     margin-left: 0;
   }
-  
+
   .content-grid.row-reverse .text-side {
     margin-right: 0;
     padding-left: 50px;
@@ -506,12 +512,12 @@
     order: -1;
     max-width: 100%;
   }
-  
+
   .service-hero {
     padding-left: 5%;
     padding-right: 5%;
   }
-  
+
   .service-intro {
     padding: 45px 5%;
   }
@@ -529,9 +535,9 @@
   .text-side {
     padding: 40px 25px;
   }
-  
+
   .content-grid.row-reverse .text-side {
-    padding-left: 25px; 
+    padding-left: 25px;
   }
 
   .image-side {
@@ -560,19 +566,19 @@
 
 .content-grid.row-reverse .text-side {
   margin-left: 0;
-  margin-right: -20px; 
-  padding-left: 5%; 
+  margin-right: -20px;
+  padding-left: 5%;
 }
 
 @media (max-width: 1024px) {
   .content-grid.row-reverse {
-    direction: ltr; 
+    direction: ltr;
     display: flex;
     flex-direction: column;
   }
 
   .content-grid.row-reverse .image-side {
-    order: -1; 
+    order: -1;
   }
 }
 
@@ -616,8 +622,8 @@
   line-height: 1.6;
   font-weight: 400;
   letter-spacing: 0.02em;
-  max-width: 100%; 
-  white-space: normal; 
+  max-width: 100%;
+  white-space: normal;
   text-align: left;
 }
 
@@ -636,14 +642,14 @@
 .email-form {
   display: flex;
   gap: 0;
-  border: 2px solid #807d7d; 
-  overflow: hidden; 
+  border: 2px solid #807d7d;
+  overflow: hidden;
 }
 
 .email-input::placeholder {
-  color: #000000; 
-  opacity: 1; 
-  font-weight: 500; 
+  color: #000000;
+  opacity: 1;
+  font-weight: 500;
 }
 
 .email-input {

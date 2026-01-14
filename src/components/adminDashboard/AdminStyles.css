@@ -502,3 +502,26 @@
 .vmv-btn:hover {
   transform: translateY(-1px);
 }
+.link-item-row {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  background: #f9fafb;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #e5e7eb;
+}
+
+.link-item-row .form-input {
+  flex: 1;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.logo-preview-img {
+  max-height: 80px;
+  object-fit: contain;
+}

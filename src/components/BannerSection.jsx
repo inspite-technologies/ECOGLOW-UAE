@@ -4,18 +4,16 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { fetchBanner } from '../services/bannerAPI';
 import './BannerSection.css';
 
-// Fallback image in case API fails or is loading
+// Fallback image
 import fallbackImage from '../assets/A9.webp';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// --- HELPER: Resolve Image URL ---
 const SERVER_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const getImageUrl = (imagePath) => {
   if (!imagePath) return fallbackImage;
   if (imagePath.startsWith("blob:") || imagePath.startsWith("http")) return imagePath;
-  // Fix Windows backslashes and prepend server URL
   return `${SERVER_URL}/${imagePath.replace(/\\/g, "/")}`;
 };
 
@@ -28,7 +26,7 @@ function BannerSection() {
   const [isDragging, setIsDragging] = useState(false);
   const [animationComplete, setAnimationComplete] = useState(false);
   const [sectionInView, setSectionInView] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState({ before: false, after: false });
   
   const sectionRef = useRef(null);
   const headingRef = useRef(null);
@@ -39,10 +37,8 @@ function BannerSection() {
     const loadData = async () => {
       try {
         const response = await fetchBanner();
-        // Handle varied response structures
         let result = response.data || response;
         if (Array.isArray(result)) result = result[0];
-        
         setBannerData(result);
       } catch (error) {
         console.error("Error fetching banner:", error);
@@ -57,33 +53,14 @@ function BannerSection() {
       const vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty('--vh', `${vh}px`);
     };
-
     setVH();
     window.addEventListener('resize', setVH);
-    window.addEventListener('orientationchange', setVH);
-
-    return () => {
-      window.removeEventListener('resize', setVH);
-      window.removeEventListener('orientationchange', setVH);
-    };
+    return () => window.removeEventListener('resize', setVH);
   }, []);
 
-  // --- 3. MOBILE DETECTION ---
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  // --- 4. GSAP ANIMATIONS ---
+  // --- 3. GSAP ANIMATIONS ---
   useEffect(() => {
     let ctx = gsap.context(() => {
-      
       ScrollTrigger.create({
         trigger: sectionRef.current,
         start: 'top 90%', 
@@ -91,18 +68,13 @@ function BannerSection() {
         onEnter: () => setSectionInView(true),
         onLeave: () => setSectionInView(false),
         onEnterBack: () => setSectionInView(true),
-        onLeaveBack: () => setSectionInView(false),
       });
 
       gsap.fromTo(
         headingRef.current,
         { opacity: 0, y: 30 },
         {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          delay: 0.2,
-          ease: 'power2.out',
+          opacity: 1, y: 0, duration: 0.6, delay: 0.2, ease: 'power2.out',
           scrollTrigger: {
             trigger: sectionRef.current,
             start: 'top 85%',
@@ -112,12 +84,14 @@ function BannerSection() {
         }
       );
     }, sectionRef);
-
     return () => ctx.revert();
   }, []);
 
-  // --- 5. SLIDER AUTO-ANIMATION ---
+  // --- 4. SLIDER AUTO-ANIMATION ---
   useEffect(() => {
+    // Only animate after both images are loaded
+    if (!imagesLoaded.before || !imagesLoaded.after) return;
+
     const totalDuration = 6000;
     const cycles = 1;
     let startTime;
@@ -145,13 +119,11 @@ function BannerSection() {
     }
 
     return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
+      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
     };
-  }, [sectionInView, isDragging, animationComplete]);
+  }, [sectionInView, isDragging, animationComplete, imagesLoaded]);
 
-  // --- 6. DRAG HANDLERS ---
+  // --- 5. DRAG HANDLERS ---
   const handleMove = useCallback((clientX) => {
     const container = sectionRef.current?.querySelector('.banner-wrapper');
     if (!container) return;
@@ -164,19 +136,11 @@ function BannerSection() {
 
   useEffect(() => {
     const onMouseMove = (e) => { 
-      if (isDragging) {
-        e.preventDefault();
-        handleMove(e.clientX); 
-      }
+      if (isDragging) { e.preventDefault(); handleMove(e.clientX); }
     };
-    
     const onTouchMove = (e) => { 
-      if (isDragging) {
-        e.preventDefault();
-        handleMove(e.touches[0].clientX); 
-      }
+      if (isDragging) { e.preventDefault(); handleMove(e.touches[0].clientX); }
     };
-    
     const onStop = () => setIsDragging(false);
 
     if (isDragging) {
@@ -195,45 +159,80 @@ function BannerSection() {
   }, [isDragging, handleMove]);
 
   const handleDragStart = (e) => {
-    if (e.type === 'mousedown') {
-      e.preventDefault();
-    }
+    if (e.type === 'mousedown') e.preventDefault();
     setIsDragging(true);
     setAnimationComplete(true);
   };
 
-  // Resolve content variables
-  const displayImage = getImageUrl(bannerData?.image);
+  // Image load handlers
+  const handleBeforeImageLoad = () => {
+    setImagesLoaded(prev => ({ ...prev, before: true }));
+  };
+
+  const handleAfterImageLoad = () => {
+    setImagesLoaded(prev => ({ ...prev, after: true }));
+  };
+
+  // --- RESOLVE CONTENT VARIABLES ---
+  const beforeImg = getImageUrl(bannerData?.beforeImage || bannerData?.image);
+  const afterImg = getImageUrl(bannerData?.afterImage || bannerData?.image);
   const displayText = bannerData?.text || "A Place You Love to Return To";
+
+  // Show loading state while images are loading
+  const bothImagesLoaded = imagesLoaded.before && imagesLoaded.after;
 
   return (
     <section className="banner-section" id="banner" ref={sectionRef}>
       <div className="banner-wrapper">
         
-        {/* Layer 1: Dark / Before (Background) */}
+        {/* Loading Overlay */}
+        {!bothImagesLoaded && (
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: '#f3f4f6',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 10
+          }}>
+            <span style={{ fontSize: '1rem', color: '#6b7280' }}>Loading banner...</span>
+          </div>
+        )}
+
+        {/* Layer 1 (Bottom/Background) -> RIGHT SIDE (BEFORE) */}
         <div className="banner-layer layer-dark">
           <div className="banner-img-container">
             <img 
-              src={displayImage} 
-              alt="Before" 
+              src={beforeImg} 
+              alt="Before cleaning" 
               className="banner-img" 
-              draggable="false" 
+              draggable="false"
+              loading="lazy"
+              onLoad={handleBeforeImageLoad}
+              style={{ opacity: imagesLoaded.before ? 1 : 0, transition: 'opacity 0.3s' }}
             />
           </div>
           <div className="banner-dark-filter"></div>
         </div>
 
-        {/* Layer 2: Bright / After (Reveal) */}
+        {/* Layer 2 (Top/Clipped) -> LEFT SIDE (AFTER) */}
         <div 
           className="banner-layer layer-reveal"
           style={{ clipPath: `inset(0 ${100 - slidePosition}% 0 0)` }}
         >
           <div className="banner-img-container">
             <img 
-              src={displayImage} 
-              alt="After" 
+              src={afterImg} 
+              alt="After cleaning" 
               className="banner-img" 
-              draggable="false" 
+              draggable="false"
+              loading="lazy"
+              onLoad={handleAfterImageLoad}
+              style={{ opacity: imagesLoaded.after ? 1 : 0, transition: 'opacity 0.3s' }}
             />
           </div>
           <div className="banner-content">
@@ -246,19 +245,17 @@ function BannerSection() {
         {/* Slider Handle */}
         <div 
           className="banner-handle"
-          style={{ left: `${slidePosition}%` }}
+          style={{ 
+            left: `${slidePosition}%`,
+            opacity: bothImagesLoaded ? 1 : 0,
+            transition: 'opacity 0.3s'
+          }}
           onMouseDown={handleDragStart}
           onTouchStart={handleDragStart}
-          role="slider"
-          aria-label="Image comparison slider"
-          aria-valuenow={Math.round(slidePosition)}
-          aria-valuemin="0"
-          aria-valuemax="100"
-          tabIndex="0"
         >
           <div className="handle-line"></div>
           <div className="handle-circle">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
               <path d="M8 18l-6-6 6-6M16 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
