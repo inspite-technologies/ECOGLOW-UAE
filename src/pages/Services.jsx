@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // 1. Added Link import
+import { Link, useLocation } from "react-router-dom"; // 1. Added Link import
 import { Home } from "lucide-react";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -64,9 +64,22 @@ const getButtonConfig = (input) => {
   };
 };
 
+// --- HELPER 4: STRING SLUGIFY (For Deep Linking) ---
+const slugify = (text) => {
+  if (!text) return '';
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')     // Replace spaces with -
+    .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+    .replace(/\-\-+/g, '-');  // Replace multiple - with single -
+};
+
 const Services = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
 
   // --- FETCH DATA ---
   useEffect(() => {
@@ -83,7 +96,30 @@ const Services = () => {
       }
     };
     loadData();
-  }, []);
+  }, []); // Only runs once on mount
+
+  // --- SCROLL TO HASH EFFECT (With Retry) ---
+  useEffect(() => {
+    if (data && location.hash) {
+      const id = decodeURIComponent(location.hash.replace('#', ''));
+      let attempts = 0;
+      const maxAttempts = 50; // Try for 5 seconds
+
+      const attemptScroll = () => {
+        const element = document.getElementById(id);
+        if (element) {
+          // Found it! Scroll and stop.
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else if (attempts < maxAttempts) {
+          // Not found yet, try again in 100ms
+          attempts++;
+          setTimeout(attemptScroll, 100);
+        }
+      };
+
+      attemptScroll();
+    }
+  }, [data, location.hash]); // Runs when data loads OR hash changes
 
   if (loading) return <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Loading...</div>;
   if (!data) return null;
@@ -113,10 +149,10 @@ const Services = () => {
           <span style={{ color: "#80cbc4" }}>/</span>
           <span>{(data.introLabel || "ALL SERVICES").toUpperCase()}</span>
         </div>
-      </section>
+      </section >
 
       {/* 3. RESIDENTIAL INTRO SECTION */}
-      <section className="residential-section">
+      < section className="residential-section" >
         <div className="container">
           <div className="content">
             <div className="section-label">{data.introLabel || "All Services"}</div>
@@ -148,82 +184,85 @@ const Services = () => {
             />
           </div>
         </div>
-      </section>
+      </section >
 
       {/* 4. TRUST BADGE */}
-      <section className="trust-section">
+      < section className="trust-section" >
         <div className="trust-badge">
           <h2 className="trusted-outline-text">{data.trustedText || "Trusted by 100+ Clients"}</h2>
         </div>
-      </section>
+      </section >
 
       {/* 5. DYNAMIC SERVICES GRID */}
-      <section className="residential-luxury-section">
+      < section className="residential-luxury-section" >
         <div className="section-header">
           <h1>{data.gridMainHeading || "Residential"}</h1>
           <p>{data.gridSubheading || "Our premium cleaning services."}</p>
         </div>
 
-        {data.servicesList && data.servicesList.map((service, index) => {
+        {
+          data.servicesList && data.servicesList.map((service, index) => {
 
-          // Fix: Hide empty cards
-          if (!service.title && !service.description) return null;
+            // Fix: Hide empty cards
+            if (!service.title && !service.description) return null;
 
-          // Logic: Get configs for buttons
-          const buttonConfig = getButtonConfig(service.phoneNumber);
-          const whatsappLink = getWhatsAppLink(service.whatsappNumber);
+            // Logic: Get configs for buttons
+            const buttonConfig = getButtonConfig(service.phoneNumber);
+            const whatsappLink = getWhatsAppLink(service.whatsappNumber);
 
-          return (
-            <div
-              key={service._id || index}
-              className={`content-grid ${index % 2 !== 0 ? "row-reverse" : ""}`}
-            >
-              <div className="image-side">
-                <img
-                  src={getImageUrl(service.image, service2)}
-                  alt={service.title}
-                />
-              </div>
+            return (
+              <div
+                key={service._id || index}
+                id={slugify(service.title)} // ADDED ID FOR DEEP LINKING
+                className={`content-grid ${index % 2 !== 0 ? "row-reverse" : ""}`}
+              >
+                <div className="image-side">
+                  <img
+                    src={getImageUrl(service.image, service2)}
+                    alt={service.title}
+                  />
+                </div>
 
-              <div className="text-side">
-                <h2>{service.title}</h2>
-                {service.subtitle && <h3>{service.subtitle}</h3>}
-                <p>{service.desc || service.description}</p>
+                <div className="text-side">
+                  <h2>{service.title}</h2>
+                  {service.subtitle && <h3>{service.subtitle}</h3>}
+                  <p>{service.desc || service.description}</p>
 
-                <div className="buttons">
+                  <div className="buttons">
 
-                  {/* DYNAMIC BOOK BUTTON */}
-                  {buttonConfig.type === 'internal' ? (
-                    <Link {...buttonConfig.props}>
-                      {buttonConfig.text}
-                    </Link>
-                  ) : (
-                    <a {...buttonConfig.props}>
-                      {buttonConfig.text}
+                    {/* DYNAMIC BOOK BUTTON */}
+                    {buttonConfig.type === 'internal' ? (
+                      <Link {...buttonConfig.props}>
+                        {buttonConfig.text}
+                      </Link>
+                    ) : (
+                      <a {...buttonConfig.props}>
+                        {buttonConfig.text}
+                      </a>
+                    )}
+
+                    {/* WHATSAPP BUTTON */}
+                    <a
+                      href={whatsappLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-whatsapp"
+                    >
+                      <span className="whatsapp-icon-circle">
+                        <FontAwesomeIcon icon={faWhatsapp} />
+                      </span>
+                      Whatsapp Now
                     </a>
-                  )}
-
-                  {/* WHATSAPP BUTTON */}
-                  <a
-                    href={whatsappLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-whatsapp"
-                  >
-                    <span className="whatsapp-icon-circle">
-                      <FontAwesomeIcon icon={faWhatsapp} />
-                    </span>
-                    Whatsapp Now
-                  </a>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </section>
+            );
+          })
+        }
+      </section >
 
       {/* 6. NEWSLETTER SECTION */}
-      <section className="newsletter-section">
+      < section className="newsletter-section" >
         <div className="newsletter-container">
           <div className="left-content">
             <h2 className="title">
@@ -246,8 +285,8 @@ const Services = () => {
             <NewsletterForm contactEmail={data.contactEmail} />
           </div>
         </div>
-      </section>
-    </div>
+      </section >
+    </div >
   );
 };
 
@@ -259,6 +298,13 @@ const NewsletterForm = ({ contactEmail }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!subscriberEmail) return;
+
+    // Email format validation
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(subscriberEmail)) {
+      alert("❌ Please enter a valid email address.");
+      return;
+    }
 
     const adminEmail = contactEmail || "residential@ecoglow.ae";
 

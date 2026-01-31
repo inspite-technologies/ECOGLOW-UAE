@@ -19,36 +19,39 @@
   align-items: flex-end;
   justify-content: flex-start;
   margin: 0;
-  padding: 0 15% 120px 15%;
+  padding: 0 15% 10px 15%;
+  /* Reduced padding-bottom for mobile compatibility */
   background-image: url('../assets/contactus.webp');
   background-size: cover;
   background-position: center 78%;
   background-repeat: no-repeat;
 }
 
-.hero-banner-image { display: none; }
+.hero-banner-image {
+  display: none;
+}
 
 .hero-banner-overlay {
   position: absolute;
-  top: 0; 
-  left: 0; 
-  width: 100%; 
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
   z-index: 1;
 }
 
 .hero-banner-content {
-  position: relative; 
-  z-index: 2; 
+  position: relative;
+  z-index: 2;
   width: 100%;
-  display: flex; 
-  flex-direction: column; 
+  display: flex;
+  flex-direction: column;
   justify-content: flex-end;
 }
 
-.hero-text-wrapper { 
-  text-align: left; 
-  margin: 0; 
+.hero-text-wrapper {
+  text-align: left;
+  margin: 0;
 }
 
 .hero-small-text {
@@ -76,7 +79,8 @@
   background: #FFFFFF;
   padding: 0;
   margin: 0;
-  display: none; /* Hide breadcrumbs to match BookService */
+  display: block;
+  /* Enable breadcrumbs */
 }
 
 /* TOP LABEL - MATCHES BOOKSERVICE */
@@ -211,8 +215,8 @@
   flex-direction: column;
 }
 
-.form-group-large.full-width { 
-  grid-column: 1 / -1; 
+.form-group-large.full-width {
+  grid-column: 1 / -1;
 }
 
 .form-group-large label {
@@ -224,8 +228,8 @@
   font-family: 'Montserrat', sans-serif;
 }
 
-.form-input-large, 
-.form-select-large, 
+.form-input-large,
+.form-select-large,
 .form-textarea-large {
   width: 100%;
   height: 70px;
@@ -240,14 +244,14 @@
   font-weight: 500;
 }
 
-.form-input-large:focus, 
-.form-select-large:focus, 
+.form-input-large:focus,
+.form-select-large:focus,
 .form-textarea-large:focus {
-  outline: none; 
+  outline: none;
   border-color: #5AB3AC;
 }
 
-.form-input-large::placeholder, 
+.form-input-large::placeholder,
 .form-textarea-large::placeholder {
   color: #999999;
   font-size: 1rem;
@@ -265,8 +269,8 @@
   border-radius: 0;
 }
 
-.phone-input-wrapper:focus-within { 
-  border-color: #5AB3AC; 
+.phone-input-wrapper:focus-within {
+  border-color: #5AB3AC;
 }
 
 .country-code {
@@ -284,24 +288,24 @@
 }
 
 .form-input-large.phone-input {
-  flex: 1; 
+  flex: 1;
   border: none !important;
-  height: 100%; 
+  height: 100%;
   padding: 0 15px;
 }
 
-.form-input-large.phone-input:focus { 
-  outline: none; 
+.form-input-large.phone-input:focus {
+  outline: none;
 }
 
 /* Select - MATCHES BOOKSERVICE */
-.custom-select-wrapper { 
-  position: relative; 
+.custom-select-wrapper {
+  position: relative;
 }
 
 .form-select-large {
-  appearance: none; 
-  -webkit-appearance: none; 
+  appearance: none;
+  -webkit-appearance: none;
   cursor: pointer;
   padding-right: 40px;
   font-weight: 500;
@@ -322,7 +326,7 @@
   height: auto;
   min-height: 150px;
   padding: 15px 20px;
-  resize: vertical; 
+  resize: vertical;
   line-height: 1.6;
 }
 
@@ -334,7 +338,7 @@
   margin-top: 10px;
 }
 
-.btn-reset, 
+.btn-reset,
 .btn-submit-teal {
   padding: 16px 50px;
   font-size: 14px;
@@ -348,21 +352,21 @@
   border-radius: 0;
 }
 
-.btn-reset { 
-  background: #E0E0E0; 
-  color: #666666; 
+.btn-reset {
+  background: #E0E0E0;
+  color: #666666;
 }
 
-.btn-reset:hover { 
-  background: #D0D0D0; 
+.btn-reset:hover {
+  background: #D0D0D0;
 }
 
-.btn-submit-teal { 
-  background: #76C8C1; 
-  color: #FFFFFF; 
+.btn-submit-teal {
+  background: #76C8C1;
+  color: #FFFFFF;
 }
 
-.btn-submit-teal:hover { 
+.btn-submit-teal:hover {
   background: #5AB3AC;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(118, 200, 193, 0.3);
@@ -377,15 +381,23 @@
 }
 
 .form-message.success {
-  background: rgba(118, 200, 193, 0.1); 
-  color: #5AB3AC; 
+  background: rgba(118, 200, 193, 0.1);
+  color: #5AB3AC;
   border-left: 3px solid #76C8C1;
 }
 
 .form-message.error {
-  background: rgba(239, 68, 68, 0.1); 
-  color: #DC2626; 
+  background: rgba(239, 68, 68, 0.1);
+  color: #DC2626;
   border-left: 3px solid #EF4444;
+}
+
+/* Error Field Highlight */
+.form-input-large.error-field,
+.form-textarea-large.error-field,
+.phone-input-wrapper.error-field {
+  border-color: #EF4444 !important;
+  background-color: rgba(239, 68, 68, 0.05);
 }
 
 /* INFO ROW SECTION */
@@ -399,59 +411,59 @@
   padding: 40px 0;
 }
 
-.address-block { 
+.address-block {
   flex: 0 0 auto;
   text-align: left;
 }
 
 .address-text {
   font-size: 24px;
-  line-height: 1.6;  
+  line-height: 1.6;
   margin: 0;
-  font-family: 'Montserrat', sans-serif; 
+  font-family: 'Montserrat', sans-serif;
   font-weight: 400;
 }
 
-.contact-links-block { 
+.contact-links-block {
   flex: 0 0 auto;
   text-align: right;
 }
 
 .contact-links-title {
   font-size: 30px;
-  font-weight: 400; 
-  color: #76c8c1; 
+  font-weight: 400;
+  color: #76c8c1;
   font-family: 'Montserrat', sans-serif;
   line-height: 1.1;
   margin: 0 0 10px 0;
 }
 
 .contact-link-item {
-  display: flex; 
-  align-items: center; 
+  display: flex;
+  align-items: center;
   justify-content: flex-end;
-  gap: 15px; 
-  margin-bottom: 8px; 
+  gap: 15px;
+  margin-bottom: 8px;
 }
 
-.contact-icon { 
-  width: 24px; 
-  height: 24px; 
-  color: #76c8c1; 
-  flex-shrink: 0; 
+.contact-icon {
+  width: 24px;
+  height: 24px;
+  color: #76c8c1;
+  flex-shrink: 0;
 }
 
-.contact-link-text { 
-  font-size: 22px; 
-  color: #333; 
-  font-family: 'Montserrat', sans-serif; 
-  font-weight: 400; 
+.contact-link-text {
+  font-size: 22px;
+  color: #333;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
 }
 
 /* FOLLOW US SECTION */
 .follow-us-section {
-  text-align: center; 
-  margin-bottom: 60px; 
+  text-align: center;
+  margin-bottom: 60px;
   padding: 0;
 }
 
@@ -467,14 +479,14 @@
 .social-accent-line {
   width: 90px;
   height: 13px;
-  background: #76c8c1; 
+  background: #76c8c1;
   margin: 0 auto 40px;
 }
 
 .social-icons-row {
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 30px;
 }
 
@@ -483,23 +495,23 @@
   height: 65px;
   border: 4px solid #76c8c1;
   border-radius: 50%;
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: #76c8c1;
-  transition: all 0.3s ease; 
+  transition: all 0.3s ease;
   cursor: pointer;
 }
 
-.social-icon-circle:hover { 
-  background: #76c8c1; 
-  color: #ffffff; 
-  transform: translateY(-3px); 
+.social-icon-circle:hover {
+  background: #76c8c1;
+  color: #ffffff;
+  transform: translateY(-3px);
 }
 
-.social-icon-circle svg { 
-  width: 30px; 
-  height: 30px; 
+.social-icon-circle svg {
+  width: 30px;
+  height: 30px;
 }
 
 /* MAP SECTION */
@@ -517,6 +529,7 @@
 
 /* Large Screens - 1440px */
 @media (max-width: 1440px) {
+
   .contact-hero-banner,
   .contact-container,
   .map-section-full {
@@ -527,6 +540,7 @@
 
 /* Tablets & Small Laptops - 1024px */
 @media (max-width: 1024px) {
+
   .contact-hero-banner,
   .contact-container,
   .map-section-full {
@@ -545,6 +559,7 @@
   .info-row-section {
     flex-direction: column;
     gap: 40px;
+    align-items: center;
     text-align: center;
   }
 
@@ -560,6 +575,7 @@
 
 /* Tablets Portrait - 768px */
 @media (max-width: 768px) {
+
   .contact-hero-banner,
   .contact-container,
   .map-section-full {
@@ -575,12 +591,37 @@
     font-size: 1rem;
   }
 
+  .section-header {
+    align-items: flex-start;
+    text-align: left;
+    margin-bottom: 20px;
+    /* Reduced from 40px */
+  }
+
   .section-main-title {
     font-size: 32px;
+    letter-spacing: -1.5px;
+    margin-bottom: 10px;
+    /* Reduced from 15px */
+  }
+
+  .title-accent-line {
+    margin: 0 0 15px 0;
+    /* Reduced from 20px and aligned left */
+    width: 60px;
+    height: 8px;
   }
 
   .section-subtitle {
     font-size: 18px;
+    text-align: left;
+    margin-bottom: 5px;
+    /* Added to reduce gap */
+  }
+
+  .contact-form-large {
+    margin-top: 15px;
+    /* Reduced from 30px */
   }
 
   .form-row-grid {
@@ -617,6 +658,15 @@
 
   .address-text {
     font-size: 18px;
+    text-align: center;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .contact-links-title {
+    font-size: 26px;
+    text-align: center;
+    margin-bottom: 20px;
   }
 
   .contact-link-text {
@@ -640,13 +690,60 @@
   .map-section-full {
     height: 350px;
   }
+
+  .info-row-section {
+    gap: 30px;
+    padding: 30px 0;
+  }
+
+  .address-text {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .contact-link-text {
+    font-size: 15px;
+  }
+
+  .contact-links-title {
+    font-size: 22px;
+  }
+
+  .follow-us-title {
+    font-size: 28px;
+  }
+
+  .social-icons-row {
+    gap: 20px;
+  }
+
+  .social-icon-circle {
+    width: 45px;
+    height: 45px;
+    border-width: 3px;
+  }
 }
 
 /* Mobile - 480px */
 @media (max-width: 480px) {
   .contact-hero-banner {
-    min-height: 300px;
-    padding-bottom: 80px;
+    min-height: 250px;
+    padding-bottom: 20px;
+  }
+
+  .about-intro {
+    padding: 10px 20px 0 20px !important;
+  }
+
+  .hero-breadcrumb {
+    font-size: 0.74rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
   .hero-large-text {
@@ -655,10 +752,32 @@
 
   .section-main-title {
     font-size: 28px;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+    /* Reduced from 12px */
+  }
+
+  .section-header {
+    margin-bottom: 15px;
+    /* Added to reduce spacing further */
+  }
+
+  .title-accent-line {
+    width: 50px;
+    height: 6px;
+    margin-bottom: 10px;
+    /* Reduced from 15px */
   }
 
   .section-subtitle {
     font-size: 16px;
+    margin-bottom: 0;
+    /* Added to minimize gap */
+  }
+
+  .contact-form-large {
+    margin-top: 10px;
+    /* Reduced from 15px (default 30px) */
   }
 
   .form-group-large label {

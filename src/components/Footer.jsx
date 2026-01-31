@@ -1,35 +1,77 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { fetchFooterData } from '../services/footerAPI';
+import { fetchServices as fetchResServices } from '../services/serviceAPI';
+import { fetchServices as fetchCommServices } from '../services/commercialAPI';
 import './Footer.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
 function Footer() {
   const [footerData, setFooterData] = useState(null);
+  const [dynamicLinks, setDynamicLinks] = useState([]); // Store combined links
   const contactRowRef = useRef(null);
   const linksRowRef = useRef(null);
   const bottomRowRef = useRef(null);
 
+  // Helper for slugify (matches what's in page components)
+  const slugify = (text) => {
+    if (!text) return '';
+    return text.toString().toLowerCase().trim().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '-');
+  };
+
   useEffect(() => {
-    const loadFooter = async () => {
+    const loadAllData = async () => {
       try {
-        const response = await fetchFooterData();
-        const data = Array.isArray(response) ? response[0] : (response.data || response);
-        setFooterData(data);
+        // 1. Fetch all data in parallel
+        const [footerRes, resServicesRes, commServicesRes] = await Promise.all([
+          fetchFooterData(),
+          fetchResServices(),
+          fetchCommServices()
+        ]);
+
+        // 2. Process Footer Data
+        const footerInfo = Array.isArray(footerRes) ? footerRes[0] : (footerRes.data || footerRes);
+        setFooterData(footerInfo);
+
+        // 3. Process Residential Services
+        const resData = Array.isArray(resServicesRes) ? resServicesRes[0] : (resServicesRes.data || resServicesRes);
+        const resLinks = (resData?.servicesList || [])
+          .filter(s => s.title)
+          .map(s => ({
+            _id: s._id || `res-${Math.random()}`,
+            label: s.title,
+            url: `/services#${slugify(s.title)}` // Link to specific card ID
+          }));
+
+        // 4. Process Commercial Services
+        const commData = Array.isArray(commServicesRes) ? commServicesRes[0] : (commServicesRes.data || commServicesRes);
+        const commLinks = (commData?.servicesList || [])
+          .filter(s => s.title)
+          .map(s => ({
+            _id: s._id || `comm-${Math.random()}`,
+            label: s.title,
+            url: `/services/commercial#${slugify(s.title)}` // Link to specific card ID
+          }));
+
+        // 5. Combine: Only Residential + Commercial Services (Limited to 12 links)
+        const combinedLinks = [...resLinks, ...commLinks];
+        setDynamicLinks(combinedLinks.slice(0, 12));
+
       } catch (error) {
-        console.error("Error fetching footer data:", error);
+        console.error("Error loading footer data:", error);
       }
     };
-    loadFooter();
+    loadAllData();
   }, []);
 
   useEffect(() => {
     if (!footerData) return;
 
     const footerElements = [contactRowRef.current, linksRowRef.current, bottomRowRef.current];
-    
+
     gsap.set(footerElements, {
       opacity: 1,
       y: 0,
@@ -82,26 +124,28 @@ function Footer() {
 
   if (!footerData) return null;
 
-  const linkGroups = chunkLinks(footerData.usefulLinks, 2);
+  // Ensure items are distributed evenly across 4 columns
+  const itemsPerColumn = Math.ceil(dynamicLinks.length / 4) || 1;
+  const linkGroups = chunkLinks(dynamicLinks, itemsPerColumn);
 
   // Style for gap between icon and text
   const iconStyle = { marginRight: '12px' };
 
   return (
     <footer className="main-footer">
-      <link 
-        rel="stylesheet" 
+      <link
+        rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
       />
-      
+
       <div className="footer-container">
-        
+
         {/* TOP ROW: Contact Information */}
         <div className="footer-contact-row" ref={contactRowRef}>
-          
+
           {/* Address: Use visibility to hide but keep space if empty */}
-          <div 
-            className="contact-item address" 
+          <div
+            className="contact-item address"
             style={{ visibility: footerData.officeAddress ? 'visible' : 'hidden' }}
           >
             <i className="fas fa-map-marker-alt" style={iconStyle}></i>
@@ -109,9 +153,9 @@ function Footer() {
           </div>
 
           <div className="contact-details-group">
-            
+
             {/* Phone */}
-            <div 
+            <div
               className="contact-item phone"
               style={{ visibility: footerData.phone ? 'visible' : 'hidden' }}
             >
@@ -120,7 +164,7 @@ function Footer() {
             </div>
 
             {/* WhatsApp */}
-            <div 
+            <div
               className="contact-item whatsapp"
               style={{ visibility: footerData.whatsapp ? 'visible' : 'hidden' }}
             >
@@ -131,7 +175,7 @@ function Footer() {
             </div>
 
             {/* Email */}
-            <div 
+            <div
               className="contact-item email"
               style={{ visibility: footerData.email ? 'visible' : 'hidden' }}
             >
@@ -149,7 +193,7 @@ function Footer() {
             {linkGroups.map((group, index) => (
               <div className="link-column" key={index}>
                 {group.map((link) => (
-                  <a key={link._id} href={link.url}>{link.label}</a>
+                  <Link key={link._id} to={link.url}>{link.label}</Link>
                 ))}
               </div>
             ))}
@@ -179,9 +223,14 @@ function Footer() {
                   <i className="fab fa-youtube"></i>
                 </a>
               )}
+              {footerData.socialLinks?.linkedin && (
+                <a href={footerData.socialLinks.linkedin} target="_blank" rel="noopener noreferrer">
+                  <i className="fab fa-linkedin-in"></i>
+                </a>
+              )}
             </div>
           </div>
-          
+
           <div className="legal-row">
             <p className="copyright">{footerData.copyrightText}</p>
             <div className="legal-links">

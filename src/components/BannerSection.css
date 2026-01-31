@@ -51,11 +51,16 @@
   user-select: none;
   -webkit-user-select: none;
   pointer-events: none;
+  /* High-quality rendering - use browser's best algorithm */
+  image-rendering: auto;
+  -ms-interpolation-mode: bicubic;
+  /* Prevent hardware acceleration quality loss */
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
-  will-change: transform;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  /* Ensure crisp rendering without compression */
+  image-orientation: from-image;
 }
 
 .banner-dark-filter {
@@ -177,8 +182,15 @@
 }
 
 @keyframes fadeInOut {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 1; }
+
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+
+  50% {
+    opacity: 1;
+  }
 }
 
 /* Desktop - Hide mobile instruction */
@@ -1080,6 +1092,7 @@
     bottom: 50px;
   }
 }
+
 /* ==================== TOUCH DEVICE ENHANCEMENTS ==================== */
 
 /* Touch Devices - Larger hit areas */
@@ -1105,6 +1118,7 @@
 
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
+
   .handle-circle,
   .mobile-instruction {
     transition: none !important;
@@ -1116,13 +1130,21 @@
   }
 
   @keyframes fadeInOut {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 1; }
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 1;
+    }
   }
 }
 
 /* High DPI Displays (Retina) - All Mac screens */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
   .banner-heading {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -1134,7 +1156,8 @@
 }
 
 /* Very High DPI (3x Retina) */
-@media (-webkit-min-device-pixel-ratio: 3), (min-resolution: 288dpi) {
+@media (-webkit-min-device-pixel-ratio: 3),
+(min-resolution: 288dpi) {
   .banner-img {
     image-rendering: crisp-edges;
   }

@@ -132,6 +132,8 @@ body {
   z-index: 100 !important;
   overflow: visible;
   margin-top: 230px;
+  opacity: 1;
+  transition: opacity 0.4s ease-in;
 }
 
 /* CARD ITEM */
@@ -155,8 +157,10 @@ body {
 }
 
 .card-item img {
+  display: block;
   width: 100%;
   height: 100%;
+  min-height: 185px;
   object-fit: cover;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
@@ -267,12 +271,23 @@ body {
   color: white;
   transition: all 0.3s ease;
   background: transparent;
+  pointer-events: auto;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .arrow:hover {
   background: white;
   color: black;
   border-color: white;
+}
+
+.arrow:active {
+  transform: scale(0.95);
+  background: rgba(255, 255, 255, 0.9);
+  color: black;
 }
 
 .hero-section .mouse-indicator {
@@ -1673,6 +1688,7 @@ body {
     height: 520px;
     margin-top: 85px;
     pointer-events: none;
+    opacity: 0;
   }
 
   .card-item {
@@ -1685,19 +1701,19 @@ body {
   }
 
   .card-item[data-position="1"] {
-    transform: translateY(155px);
+    transform: translateY(180px);
   }
 
   .card-item[data-position="2"] {
-    transform: translateY(310px);
+    transform: translateY(360px);
   }
 
   .card-item[data-position="3"] {
-    transform: translateY(465px);
+    transform: translateY(540px);
   }
 
   .card-item[data-position="4"] {
-    transform: translateY(620px);
+    transform: translateY(720px);
     opacity: 0;
   }
 
@@ -1781,19 +1797,19 @@ body {
   }
 
   .card-item[data-position="1"] {
-    transform: translateY(145px);
+    transform: translateY(160px);
   }
 
   .card-item[data-position="2"] {
-    transform: translateY(290px);
+    transform: translateY(320px);
   }
 
   .card-item[data-position="3"] {
-    transform: translateY(435px);
+    transform: translateY(480px);
   }
 
   .card-item[data-position="4"] {
-    transform: translateY(580px);
+    transform: translateY(640px);
     opacity: 0;
   }
 
@@ -1879,19 +1895,19 @@ body {
   }
 
   .card-item[data-position="1"] {
-    transform: translateY(135px);
+    transform: translateY(150px);
   }
 
   .card-item[data-position="2"] {
-    transform: translateY(270px);
+    transform: translateY(300px);
   }
 
   .card-item[data-position="3"] {
-    transform: translateY(405px);
+    transform: translateY(450px);
   }
 
   .card-item[data-position="4"] {
-    transform: translateY(540px);
+    transform: translateY(600px);
     opacity: 0;
   }
 
@@ -1977,19 +1993,19 @@ body {
   }
 
   .card-item[data-position="1"] {
-    transform: translateY(125px);
+    transform: translateY(140px);
   }
 
   .card-item[data-position="2"] {
-    transform: translateY(250px);
+    transform: translateY(280px);
   }
 
   .card-item[data-position="3"] {
-    transform: translateY(375px);
+    transform: translateY(420px);
   }
 
   .card-item[data-position="4"] {
-    transform: translateY(500px);
+    transform: translateY(560px);
     opacity: 0;
   }
 
@@ -2075,19 +2091,19 @@ body {
   }
 
   .card-item[data-position="1"] {
-    transform: translateY(120px);
+    transform: translateY(135px);
   }
 
   .card-item[data-position="2"] {
-    transform: translateY(240px);
+    transform: translateY(270px);
   }
 
   .card-item[data-position="3"] {
-    transform: translateY(360px);
+    transform: translateY(405px);
   }
 
   .card-item[data-position="4"] {
-    transform: translateY(480px);
+    transform: translateY(540px);
     opacity: 0;
   }
 
@@ -2173,19 +2189,19 @@ body {
   }
 
   .card-item[data-position="1"] {
-    transform: translateY(100px);
+    transform: translateY(112px);
   }
 
   .card-item[data-position="2"] {
-    transform: translateY(200px);
+    transform: translateY(224px);
   }
 
   .card-item[data-position="3"] {
-    transform: translateY(300px);
+    transform: translateY(336px);
   }
 
   .card-item[data-position="4"] {
-    transform: translateY(400px);
+    transform: translateY(448px);
     opacity: 0;
   }
 

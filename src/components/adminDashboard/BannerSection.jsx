@@ -26,7 +26,7 @@ function BannerAdmin() {
   const [loading, setLoading] = useState(true);
   const [compressing, setCompressing] = useState(false);
   const [saving, setSaving] = useState(false);
-  
+
   const beforeInputRef = useRef(null);
   const afterInputRef = useRef(null);
 
@@ -84,13 +84,13 @@ function BannerAdmin() {
         img.onload = () => {
           const canvas = document.createElement('canvas');
           const ctx = canvas.getContext('2d');
-          
+
           const MAX_WIDTH = 1920;
           const MAX_HEIGHT = 1080;
-          
+
           let width = img.width;
           let height = img.height;
-          
+
           if (width > height) {
             if (width > MAX_WIDTH) {
               height *= MAX_WIDTH / width;
@@ -102,13 +102,13 @@ function BannerAdmin() {
               height = MAX_HEIGHT;
             }
           }
-          
+
           canvas.width = width;
           canvas.height = height;
           ctx.drawImage(img, 0, 0, width, height);
-          
+
           const fileExt = file.name.split('.').pop().toLowerCase();
-          
+
           if (fileExt === 'avif') {
             canvas.toBlob(
               (blob) => {
@@ -145,20 +145,11 @@ function BannerAdmin() {
 
     try {
       setCompressing(true);
-      
-      const fileExt = file.name.split('.').pop().toLowerCase();
-      const fileSizeMB = file.size / 1024 / 1024;
-      
-      let finalFile = file;
-      
-      // Only compress if file is larger than 500KB
-      if (fileSizeMB > 0.5) {
-        console.log(`Compressing ${type} image (${fileExt.toUpperCase()}): ${fileSizeMB.toFixed(2)}MB`);
-        finalFile = await compressImage(file);
-      } else {
-        console.log(`${type} image already optimized: ${fileSizeMB.toFixed(2)}MB`);
-      }
 
+      // ⚠️ SKIP COMPRESSION FOR BANNER IMAGES - UPLOAD IN ORIGINAL QUALITY
+      console.log(`Banner image selected (${type}): ${(file.size / 1024 / 1024).toFixed(2)}MB - uploading in original quality`);
+
+      const finalFile = file; // Use original file without compression
       const previewUrl = URL.createObjectURL(finalFile);
 
       if (type === "before") {
@@ -168,9 +159,9 @@ function BannerAdmin() {
         setFiles((prev) => ({ ...prev, afterFile: finalFile }));
         setInputs((prev) => ({ ...prev, afterPreview: previewUrl }));
       }
-      
+
     } catch (error) {
-      console.error('Image compression error:', error);
+      console.error('Image processing error:', error);
       alert('Failed to process image. Please try again.');
     } finally {
       setCompressing(false);
@@ -196,7 +187,7 @@ function BannerAdmin() {
       await updateBanner(formData);
 
       alert("Banner updated successfully");
-      loadBanner(); 
+      loadBanner();
     } catch (err) {
       console.error("Update failed:", err);
       alert("Failed to update banner");
@@ -240,7 +231,7 @@ function BannerAdmin() {
       <div className="admin-grid-2">
         {/* --- LEFT COLUMN: IMAGES --- */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          
+
           {/* BEFORE IMAGE CARD */}
           <div className="admin-card">
             <div className="input-group">
@@ -251,8 +242,8 @@ function BannerAdmin() {
                 style={{ cursor: 'pointer' }}
               >
                 {inputs.beforePreview ? (
-                  <img 
-                    src={inputs.beforePreview} 
+                  <img
+                    src={inputs.beforePreview}
                     alt="Before Preview"
                     loading="lazy"
                   />
@@ -292,8 +283,8 @@ function BannerAdmin() {
                 style={{ cursor: 'pointer' }}
               >
                 {inputs.afterPreview ? (
-                  <img 
-                    src={inputs.afterPreview} 
+                  <img
+                    src={inputs.afterPreview}
                     alt="After Preview"
                     loading="lazy"
                   />
@@ -338,15 +329,15 @@ function BannerAdmin() {
               placeholder="Enter banner headline..."
             />
           </div>
-          
+
           <div className="info-box" style={{ marginTop: '20px' }}>
             <Info size={16} />
             <p>Recommended size for both images: 1920×800px</p>
-            <p style={{ marginTop: '5px', fontSize:'12px' }}>
+            <p style={{ marginTop: '5px', fontSize: '12px' }}>
               Ensure both images have the exact same dimensions for the slider to work perfectly.
             </p>
-            <p style={{ marginTop: '10px', fontSize:'12px', color: '#10b981' }}>
-              ✓ Images will be automatically compressed to ~100-200KB
+            <p style={{ marginTop: '10px', fontSize: '12px', color: '#10b981' }}>
+              ✓ Banner images are uploaded in ORIGINAL QUALITY (no compression)
             </p>
           </div>
         </div>

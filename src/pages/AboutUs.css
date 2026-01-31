@@ -7,10 +7,12 @@
   --text-gray: #6b7280;
   --bg-light: #f9fafb;
 }
+
 .clients-logo-img {
   max-width: 100%;
   height: auto;
-  filter: grayscale(100%); /* Optional: makes logos look elegant/uniform */
+  filter: grayscale(100%);
+  /* Optional: makes logos look elegant/uniform */
   opacity: 0.7;
   transition: all 0.3s ease;
 }
@@ -28,26 +30,29 @@
   min-height: 350px;
   background-image: url('../assets/banner.webp');
   background-size: cover;
-  
+
   /* --- ADJUST THIS PERCENTAGE --- */
   /* 50% is center, 100% is bottom. 80% shows mostly the bottom but not all of it. */
-  background-position: center 78%; 
-  
+  background-position: center 78%;
+
   display: flex;
   flex-direction: column;
-  justify-content: flex-end; 
+  justify-content: flex-end;
   align-items: flex-start;
   text-align: left;
-  padding: 0px 0 120px 14%; 
+  padding: 0px 0 120px 14%;
   color: white;
 }
 
 .hero-breadcrumb {
-  font-size: 0.74rem;     /* Made it smaller (was 0.9rem) */
-  font-weight: 700;       /* Made it "darker" (Bold) */
+  font-size: 0.74rem;
+  /* Made it smaller (was 0.9rem) */
+  font-weight: 700;
+  /* Made it "darker" (Bold) */
   text-transform: uppercase;
   letter-spacing: 1px;
-  opacity: 1;             /* Removed opacity so colors are full strength */
+  opacity: 1;
+  /* Removed opacity so colors are full strength */
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
@@ -61,13 +66,15 @@
 
 /* About */
 .about-text {
-  font-size: 1.2rem;      /* smaller */
+  font-size: 1.2rem;
+  /* smaller */
   font-weight: 500;
 }
 
 /* EcoGlow */
 .brand-text {
-  font-size: 3rem;        /* bigger */
+  font-size: 3rem;
+  /* bigger */
   font-weight: 700;
 }
 
@@ -82,28 +89,38 @@
 
 /* 1. "About" Label */
 .section-label {
-  font-size: 1.49rem;            /* Small font */
-  color: var(--teal-primary); /* Teal color */
+  font-size: 1.49rem;
+  /* Small font */
+  color: var(--teal-primary);
+  /* Teal color */
   font-weight: 450;
   letter-spacing: 1px;
-  margin-bottom: 0.1rem;      /* Space below "About" */
-  padding-top: 70px;          /* "Little top padding" as requested */
+  margin-bottom: 0.1rem;
+  /* Space below "About" */
+  padding-top: 70px;
+  /* "Little top padding" as requested */
   display: block;
 }
 
 /* 2. "EcoGlow Cleaning Services" Heading */
 .main-heading {
-  font-size: 2.1rem;          /* Big size */
-  font-weight: 400;           /* "Darker" (Bolder) */
-  color: #111;                /* Very dark gray/black */
-  margin: 0 0 1.5rem 0;       /* Spacing below the heading */
+  font-size: 2.1rem;
+  /* Big size */
+  font-weight: 400;
+  /* "Darker" (Bolder) */
+  color: #111;
+  /* Very dark gray/black */
+  margin: 0 0 1.5rem 0;
+  /* Spacing below the heading */
   line-height: 1.2;
 }
 
 /* 3. "Luxury standard..." Subtitle */
 .intro-subtitle {
-  font-size: 1.6rem;          /* Smaller than heading, but clear */
-  font-weight: 400;           /* Light/Thin look */
+  font-size: 1.6rem;
+  /* Smaller than heading, but clear */
+  font-weight: 400;
+  /* Light/Thin look */
   line-height: 1.5;
   color: var(--text-dark);
   margin-bottom: 2rem;
@@ -132,10 +149,11 @@
 /* --- Slogan Banner --- */
 .slogan-banner {
   height: 400px;
-  background-image:  url('../assets/abt4.webp');
+  background-image: url('../assets/abt4.webp');
   background-size: cover;
   background-position: center;
-  background-attachment: fixed; /* Parallax effect */
+  background-attachment: fixed;
+  /* Parallax effect */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -148,11 +166,12 @@
   text-align: center;
   letter-spacing: -1px;
 }
+
 /* --- FIXED VISION SECTION --- */
 .vision-section-fixed {
   display: flex;
   width: 100%;
-  height: 460px; 
+  height: 460px;
   background: #f3f4f6;
   overflow: hidden;
   margin-top: 100px;
@@ -164,7 +183,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 5% 0 14%; 
+  padding: 0 5% 0 14%;
 }
 
 /* REDUCING THE GAP HERE */
@@ -177,9 +196,11 @@
 
 .vision-content .section-text {
   font-size: 1.7rem;
-  line-height: 1.3; /* Tighter line height for the vision statement */
+  line-height: 1.3;
+  /* Tighter line height for the vision statement */
   color: #333333;
-  margin-top: 0;      /* Ensure no top margin is pushing it away */
+  margin-top: 0;
+  /* Ensure no top margin is pushing it away */
   max-width: 600px;
 }
 
@@ -188,39 +209,48 @@
   width: 20px;
   height: 100%;
   background-size: cover;
-  background-position: left center ;
+  background-position: left center;
 
 }
+
 /* Update this block in your AboutUs.css */
 .mission-title {
   font-size: 3.1rem;
   font-weight: 350;
-  color: #1a1a1a; /* Ensuring it matches Vision/Values */
+  color: #1a1a1a;
+  /* Ensuring it matches Vision/Values */
   /* margin shorthand: top | right | bottom | left */
-  margin: 15px 0 20px 0; /* Changed from 40px to 10px */
+  margin: 15px 0 20px 0;
+  /* Changed from 40px to 10px */
   line-height: 1.1;
 }
 
 .section-icon {
-  margin-bottom: 10px; /* Reduced gap between icon and title as well */
+  margin-bottom: 10px;
+  /* Reduced gap between icon and title as well */
 }
 
 /* --- Split Sections Ratio Adjustment --- */
 .split-section {
   display: flex;
-  max-height: 450px; /* Keeping your fixed height */
+  max-height: 450px;
+  /* Keeping your fixed height */
   margin-top: 100px;
   margin-bottom: 100px;
   align-items: stretch;
 }
+
 /* Styling for the Mission png icon */
 .mission-icon-img {
-  width: 110px;         /* Adjust this size as needed */
+  width: 110px;
+  /* Adjust this size as needed */
   height: auto;
   display: block;
-  margin-left: 0;      /* Keeps it left aligned */
+  margin-left: 0;
+  /* Keeps it left aligned */
   margin-right: auto;
-  margin-bottom: -25px; /* Negative margin to pull title closer */
+  margin-bottom: -25px;
+  /* Negative margin to pull title closer */
   object-fit: contain;
 }
 
@@ -229,10 +259,10 @@
 
 .split-content {
   /* This takes up 4 parts (80%) */
-  flex: 1; 
-  
+  flex: 1;
+
   /* Increased padding to keep text from looking too stretched in the wide area */
-  padding: 4rem 10% 4rem 14%; 
+  padding: 4rem 10% 4rem 14%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -241,25 +271,30 @@
 
 .split-image {
   /* This takes up 1 part (20%) */
-  flex: 1; 
+  flex: 1;
   background-size: cover;
   background-position: center left;
 }
 
 /* --- Responsive Fix --- */
 @media (max-width: 968px) {
-  .split-section, .split-section.reverse {
+
+  .split-section,
+  .split-section.reverse {
     flex-direction: column;
-    max-height: none; /* Allow height to grow on mobile */
+    max-height: none;
+    /* Allow height to grow on mobile */
   }
-  
-  .split-content, .split-image {
+
+  .split-content,
+  .split-image {
     flex: none;
     width: 100%;
   }
 
   .split-image {
-    height: 300px; /* Fixed height for the small image on mobile */
+    height: 300px;
+    /* Fixed height for the small image on mobile */
   }
 }
 
@@ -268,14 +303,15 @@
 .section-icon {
   margin-bottom: 1.5rem;
   color: var(--teal-primary);
-  display: flex; /* Keeps icon aligned */
+  display: flex;
+  /* Keeps icon aligned */
 }
 
 /* --- VISION SECTION --- */
 .vision-section-fixed {
   display: flex;
   width: 100%;
-  height: 460px; 
+  height: 460px;
   background: #f3f4f6;
   overflow: hidden;
   margin: 100px 0;
@@ -287,20 +323,21 @@
   display: flex;
   flex-direction: column;
   /* Aligns everything to the top */
-  justify-content: flex-start; 
+  justify-content: flex-start;
   /* Minimal top padding to bring icon to the edge */
-  padding: 20px 5% 0 14%; 
+  padding: 20px 5% 0 14%;
 }
 
 .vision-icon-img {
-  width: 200px;         /* Updated size */
+  width: 200px;
+  /* Updated size */
   height: auto;
   display: block;
   /* Nudges it further left than the text line */
-  margin-left: -45px;   
+  margin-left: -45px;
   margin-top: 0;
   /* Reduces space between icon and the word "Vision" */
-  margin-bottom: -100px; 
+  margin-bottom: -100px;
   object-fit: contain;
 }
 
@@ -317,8 +354,9 @@
 .section-title {
   font-size: 3.1rem;
   font-weight: 350;
-    margin-bottom: 0px; /* Reduced from 40px to 5px to close the gap */
-    margin: 15px 0 40px 0;
+  margin-bottom: 0px;
+  /* Reduced from 40px to 5px to close the gap */
+  margin: 15px 0 40px 0;
 
 }
 
@@ -327,6 +365,7 @@
   line-height: 1.2;
   color: #444444;
 }
+
 .vision-text {
   font-size: 1.7rem;
   line-height: 1.2;
@@ -400,6 +439,7 @@
   opacity: 1;
   transform: scale(1.05);
 }
+
 .pillar-section {
   display: flex;
   min-height: 600px;
@@ -409,32 +449,35 @@
 }
 
 .pillar-content {
-  flex: 1; 
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start; 
-  padding-left: 14%; 
+  align-items: flex-start;
+  padding-left: 14%;
   padding-right: 40px;
 }
 
 .pillar-inner-wrapper {
   width: 100%;
-  max-width: 650px; 
+  max-width: 650px;
   text-align: left;
 }
 
 .pillar-image {
-  width: 39%; 
+  width: 39%;
   background-size: cover;
   background-position: center;
 }
+
 /* Specific styling for the Values png icon */
 .values-icon-img {
-  width: 90px;        /* Adjust this number to make it smaller/larger */
+  width: 90px;
+  /* Adjust this number to make it smaller/larger */
   height: auto;
   display: block;
-  margin-left: 0;     /* Forces it to the left */
+  margin-left: 0;
+  /* Forces it to the left */
   margin-right: auto;
   margin-bottom: -30px;
   padding-top: 20px;
@@ -456,7 +499,8 @@
 
 .value-item {
   display: grid;
-  grid-template-columns: 45px 1fr; /* Fixed width for the number */
+  grid-template-columns: 45px 1fr;
+  /* Fixed width for the number */
   gap: 10px;
   margin-bottom: 40px;
   align-items: start;
@@ -466,7 +510,7 @@
 .value-number {
   font-size: 1.7rem;
   font-weight: 300;
-  color: #1a1a1a; 
+  color: #1a1a1a;
   line-height: 1.2;
 }
 
@@ -474,16 +518,18 @@
 .value-head {
   font-size: 1.7rem;
   font-weight: 300;
-    color:var(--teal-primary); 
+  color: var(--teal-primary);
   margin: 0 0 10px 0;
   display: inline-block;
 }
 
 /* Description starts below the heading text */
 .value-desc {
-  font-size: 1.6rem; /* Slightly smaller for hierarchy */
+  font-size: 1.6rem;
+  /* Slightly smaller for hierarchy */
   line-height: 1.6;
-  color: #444444; /* Soft black */
+  color: #444444;
+  /* Soft black */
   margin: 0;
 }
 
@@ -498,9 +544,11 @@
   .pillar-section {
     flex-direction: column;
   }
+
   .pillar-content {
     padding: 60px 8%;
   }
+
   .pillar-image {
     width: 100%;
     height: 400px;
@@ -526,9 +574,11 @@
   .pillar-section {
     flex-direction: column;
   }
+
   .pillar-content {
     padding: 40px 8%;
   }
+
   .pillar-image {
     width: 100%;
     height: 450px;
@@ -546,12 +596,14 @@
   .about-hero {
     height: auto;
     min-height: 350px;
-    padding: 80px 5% 40px 5%; /* Reduce side padding to 5% */
+    padding: 80px 5% 40px 5%;
+    /* Reduce side padding to 5% */
     background-position: center center;
   }
 
   .brand-text {
-    font-size: 2.5rem; /* Smaller title for mobile */
+    font-size: 2.5rem;
+    /* Smaller title for mobile */
   }
 
   .about-text {
@@ -560,7 +612,8 @@
 
   /* --- 2. Intro Section --- */
   .about-intro {
-    padding: 3rem 5%; /* Use more screen width */
+    padding: 3rem 5%;
+    /* Use more screen width */
   }
 
   .main-heading {
@@ -573,8 +626,10 @@
 
   /* --- 3. Slogan Banner --- */
   .slogan-banner {
-    height: 250px; /* Reduced height */
-    background-attachment: scroll; /* Fix parallax jitter on mobile */
+    height: 250px;
+    /* Reduced height */
+    background-attachment: scroll;
+    /* Fix parallax jitter on mobile */
   }
 
   .slogan-text {
@@ -585,46 +640,56 @@
 
   /* --- 4. Vision Section (Fixed & Split) --- */
   .vision-section-fixed {
-    flex-direction: column; /* Stack vertical */
-    height: auto; /* Let height grow with text */
+    flex-direction: column;
+    /* Stack vertical */
+    height: auto;
+    /* Let height grow with text */
     margin: 40px 0;
   }
 
   .vision-content {
     padding: 40px 5%;
-    order: 2; /* Text below image */
+    order: 2;
+    /* Text below image */
     width: 100%;
   }
 
   .vision-image {
     width: 100%;
-    height: 250px; /* Visible image bar */
+    height: 250px;
+    /* Visible image bar */
     flex: none;
-    order: 1; /* Image on top */
+    order: 1;
+    /* Image on top */
   }
 
   .vision-icon-img {
-    margin-left: 0; /* Reset negative margin so it fits */
+    margin-left: 0;
+    /* Reset negative margin so it fits */
     width: 120px;
     margin-bottom: 0;
   }
 
-  .vision-text, .section-text {
-    font-size: 1.1rem; /* Readable mobile size */
+  .vision-text,
+  .section-text {
+    font-size: 1.1rem;
+    /* Readable mobile size */
     line-height: 1.6;
   }
-  
-  .section-title, .mission-title {
+
+  .section-title,
+  .mission-title {
     font-size: 2.2rem;
     margin-top: 10px;
     margin-bottom: 20px;
   }
 
   /* --- 5. Mission Split Section --- */
-  .split-section, 
+  .split-section,
   .split-section.reverse {
     flex-direction: column;
-    max-height: none; /* Remove fixed height */
+    max-height: none;
+    /* Remove fixed height */
     margin: 40px 0;
   }
 
@@ -637,11 +702,12 @@
 
   .split-image {
     width: 100%;
-    height: 250px; /* Visible image bar */
+    height: 250px;
+    /* Visible image bar */
     flex: none;
     order: 1;
   }
-  
+
   .mission-icon-img {
     margin-bottom: 0;
     width: 80px;
@@ -674,7 +740,8 @@
 
   /* Values List Items */
   .value-item {
-    grid-template-columns: 30px 1fr; /* Smaller number column */
+    grid-template-columns: 30px 1fr;
+    /* Smaller number column */
     gap: 15px;
     margin-bottom: 30px;
   }
@@ -703,7 +770,8 @@
   }
 
   .clients-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 columns for logos */
+    grid-template-columns: repeat(2, 1fr);
+    /* 2 columns for logos */
     gap: 2rem;
   }
 }
@@ -711,6 +779,7 @@
 /* Small Phones */
 @media (max-width: 480px) {
   .clients-grid {
-    grid-template-columns: 1fr; /* 1 column for logos */
+    grid-template-columns: 1fr;
+    /* 1 column for logos */
   }
 }

@@ -6,15 +6,20 @@ import logo from '../assets/eco.png';
 const Preloader = ({ loading, onComplete }) => {
   const preloaderRef = useRef(null);
   const logoWrapperRef = useRef(null);
+  const logoImgRef = useRef(null);
+  const brandNameRef = useRef(null);
+  const loadingRingRef = useRef(null);
 
   useEffect(() => {
+    let tl = null;
+
     if (!loading) {
-      const tl = gsap.timeline({
+      tl = gsap.timeline({
         onComplete: onComplete
       });
 
       // 1. Fade out text and ring immediately
-      tl.to('.brand-name, .loading-ring', {
+      tl.to([brandNameRef.current, loadingRingRef.current], {
         opacity: 0,
         duration: 0.3,
         ease: 'power2.in'
@@ -41,7 +46,9 @@ const Preloader = ({ loading, onComplete }) => {
         const scale = targetRect.height / currentRect.height;
 
         // Stop CSS animation on the image
-        gsap.set('.preloader-logo-img', { animation: 'none' });
+        if (logoImgRef.current) {
+          gsap.set(logoImgRef.current, { animation: 'none' });
+        }
 
         // Animate Logo Wrapper
         tl.to(logoWrapperRef.current, {
@@ -69,6 +76,13 @@ const Preloader = ({ loading, onComplete }) => {
         });
       }
     }
+
+    // Cleanup function to kill timeline if component unmounts
+    return () => {
+      if (tl) {
+        tl.kill();
+      }
+    };
   }, [loading, onComplete]);
 
   return (
@@ -77,15 +91,15 @@ const Preloader = ({ loading, onComplete }) => {
         {/* Logo Container with Animation */}
         <div className="logo-container">
           <div className="logo-wrapper" ref={logoWrapperRef}>
-            <img src={logo} alt="EcoGlow" className="preloader-logo-img" />
+            <img ref={logoImgRef} src={logo} alt="EcoGlow" className="preloader-logo-img" />
           </div>
 
           {/* Elegant Loading Ring */}
-          <div className="loading-ring"></div>
+          <div ref={loadingRingRef} className="loading-ring"></div>
         </div>
 
         {/* Premium Brand Name */}
-        <div className="brand-name">
+        <div ref={brandNameRef} className="brand-name">
           <span className="brand-eco">Eco</span>
           <span className="brand-glow">Glow</span>
         </div>

@@ -30,39 +30,43 @@ function ServicesSection({ data }) {
     if (!content) return;
 
     let ctx = gsap.context(() => {
-      // 1. Animate Text Content Group
-      gsap.fromTo(textContentRef.current.children,
-        { opacity: 0, x: -50 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.6,
-          stagger: 0.2,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 85%',
-            once: true
+      // 1. Animate Text Content Group - with null check
+      if (textContentRef.current && textContentRef.current.children) {
+        gsap.fromTo(textContentRef.current.children,
+          { opacity: 0, x: -50 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.6,
+            stagger: 0.2,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 85%',
+              once: true
+            }
           }
-        }
-      );
+        );
+      }
 
-      // 2. Animate Image Cards
-      gsap.fromTo([card1Ref.current, card2Ref.current],
-        { opacity: 0, y: 100 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.3,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 75%',
-            once: true
+      // 2. Animate Image Cards - with null checks
+      if (card1Ref.current && card2Ref.current) {
+        gsap.fromTo([card1Ref.current, card2Ref.current],
+          { opacity: 0, y: 100 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.3,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 75%',
+              once: true
+            }
           }
-        }
-      );
+        );
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -72,7 +76,7 @@ function ServicesSection({ data }) {
     if (!title) return <>Our<br />Services</>;
     const parts = title.split(' ');
     if (parts.length >= 2) {
-        return <>{parts[0]}<br />{parts.slice(1).join(' ')}</>;
+      return <>{parts[0]}<br />{parts.slice(1).join(' ')}</>;
     }
     return title;
   };
@@ -82,7 +86,7 @@ function ServicesSection({ data }) {
     href: url || "#",
     target: url?.startsWith("http") ? "_blank" : "_self",
     rel: "noopener noreferrer",
-    className: "service-link-wrapper" 
+    className: "service-link-wrapper"
   });
 
   if (!content) return null;
@@ -90,7 +94,7 @@ function ServicesSection({ data }) {
   return (
     <section className="services-section-replica" ref={sectionRef}>
       <div className="services-grid-container">
-        
+
         {/* Column 1: Text Content */}
         <div className="services-text-col" ref={textContentRef}>
           <h2 className="services-main-title">
@@ -100,7 +104,7 @@ function ServicesSection({ data }) {
           <p className="services-description-text">
             {content.mainDescription}
           </p>
-          
+
           {/* IMPLEMENTED: Main Link */}
           <a {...getLinkProps(content.mainLink)} style={{ textDecoration: 'none' }}>
             <button className="services-know-more-btn">Know More</button>
@@ -112,8 +116,8 @@ function ServicesSection({ data }) {
           {/* IMPLEMENTED: Card 1 Link */}
           <a {...getLinkProps(content.card1Link)}>
             <div className="service-card-img-wrapper">
-              <img 
-                src={getImageUrl(content.card1Image) || commercialImgFallback} 
+              <img
+                src={getImageUrl(content.card1Image) || commercialImgFallback}
                 alt={content.card1Title || "Commercial Services"}
                 loading="lazy"
               />
@@ -131,8 +135,8 @@ function ServicesSection({ data }) {
           {/* IMPLEMENTED: Card 2 Link */}
           <a {...getLinkProps(content.card2Link)}>
             <div className="service-card-img-wrapper">
-              <img 
-                src={getImageUrl(content.card2Image) || residentialImgFallback} 
+              <img
+                src={getImageUrl(content.card2Image) || residentialImgFallback}
                 alt={content.card2Title || "Residential Services"}
                 loading="lazy"
               />

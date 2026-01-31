@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Save, Layout, Info, Share2, 
-  Plus, Trash2, MapPin, Phone, 
-  Loader2, Globe, Link as LinkIcon 
+import {
+  Save, Layout, Info, Share2,
+  Plus, Trash2, MapPin, Phone,
+  Loader2, Globe, Link as LinkIcon
 } from 'lucide-react';
 import { fetchFooterData, updateFooterData } from '../../services/footerAPI';
 
@@ -19,6 +19,7 @@ const FooterManagement = () => {
     facebook: "",
     instagram: "",
     youtube: "",
+    linkedin: "",
     copyrightText: "Copyright © 2025 EcoGlow. All rights reserved",
     usefulLinks: []
   });
@@ -38,6 +39,7 @@ const FooterManagement = () => {
           facebook: data.socialLinks?.facebook || "",
           instagram: data.socialLinks?.instagram || "",
           youtube: data.socialLinks?.youtube || "",
+          linkedin: data.socialLinks?.linkedin || "",
           copyrightText: data.copyrightText || "",
           usefulLinks: data.usefulLinks || []
         });
@@ -87,6 +89,7 @@ const FooterManagement = () => {
         facebook: footerData.facebook,
         instagram: footerData.instagram,
         youtube: footerData.youtube,
+        linkedin: footerData.linkedin,
         usefulLinks: footerData.usefulLinks
       };
 
@@ -103,7 +106,7 @@ const FooterManagement = () => {
 
   return (
     <div style={{ padding: '40px', maxWidth: '1100px', margin: '0 auto', fontFamily: 'Inter, sans-serif', backgroundColor: '#f8fafc' }}>
-      
+
       {/* HEADER */}
       <div style={headerStyle}>
         <div>
@@ -111,16 +114,16 @@ const FooterManagement = () => {
           <p style={{ margin: 0, color: '#64748b', fontSize: '0.9rem' }}>Global site information, links, and social media.</p>
         </div>
         <button style={publishBtn} onClick={handleSave} disabled={loading}>
-          {loading ? <Loader2 className="animate-spin" size={20}/> : <Save size={20} />} 
+          {loading ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
           {loading ? " Saving..." : " Save Changes"}
         </button>
       </div>
 
       {message.text && (
-        <div style={{ 
-          padding: '15px', 
-          borderRadius: '12px', 
-          marginBottom: '20px', 
+        <div style={{
+          padding: '15px',
+          borderRadius: '12px',
+          marginBottom: '20px',
           backgroundColor: message.type === 'success' ? '#f0fdf4' : '#fef2f2',
           color: message.type === 'success' ? '#166534' : '#991b1b',
           border: `1px solid ${message.type === 'success' ? '#bbf7d0' : '#fecaca'}`
@@ -136,11 +139,11 @@ const FooterManagement = () => {
           <div style={sectionHeader}><MapPin size={18} color="#14b8a6" /> <h3>1. Contact Information</h3></div>
           <div style={{ marginBottom: '20px' }}>
             <label style={labelStyle}>Office Address</label>
-            <textarea 
-              name="officeAddress" 
-              style={{ ...inputStyle, minHeight: '80px', resize: 'vertical' ,whiteSpace: 'pre-wrap'}} 
-              value={footerData.officeAddress} 
-              onChange={handleTextChange} 
+            <textarea
+              name="officeAddress"
+              style={{ ...inputStyle, minHeight: '80px', resize: 'vertical', whiteSpace: 'pre-wrap' }}
+              value={footerData.officeAddress}
+              onChange={handleTextChange}
               placeholder="Full address here..."
             />
           </div>
@@ -176,61 +179,24 @@ const FooterManagement = () => {
               <label style={labelStyle}>YouTube URL</label>
               <input name="youtube" style={inputStyle} value={footerData.youtube} onChange={handleTextChange} />
             </div>
-          </div>
-        </section>
-
-        {/* 3. USEFUL LINKS MANAGER */}
-        <section style={cardStyle}>
-          <div style={{ ...sectionHeader, justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <LinkIcon size={18} color="#14b8a6" /> 
-              <h3>3. Useful Links Manager</h3>
+            <div>
+              <label style={labelStyle}>LinkedIn URL</label>
+              <input name="linkedin" style={inputStyle} value={footerData.linkedin} onChange={handleTextChange} />
             </div>
-            <button onClick={addLink} style={addBtn}><Plus size={16} /> Add Link</button>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {footerData.usefulLinks.map((link, index) => (
-              <div key={index} style={itemBox}>
-                <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-                   <div style={{ flex: 1 }}>
-                     <label style={labelStyle}>Link Label</label>
-                     <input 
-                       style={inputStyle} 
-                       placeholder="e.g. Deep Cleaning" 
-                       value={link.label}
-                       onChange={(e) => updateLink(index, 'label', e.target.value)}
-                     />
-                   </div>
-                   <div style={{ flex: 1 }}>
-                     <label style={labelStyle}>Link Destination (URL)</label>
-                     <input 
-                       style={inputStyle} 
-                       placeholder="e.g. /services/deep-cleaning" 
-                       value={link.url}
-                       onChange={(e) => updateLink(index, 'url', e.target.value)}
-                     />
-                   </div>
-                   <button onClick={() => removeLink(index)} style={deleteBtn}><Trash2 size={18} /></button>
-                </div>
-              </div>
-            ))}
-            {footerData.usefulLinks.length === 0 && (
-              <div style={emptyState}>No links configured for footer navigation.</div>
-            )}
           </div>
         </section>
+
 
         {/* 4. LEGAL & COPYRIGHT */}
         <section style={cardStyle}>
           <div style={sectionHeader}><Globe size={18} color="#14b8a6" /> <h3>4. Legal & Copyright</h3></div>
           <div>
             <label style={labelStyle}>Copyright Notice</label>
-            <input 
-               name="copyrightText" 
-               style={inputStyle} 
-               value={footerData.copyrightText} 
-               onChange={handleTextChange} 
+            <input
+              name="copyrightText"
+              style={inputStyle}
+              value={footerData.copyrightText}
+              onChange={handleTextChange}
             />
           </div>
         </section>

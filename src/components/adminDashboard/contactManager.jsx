@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
   Save, Layout, Info, Mail, Phone, MapPin,
-  ImageIcon, Loader2, X, Globe, MessageSquare, AtSign
+  ImageIcon, Loader2, X, Globe, MessageSquare, AtSign, Plus
 } from 'lucide-react';
 import { getContactSettings, upsertContactSettings } from '../../services/contactAPI';
 
@@ -22,7 +22,14 @@ const ContactAdmin = () => {
     phone: "",
     email: "",
     mapEmbedUrl: "",
-    contactEmail: ""
+    contactEmail: "",
+    enquirySubjects: [],
+    // ✅ Social Links
+    facebook: "",
+    instagram: "",
+    youtube: "",
+    twitter: "",
+    linkedin: ""
   });
 
   const fileRef = useRef(null);
@@ -37,12 +44,34 @@ const ContactAdmin = () => {
   };
 
   // --- 1. FETCH DATA ON LOAD ---
+  // --- 1. FETCH DATA ON LOAD ---
   useEffect(() => {
     const loadData = async () => {
       try {
         const res = await getContactSettings();
         if (res.success && res.data) {
           const apiData = res.data;
+
+          // ---------------------------------------------------------
+          // 🛠️ FIX: Manually parse socialLinks if it arrives as a string
+          // ---------------------------------------------------------
+          let socialObj = { facebook: "", instagram: "", youtube: "" };
+
+          if (apiData.socialLinks) {
+            if (typeof apiData.socialLinks === 'string') {
+              // It looks like "{\"facebook\":\"...\"}" -> Parse it!
+              try {
+                socialObj = JSON.parse(apiData.socialLinks);
+              } catch (e) {
+                console.error("Error parsing socialLinks string:", e);
+              }
+            } else if (typeof apiData.socialLinks === 'object') {
+              // It is already an object -> Use it directly
+              socialObj = apiData.socialLinks;
+            }
+          }
+          // ---------------------------------------------------------
+
           setData({
             heroTitle: apiData.heroTitle || "",
             heroSubtitle: apiData.heroSubtitle || "",
@@ -53,7 +82,15 @@ const ContactAdmin = () => {
             phone: apiData.contactInfo?.phone || "",
             email: apiData.contactInfo?.email || "",
             mapEmbedUrl: apiData.mapEmbedUrl || "",
-            contactEmail: apiData.contactEmail || ""
+            contactEmail: apiData.contactEmail || "",
+            enquirySubjects: apiData.enquirySubjects || [],
+
+            // ✅ Assign using the parsed object
+            facebook: socialObj.facebook || "",
+            instagram: socialObj.instagram || "",
+            youtube: socialObj.youtube || "",
+            twitter: socialObj.twitter || "",
+            linkedin: socialObj.linkedin || ""
           });
         }
       } catch (error) {
@@ -67,6 +104,27 @@ const ContactAdmin = () => {
   const handleTextChange = (e) => {
     const { name, value } = e.target;
     setData(prev => ({ ...prev, [name]: value }));
+  };
+
+  // ✅ Enquiry Subject Handlers
+  const handleAddSubject = () => {
+    setData(prev => ({
+      ...prev,
+      enquirySubjects: [...prev.enquirySubjects, { label: "" }]
+    }));
+  };
+
+  const handleSubjectChange = (index, value) => {
+    const updated = [...data.enquirySubjects];
+    updated[index].label = value;
+    setData(prev => ({ ...prev, enquirySubjects: updated }));
+  };
+
+  const handleRemoveSubject = (index) => {
+    setData(prev => ({
+      ...prev,
+      enquirySubjects: prev.enquirySubjects.filter((_, i) => i !== index)
+    }));
   };
 
   const handleImageUpload = (e) => {
@@ -88,8 +146,15 @@ const ContactAdmin = () => {
   // --- 2. UPDATE HANDLER ---
   const handlePublish = async () => {
     setLoading(true);
+    console.log("🚀 Publishing Contact Data:", data);
+    console.log("📱 Social Links being sent:", {
+      facebook: data.facebook,
+      instagram: data.instagram,
+      youtube: data.youtube,
+      twitter: data.twitter,
+      linkedin: data.linkedin
+    });
     try {
-      // Note: upsertContactSettings service should handle the FormData construction
       await upsertContactSettings(data, bannerFile);
       alert("✅ Contact Page updated successfully!");
     } catch (error) {
@@ -103,7 +168,7 @@ const ContactAdmin = () => {
   return (
     <div style={{ padding: '40px', maxWidth: '1100px', margin: '0 auto', fontFamily: 'Inter, sans-serif', backgroundColor: '#f8fafc' }}>
 
-      {/* HEADER (Identical to FAQ) */}
+      {/* HEADER */}
       <div style={headerStyle}>
         <div>
           <h1 style={{ margin: 0, fontSize: '1.5rem', color: '#0f766e' }}>Contact Page Manager</h1>
@@ -163,7 +228,33 @@ const ContactAdmin = () => {
           </div>
         </section>
 
-        {/* 3. CONTACT INFORMATION */}
+        {/* ✅ NEW SECTION: ENQUIRY SUBJECTS */}
+        <section style={cardStyle}>
+          <div style={sectionHeader}><Plus size={18} color="#14b8a6" /> <h3>2.5 Enquiry Subjects</h3></div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <label style={labelStyle}>Dropdown Options for Contact Form</label>
+            {data.enquirySubjects.map((subject, index) => (
+              <div key={index} style={{ display: 'flex', gap: '10px' }}>
+                <input
+                  style={inputStyle}
+                  value={subject.label}
+                  onChange={(e) => handleSubjectChange(index, e.target.value)}
+                  placeholder="e.g. Deep Cleaning"
+                />
+                <button
+                  onClick={() => handleRemoveSubject(index)}
+                  style={{ ...imageRemoveBtn, position: 'static', width: '40px', height: '40px', borderRadius: '10px' }}
+                >
+                  <X size={18} />
+                </button>
+              </div>
+            ))}
+            <button onClick={handleAddSubject} style={addBtnStyle}>
+              <Plus size={16} /> Add Subject Option
+            </button>
+          </div>
+        </section>
+
         {/* 3. CONTACT INFORMATION */}
         <section style={cardStyle}>
           <div style={sectionHeader}><Info size={18} color="#14b8a6" /> <h3>3. Business Information</h3></div>
@@ -171,7 +262,6 @@ const ContactAdmin = () => {
             <div>
               <label style={labelStyle}>Physical Address (Supports Multi-line)</label>
               <div style={iconInputWrapper}>
-                {/* Adjusted icon position for the taller box */}
                 <MapPin size={16} style={{ ...inputIcon, top: '20px', transform: 'none' }} />
                 <textarea
                   name="address"
@@ -179,18 +269,17 @@ const ContactAdmin = () => {
                     ...inputStyle,
                     paddingLeft: '40px',
                     paddingTop: '12px',
-                    minHeight: '100px', // Gives space for 3+ lines
-                    resize: 'vertical', // Allows you to pull the corner to see more
+                    minHeight: '100px',
+                    resize: 'vertical',
                     fontFamily: 'inherit'
                   }}
                   value={data.address}
                   onChange={handleTextChange}
-                  placeholder="Enter address...&#10;Line 2&#10;Line 3"
+                  placeholder="Enter address..."
                 />
               </div>
             </div>
 
-            {/* Phone and Email remain as inputs */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
               <div>
                 <label style={labelStyle}>Phone Number</label>
@@ -239,16 +328,43 @@ const ContactAdmin = () => {
               style={{ ...inputStyle, minHeight: '80px', resize: 'vertical' }}
               value={data.mapEmbedUrl}
               onChange={handleTextChange}
-              placeholder="Paste the src link from Google Maps embed code here..."
+              placeholder="Paste the src link from Google Maps..."
             />
           </div>
         </section>
+
+        {/* 5. SOCIAL MEDIA LINKS */}
+        <section style={cardStyle}>
+          <div style={sectionHeader}><MessageSquare size={18} color="#14b8a6" /> <h3>5. Social Media Links</h3></div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+            <div>
+              <label style={labelStyle}>Facebook</label>
+              <input name="facebook" style={inputStyle} value={data.facebook} onChange={handleTextChange} placeholder="https://facebook.com/..." />
+            </div>
+            <div>
+              <label style={labelStyle}>Instagram</label>
+              <input name="instagram" style={inputStyle} value={data.instagram} onChange={handleTextChange} placeholder="https://instagram.com/..." />
+            </div>
+            <div>
+              <label style={labelStyle}>YouTube</label>
+              <input name="youtube" style={inputStyle} value={data.youtube} onChange={handleTextChange} placeholder="https://youtube.com/..." />
+            </div>
+            <div>
+              <label style={labelStyle}>Twitter / X</label>
+              <input name="twitter" style={inputStyle} value={data.twitter} onChange={handleTextChange} placeholder="https://twitter.com/..." />
+            </div>
+            <div>
+              <label style={labelStyle}>LinkedIn</label>
+              <input name="linkedin" style={inputStyle} value={data.linkedin} onChange={handleTextChange} placeholder="https://linkedin.com/..." />
+            </div>
+          </div>
+        </section>
       </div>
-    </div>
+    </div >
   );
 };
 
-// --- STYLES (Identical to FAQ for Consistency) ---
+// --- STYLES ---
 const headerStyle = { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px', background: '#fff', padding: '25px', borderRadius: '16px', border: '1px solid #e2e8f0' };
 const publishBtn = { backgroundColor: '#14b8a6', color: '#fff', border: 'none', padding: '12px 25px', borderRadius: '10px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' };
 const cardStyle = { background: '#fff', padding: '25px', borderRadius: '16px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05)' };
@@ -261,5 +377,8 @@ const fullImg = { width: '100%', height: '100%', objectFit: 'cover' };
 const imageRemoveBtn = { position: 'absolute', top: '5px', right: '5px', background: 'rgba(239, 68, 68, 0.9)', color: 'white', border: 'none', borderRadius: '50%', width: '20px', height: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' };
 const iconInputWrapper = { position: 'relative', width: '100%' };
 const inputIcon = { position: 'absolute', left: '15px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' };
+const addBtnStyle = { display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 15px', borderRadius: '10px', border: '1px dashed #14b8a6', background: '#f0fdfa', color: '#0d9488', cursor: 'pointer', fontWeight: '600', width: 'fit-content' };
+
+
 
 export default ContactAdmin;

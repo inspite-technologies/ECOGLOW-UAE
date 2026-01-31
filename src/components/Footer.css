@@ -9,6 +9,15 @@
   font-family: 'Montserrat', sans-serif;
   width: 100%;
   overflow-x: hidden;
+  opacity: 0;
+  animation: footerFadeIn 0.5s ease forwards;
+  animation-delay: 1.5s;
+}
+
+@keyframes footerFadeIn {
+  to {
+    opacity: 1;
+  }
 }
 
 .footer-container {
@@ -213,7 +222,7 @@
   font-weight: 500;
   transition: all 0.3s ease;
   line-height: 1.6;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 .link-column a:hover {
@@ -686,17 +695,17 @@
   }
 
   .contact-item {
-    font-size: 12px;
+    font-size: 17px;
   }
 
   .contact-item span,
   .contact-item a {
-    font-size: 12px;
+    font-size: 17px;
   }
 
   .contact-item i {
-    font-size: 13px;
-    width: 22px;
+    font-size: 18px;
+    width: 28px;
     display: inline-flex;
     justify-content: center;
   }
@@ -706,13 +715,13 @@
   }
 
   .contact-item.address i {
-    font-size: 15px;
+    font-size: 20px;
   }
 
   .contact-item.whatsapp i {
-    width: 22px;
-    height: 22px;
-    font-size: 12px;
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
   }
 
   .footer-contact-row {
@@ -773,7 +782,7 @@
   }
 
   .social-follow span {
-    font-size: 13px;
+    font-size: 16px;
   }
 
   .social-icons {
@@ -781,9 +790,9 @@
   }
 
   .social-icons a {
-    width: 40px;
-    height: 40px;
-    font-size: 15px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
   }
 
   .legal-row {
@@ -830,18 +839,18 @@
   }
 
   .contact-item {
-    font-size: 11px;
+    font-size: 16px;
   }
 
   .contact-item span,
   .contact-item a {
-    font-size: 11px;
+    font-size: 16px;
     line-height: 1.8;
   }
 
   .contact-item i {
-    font-size: 12px;
-    width: 20px;
+    font-size: 17px;
+    width: 26px;
     display: inline-flex;
     justify-content: center;
   }
@@ -851,13 +860,13 @@
   }
 
   .contact-item.address i {
-    font-size: 14px;
+    font-size: 18px;
   }
 
   .contact-item.whatsapp i {
-    width: 20px;
-    height: 20px;
-    font-size: 11px;
+    width: 26px;
+    height: 26px;
+    font-size: 15px;
   }
 
   .footer-contact-row {
@@ -918,7 +927,7 @@
   }
 
   .social-follow span {
-    font-size: 12px;
+    font-size: 15px;
   }
 
   .social-icons {
@@ -926,9 +935,9 @@
   }
 
   .social-icons a {
-    width: 38px;
-    height: 38px;
-    font-size: 14px;
+    width: 46px;
+    height: 46px;
+    font-size: 18px;
   }
 
   .legal-row {

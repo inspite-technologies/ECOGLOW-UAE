@@ -26,40 +26,55 @@ function AboutSection({ data }) {
   }, [data]);
 
   useLayoutEffect(() => {
-    if (!data) return;
+  if (!data) return;
 
-    let ctx;
-    const timer = setTimeout(() => {
-        ctx = gsap.context(() => {
-            gsap.fromTo(textLeftRef.current, { opacity: 0, x: -60 }, {
-                opacity: 1, x: 0, duration: 0.6, ease: "power2.out",
-                scrollTrigger: { trigger: sectionRef.current, start: "top 85%", once: true },
-            });
+  let ctx = gsap.context(() => {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 80%",
+        once: true,
+      },
+      defaults: {
+        ease: "power3.out",
+        duration: 0.8,
+      },
+    });
 
-            gsap.fromTo(textRightRef.current, { opacity: 0, x: 60 }, {
-                opacity: 1, x: 0, duration: 0.6, delay: 0.1, ease: "power2.out",
-                scrollTrigger: { trigger: sectionRef.current, start: "top 85%", once: true },
-            });
+    tl.from(textLeftRef.current, {
+      opacity: 0,
+      x: -80,
+    })
+      .from(
+        textRightRef.current,
+        {
+          opacity: 0,
+          x: 80,
+        },
+        "-=0.5" // overlap
+      )
+      .from(
+        imageRef.current,
+        {
+          opacity: 0,
+          y: 120,
+          scale: 0.96,
+        },
+        "-=0.4"
+      )
+      .from(
+        accordionRef.current,
+        {
+          opacity: 0,
+          y: 60,
+        },
+        "-=0.5"
+      );
+  }, sectionRef);
 
-            gsap.fromTo(imageRef.current, { opacity: 0, y: 100 }, {
-                opacity: 1, y: 0, duration: 0.8, ease: "power2.out",
-                scrollTrigger: { trigger: sectionRef.current, start: "top 70%", once: true },
-            });
+  return () => ctx.revert();
+}, [data]);
 
-            gsap.fromTo(accordionRef.current, { opacity: 0, y: 50 }, {
-                opacity: 1, y: 0, duration: 0.6, delay: 0.15, ease: "power2.out",
-                scrollTrigger: { trigger: sectionRef.current, start: "top 70%", once: true },
-            });
-            
-            ScrollTrigger.refresh();
-        }, sectionRef);
-    }, 100); 
-
-    return () => {
-        if(ctx) ctx.revert();
-        clearTimeout(timer);
-    };
-  }, [data]);
 
   const getImgUrl = (path) => {
     if (!path) return "";
@@ -131,21 +146,23 @@ function AboutSection({ data }) {
                     <span className={`accordion-icon ${isOpen ? "expanded" : ""}`}></span>
                   </button>
                   <div className={`accordion-content ${isOpen ? "expanded" : ""}`}>
-                      {item.content?.split("\n").map((paragraph, idx) => {
-                        if (!paragraph.trim()) return null;
-                        const [titlePart, ...rest] = paragraph.split(":");
-                        const hasColon = paragraph.includes(":");
-                        return (
-                          <p key={idx} style={{ textAlign: "left", margin: "0", lineHeight: "1.8" }}>
-                            {hasColon ? (
-                              <>
-                                <strong style={{ fontWeight: "700", color: "#1b1a1a" }}>{titlePart}:</strong>
-                                {rest.join(":")}
-                              </>
-                            ) : paragraph}
-                          </p>
-                        );
-                      })}
+                      <div className="accordion-inner">
+                        {item.content?.split("\n").map((paragraph, idx) => {
+                          if (!paragraph.trim()) return null;
+                          const [titlePart, ...rest] = paragraph.split(":");
+                          const hasColon = paragraph.includes(":");
+                          return (
+                            <p key={idx} style={{ textAlign: "left", margin: "0", lineHeight: "1.8" }}>
+                              {hasColon ? (
+                                <>
+                                  <strong style={{ fontWeight: "700", color: "#1b1a1a" }}>{titlePart}:</strong>
+                                  {rest.join(":")}
+                                </>
+                              ) : paragraph}
+                            </p>
+                          );
+                        })}
+                      </div>
                   </div>
                 </div>
               );

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap");
 
 * {
   box-sizing: border-box;
@@ -7,7 +7,7 @@
 }
 
 .packages-page {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   color: #1f2937;
   overflow-x: hidden;
 }
@@ -19,7 +19,8 @@
 .packages-hero {
   height: 40vh;
   min-height: 350px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.159), rgba(0, 0, 0, 0.17)), url('../assets/packages.webp');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.159), rgba(0, 0, 0, 0.17)),
+    url("../assets/packages.webp");
   background-size: cover;
   background-position: center 78%;
   display: flex;
@@ -35,13 +36,13 @@
 }
 
 .packages-hero-small {
-     font-size: 1rem;
+  font-size: 1rem;
   font-weight: 450;
   color: #ffffff;
   margin: 0 0 6px 0;
   letter-spacing: 0.3px;
   font-family: "Montserrat", sans-serif;
-  opacity: 0.95;  
+  opacity: 0.95;
 }
 
 .packages-hero-large {
@@ -182,7 +183,7 @@
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background: #25D366; /* WhatsApp green background */
+  background: #25d366; /* WhatsApp green background */
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -256,11 +257,11 @@
 }
 
 .packages-bullet {
-  font-size:2rem;
+  font-size: 2rem;
   line-height: 1.1;
   color: white;
   flex-shrink: 0;
- margin-top: -10px;
+  margin-top: -10px;
 }
 
 .packages-feature-text {
@@ -288,7 +289,7 @@
 }
 
 .packages-minimum {
-  font-size: .8rem;
+  font-size: 0.8rem;
   font-weight: 400;
 }
 
@@ -448,9 +449,13 @@
     font-size: 1.8rem;
   }
 
-  .packages-pricing-grid {
-    grid-template-columns: 1fr;
-  }
+ .packages-pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr ;
+    gap: 0;
+    grid-auto-rows: auto; /* overrides external rule */
+}
+
 
   .packages-pricing-card {
     min-height: 280px; /* Maintain consistent height on mobile */
@@ -476,7 +481,8 @@
   }
 
   .packages-table-footer {
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
     gap: 1rem;
   }
 }

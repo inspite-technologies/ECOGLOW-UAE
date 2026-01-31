@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Home } from "lucide-react";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { fetchServices } from '../services/commercialAPI';
+import Preloader from '../components/Preloader';
 import "./Services.css";
 
 // Import local images as Fallbacks
@@ -65,9 +66,23 @@ const getButtonConfig = (input) => {
   };
 };
 
+// --- HELPER 4: STRING SLUGIFY (For Deep Linking) ---
+const slugify = (text) => {
+  if (!text) return '';
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')     // Replace spaces with -
+    .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+    .replace(/\-\-+/g, '-');  // Replace multiple - with single -
+};
+
 const Commercial = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showPreloader, setShowPreloader] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
     const loadData = async () => {
@@ -79,168 +94,204 @@ const Commercial = () => {
       } catch (error) {
         console.error("Error fetching commercial page data:", error);
       } finally {
-        setLoading(false);
+        setLoading(false); // Trigger exit animation
       }
     };
     loadData();
-  }, []);
+  }, []); // Run only on mount
 
-  if (loading) return <div style={{ height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>Loading...</div>;
-  if (!data) return null;
+  // --- SCROLL TO HASH EFFECT (With Retry) ---
+  useEffect(() => {
+    if (data && location.hash) {
+      const id = decodeURIComponent(location.hash.replace('#', ''));
+      let attempts = 0;
+      const maxAttempts = 50; // Try for 5 seconds
+
+      const attemptScroll = () => {
+        const element = document.getElementById(id);
+        if (element) {
+          // Found it! Scroll and stop.
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else if (attempts < maxAttempts) {
+          // Not found yet, try again in 100ms
+          attempts++;
+          setTimeout(attemptScroll, 100);
+        }
+      };
+
+      attemptScroll();
+    }
+  }, [data, location.hash]); // Run when data loads OR hash changes
+
+  if (!data && !loading) return <div className="error-message">Failed to load commercial services.</div>;
 
   return (
-    <div className="service-page">
+    <>
+      {showPreloader && (
+        <Preloader
+          loading={loading}
+          onComplete={() => setShowPreloader(false)}
+        />
+      )}
 
-      {/* 1. HERO SECTION */}
-      <section
-        className="service-hero"
-        style={{
-          backgroundImage: `url(${getImageUrl(data.bannerImage, service1)})`
-        }}
-      >
-        <h1 className="hero-title">
-          <span className="service-text">{data.heroTitlePart1 || "All"}</span>
-          <span className="brand-text">{data.heroTitlePart2 || "Services"}</span>
-        </h1>
-      </section>
+      {data && (
+        <div className="service-page" style={{ opacity: showPreloader && loading ? 0 : 1 }}>
+        
 
-      {/* 2. BREADCRUMB */}
-      <section className="service-intro">
-        <div className="hero-breadcrumb">
-          <span style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-            <Home size={16} /> HOME
-          </span>
-          <span style={{ color: "#80cbc4" }}>/</span>
-          <span>{(data.introLabel || "ALL SERVICES").toUpperCase()}</span>
-        </div>
-      </section>
+          {/* 1. HERO SECTION */}
+          <section
+            className="service-hero"
+            style={{
+              backgroundImage: `url(${getImageUrl(data.bannerImage, service1)})`
+            }}
+          >
+            <h1 className="hero-title">
+              <span className="service-text">{data.heroTitlePart1 || "All"}</span>
+              <span className="brand-text">{data.heroTitlePart2 || "Services"}</span>
+            </h1>
+          </section>
 
-      {/* 3. INTRO SECTION */}
-      <section className="residential-section">
-        <div className="container">
-          <div className="content">
-            <div className="section-label">{data.introLabel || "All Services"}</div>
-            <h4 className="title">
-              {(() => {
-                const title = data.introMainTitle || "Commercial";
-                const parts = title.split(' ');
-                if (parts.length >= 2) {
-                  return <>{parts.slice(0, -1).join(' ')} <span className="teal-text-thin">{parts[parts.length - 1]}</span></>;
-                }
-                return title;
-              })()}
-            </h4>
-            <div className="title-underline"></div>
-            <p className="description">
-              {data.introDescription || "At EcoGlow, we deliver luxury-standard cleaning experiences."}
-            </p>
-            <p className="lorem-text">{data.introLongText}</p>
-          </div>
-          <div className="image-container">
-            <img src={getImageUrl(data.introSideImage, service2)} alt="Intro Side" />
-          </div>
-        </div>
-      </section>
+          {/* 2. BREADCRUMB */}
+          <section className="service-intro">
+            <div className="hero-breadcrumb">
+              <span style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                <Home size={16} /> HOME
+              </span>
+              <span style={{ color: "#80cbc4" }}>/</span>
+              <span>{(data.introLabel || "ALL SERVICES").toUpperCase()}</span>
+            </div>
+          </section>
 
-      {/* 4. TRUST BADGE */}
-      <section className="trust-section">
-        <div className="trust-badge">
-          <h2 className="trusted-outline-text">{data.trustedText || "Trusted by 100+ Clients"}</h2>
-        </div>
-      </section>
-
-      {/* 5. DYNAMIC SERVICES GRID */}
-      <section className="residential-luxury-section">
-        <div className="section-header">
-          <h1>{data.gridMainHeading || "Commercial"}</h1>
-          <p>{data.gridSubheading || "Our premium cleaning services."}</p>
-        </div>
-
-        {data.servicesList && data.servicesList.map((service, index) => {
-
-          // HIDE EMPTY CARDS (Prevents 404s on blank data)
-          if (!service.title && !service.description) return null;
-
-          // GET BUTTON CONFIGURATION
-          const buttonConfig = getButtonConfig(service.phoneNumber);
-          const whatsappLink = getWhatsAppLink(service.whatsappNumber);
-
-          return (
-            <div
-              key={service._id || index}
-              className={`content-grid ${index % 2 !== 0 ? "row-reverse" : ""}`}
-            >
-              <div className="image-side">
-                <img
-                  src={getImageUrl(service.image, service2)}
-                  alt={service.title || "Service"}
-                />
+          {/* 3. INTRO SECTION */}
+          <section className="residential-section">
+            <div className="container">
+              <div className="content">
+                <div className="section-label">{data.introLabel || "All Services"}</div>
+                <h4 className="title">
+                  {(() => {
+                    const title = data.introMainTitle || "Commercial";
+                    const parts = title.split(' ');
+                    if (parts.length >= 2) {
+                      return <>{parts.slice(0, -1).join(' ')} <span className="teal-text-thin">{parts[parts.length - 1]}</span></>;
+                    }
+                    return title;
+                  })()}
+                </h4>
+                <div className="title-underline"></div>
+                <p className="description">
+                  {data.introDescription || "At EcoGlow, we deliver luxury-standard cleaning experiences."}
+                </p>
+                <p className="lorem-text">{data.introLongText}</p>
               </div>
-
-              <div className="text-side">
-                <h2>{service.title}</h2>
-                <h3>{service.subtitle}</h3>
-                <p>{service.desc || service.description}</p>
-
-                <div className="buttons">
-
-                  {/* --- BOOK NOW BUTTON --- */}
-                  {/* Logic: Uses 'a' for Tel/External, 'Link' for Internal */}
-                  {buttonConfig.type === 'internal' ? (
-                    <Link {...buttonConfig.props}>
-                      {buttonConfig.text}
-                    </Link>
-                  ) : (
-                    <a {...buttonConfig.props}>
-                      {buttonConfig.text}
-                    </a>
-                  )}
-
-                  {/* --- WHATSAPP BUTTON --- */}
-                  <a
-                    href={whatsappLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-whatsapp"
-                  >
-                    <span className="whatsapp-icon-circle">
-                      <FontAwesomeIcon icon={faWhatsapp} />
-                    </span>
-                    Whatsapp Now
-                  </a>
-                </div>
+              <div className="image-container">
+                <img src={getImageUrl(data.introSideImage, service2)} alt="Intro Side" />
               </div>
             </div>
-          );
-        })}
-      </section>
+          </section>
 
-      {/* 6. NEWSLETTER */}
-      <section className="newsletter-section">
-        <div className="newsletter-container">
-          <div className="left-content">
-            <h2 className="title">
-              {(() => {
-                const title = data.newsletterTitle || "LET'S CONNECT";
-                const parts = title.split(' ');
-                if (parts.length >= 2) {
-                  return <>{parts.slice(0, -1).join(' ')} <span className="teal-text-thin">{parts[parts.length - 1]}</span></>;
-                }
-                return title;
-              })()}
-            </h2>
-            <p className="subtitle">{data.newsletterSubtitle}</p>
-          </div>
-          <div className="right-content">
-            <p className="newsletter-label">You will get monthly newsletter</p>
-            <NewsletterForm contactEmail={data.contactEmail} />
-          </div>
+          {/* 4. TRUST BADGE */}
+          <section className="trust-section">
+            <div className="trust-badge">
+              <h2 className="trusted-outline-text">{data.trustedText || "Trusted by 100+ Clients"}</h2>
+            </div>
+          </section>
+
+          {/* 5. DYNAMIC SERVICES GRID */}
+          <section className="residential-luxury-section">
+            <div className="section-header">
+              <h1>{data.gridMainHeading || "Commercial"}</h1>
+              <p>{data.gridSubheading || "Our premium cleaning services."}</p>
+            </div>
+
+            {data.servicesList && data.servicesList.map((service, index) => {
+
+              // HIDE EMPTY CARDS (Prevents 404s on blank data)
+              if (!service.title && !service.description) return null;
+
+              // GET BUTTON CONFIGURATION
+              const buttonConfig = getButtonConfig(service.phoneNumber);
+              const whatsappLink = getWhatsAppLink(service.whatsappNumber);
+
+              return (
+                <div
+                  key={service._id || index}
+                  id={slugify(service.title)} // ID for deep linking
+                  className={`content-grid ${index % 2 !== 0 ? "row-reverse" : ""}`}
+                >
+                  <div className="image-side">
+                    <img
+                      src={getImageUrl(service.image, service2)}
+                      alt={service.title || "Service"}
+                    />
+                  </div>
+
+                  <div className="text-side">
+                    <h2>{service.title}</h2>
+                    <h3>{service.subtitle}</h3>
+                    <p>{service.desc || service.description}</p>
+
+                    <div className="buttons">
+
+                      {/* --- BOOK NOW BUTTON --- */}
+                      {/* Logic: Uses 'a' for Tel/External, 'Link' for Internal */}
+                      {buttonConfig.type === 'internal' ? (
+                        <Link {...buttonConfig.props}>
+                          {buttonConfig.text}
+                        </Link>
+                      ) : (
+                        <a {...buttonConfig.props}>
+                          {buttonConfig.text}
+                        </a>
+                      )}
+
+                      {/* --- WHATSAPP BUTTON --- */}
+                      <a
+                        href={whatsappLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn-whatsapp"
+                      >
+                        <span className="whatsapp-icon-circle">
+                          <FontAwesomeIcon icon={faWhatsapp} />
+                        </span>
+                        Whatsapp Now
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </section>
+
+          {/* 6. NEWSLETTER */}
+          <section className="newsletter-section">
+            <div className="newsletter-container">
+              <div className="left-content">
+                <h2 className="title">
+                  {(() => {
+                    const title = data.newsletterTitle || "LET'S CONNECT";
+                    const parts = title.split(' ');
+                    if (parts.length >= 2) {
+                      return <>{parts.slice(0, -1).join(' ')} <span className="teal-text-thin">{parts[parts.length - 1]}</span></>;
+                    }
+                    return title;
+                  })()}
+                </h2>
+                <p className="subtitle">{data.newsletterSubtitle}</p>
+              </div>
+              <div className="right-content">
+                <p className="newsletter-label">You will get monthly newsletter</p>
+                <NewsletterForm contactEmail={data.contactEmail} />
+              </div>
+            </div>
+          </section>
         </div>
-      </section>
-    </div>
+      )}
+    </>
   );
 };
 
+// --- MOVED OUTSIDE THE COMMERCIAL COMPONENT ---
 // Newsletter Form Component
 const NewsletterForm = ({ contactEmail }) => {
   const [subscriberEmail, setSubscriberEmail] = React.useState("");
@@ -248,7 +299,17 @@ const NewsletterForm = ({ contactEmail }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!subscriberEmail) return;
+    if (!subscriberEmail) {
+      alert("❌ Please enter your email address.");
+      return;
+    }
+
+    // Email format validation
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(subscriberEmail)) {
+      alert("❌ Please enter a valid email address.");
+      return;
+    }
 
     const adminEmail = contactEmail || "commercial@ecoglow.ae";
 

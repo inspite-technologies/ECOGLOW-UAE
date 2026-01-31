@@ -87,9 +87,9 @@
   height: 70px;
   object-fit: contain;
   /* Smoothed out transform and filter */
-  transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
-              height 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
-              filter 0.4s ease;
+  transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+    height 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+    filter 0.4s ease;
   filter: brightness(0);
   display: block;
   transform-origin: top center;
@@ -257,22 +257,24 @@
 }
 
 .cta-button-primary,
-.cta-button-whatsapp {
-  padding: 13px 22px;
-  border: none;
-  font-size: 11px;
-  font-weight: 500;
-  text-transform: uppercase;
-  color: white;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  width: 100%;
-  justify-content: center;
-}
+  .cta-button-whatsapp {
+    padding: 0 24px; /* Remove top/bottom padding when using fixed height */
+    font-size: 10px;
+    width: 100%;
+    
+    /* FORCE IDENTICAL BOX MODEL */
+    height: 48px;            /* Set a comfortable fixed height */
+    display: flex;           /* Both must be flex */
+    align-items: center;     /* Center text/icons vertically */
+    justify-content: center; /* Center text/icons horizontally */
+    box-sizing: border-box;
+    line-height: 1;
+    margin: 0;               /* Ensure no stray margins */
+  }
 
-.cta-button-primary { 
-  background: #73c9c1; 
+
+.cta-button-primary {
+  background: #73c9c1;
 }
 
 .cta-button-primary:hover {
@@ -281,11 +283,11 @@
   box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
 }
 
-.cta-button-whatsapp { 
-  background: #73c9c1; 
-  display: flex; 
-  align-items: center; 
-  gap: 8px; 
+.cta-button-whatsapp {
+  background: #73c9c1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .cta-button-whatsapp:hover {
@@ -522,6 +524,13 @@
     padding: 12px 24px;
     font-size: 10px;
     width: 100%;
+    min-height: 44px;
+    height: 44px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
   }
 }
 
@@ -1052,6 +1061,7 @@
 /* ==================== PERFORMANCE & ACCESSIBILITY ==================== */
 
 @media (prefers-reduced-motion: reduce) {
+
   .advantage-item,
   .advantage-icon-image,
   .advantage-toggle,
@@ -1068,7 +1078,9 @@
   }
 }
 
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+
   .advantages-title,
   .advantage-title,
   .advantage-description-content p,

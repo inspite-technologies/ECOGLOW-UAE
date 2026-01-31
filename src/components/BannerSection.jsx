@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { fetchBanner } from '../services/bannerAPI';
 import './BannerSection.css';
 
 // Fallback image
@@ -17,35 +16,21 @@ const getImageUrl = (imagePath) => {
   return `${SERVER_URL}/${imagePath.replace(/\\/g, "/")}`;
 };
 
-function BannerSection() {
-  // Data State
-  const [bannerData, setBannerData] = useState(null);
-  
+// 1. Accept 'data' as a prop here
+function BannerSection({ data }) {
   // Animation/UI State
-  const [slidePosition, setSlidePosition] = useState(50); 
+  const [slidePosition, setSlidePosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const [animationComplete, setAnimationComplete] = useState(false);
   const [sectionInView, setSectionInView] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState({ before: false, after: false });
-  
+
   const sectionRef = useRef(null);
   const headingRef = useRef(null);
   const animationFrameRef = useRef(null);
 
-  // --- 1. FETCH DATA ---
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const response = await fetchBanner();
-        let result = response.data || response;
-        if (Array.isArray(result)) result = result[0];
-        setBannerData(result);
-      } catch (error) {
-        console.error("Error fetching banner:", error);
-      }
-    };
-    loadData();
-  }, []);
+  // --- REMOVED: Internal API Fetch (useEffect) --- 
+  // We now rely on the 'data' prop passed from Home.jsx
 
   // --- 2. VIEWPORT HEIGHT FIX ---
   useEffect(() => {
@@ -63,26 +48,29 @@ function BannerSection() {
     let ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: sectionRef.current,
-        start: 'top 90%', 
+        start: 'top 90%',
         end: 'bottom 10%',
         onEnter: () => setSectionInView(true),
         onLeave: () => setSectionInView(false),
         onEnterBack: () => setSectionInView(true),
       });
 
-      gsap.fromTo(
-        headingRef.current,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1, y: 0, duration: 0.6, delay: 0.2, ease: 'power2.out',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 85%',
-            toggleActions: 'play none none none',
-            once: true
+      // Add null check for headingRef
+      if (headingRef.current) {
+        gsap.fromTo(
+          headingRef.current,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1, y: 0, duration: 0.6, delay: 0.2, ease: 'power2.out',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top 85%',
+              toggleActions: 'play none none none',
+              once: true
+            }
           }
-        }
-      );
+        );
+      }
     }, sectionRef);
     return () => ctx.revert();
   }, []);
@@ -109,7 +97,7 @@ function BannerSection() {
       const progress = elapsed / totalDuration;
       const sineValue = Math.sin(progress * Math.PI * 2 * cycles);
       const position = 50 + (sineValue * 40);
-      
+
       setSlidePosition(position);
       animationFrameRef.current = requestAnimationFrame(animate);
     };
@@ -127,7 +115,7 @@ function BannerSection() {
   const handleMove = useCallback((clientX) => {
     const container = sectionRef.current?.querySelector('.banner-wrapper');
     if (!container) return;
-    
+
     const rect = container.getBoundingClientRect();
     const x = clientX - rect.left;
     const percentage = (x / rect.width) * 100;
@@ -135,10 +123,10 @@ function BannerSection() {
   }, []);
 
   useEffect(() => {
-    const onMouseMove = (e) => { 
+    const onMouseMove = (e) => {
       if (isDragging) { e.preventDefault(); handleMove(e.clientX); }
     };
-    const onTouchMove = (e) => { 
+    const onTouchMove = (e) => {
       if (isDragging) { e.preventDefault(); handleMove(e.touches[0].clientX); }
     };
     const onStop = () => setIsDragging(false);
@@ -173,10 +161,11 @@ function BannerSection() {
     setImagesLoaded(prev => ({ ...prev, after: true }));
   };
 
-  // --- RESOLVE CONTENT VARIABLES ---
-  const beforeImg = getImageUrl(bannerData?.beforeImage || bannerData?.image);
-  const afterImg = getImageUrl(bannerData?.afterImage || bannerData?.image);
-  const displayText = bannerData?.text || "A Place You Love to Return To";
+  // --- 6. RESOLVE CONTENT VARIABLES USING PROP ---
+  // Using optional chaining (data?.) to be safe
+  const beforeImg = getImageUrl(data?.beforeImage || data?.image);
+  const afterImg = getImageUrl(data?.afterImage || data?.image);
+  const displayText = data?.text || "A Place You Love to Return To";
 
   // Show loading state while images are loading
   const bothImagesLoaded = imagesLoaded.before && imagesLoaded.after;
@@ -184,8 +173,8 @@ function BannerSection() {
   return (
     <section className="banner-section" id="banner" ref={sectionRef}>
       <div className="banner-wrapper">
-        
-        {/* Loading Overlay */}
+
+        {/* Loading Overlay (Wait for images to load) */}
         {!bothImagesLoaded && (
           <div style={{
             position: 'absolute',
@@ -206,12 +195,13 @@ function BannerSection() {
         {/* Layer 1 (Bottom/Background) -> RIGHT SIDE (BEFORE) */}
         <div className="banner-layer layer-dark">
           <div className="banner-img-container">
-            <img 
-              src={beforeImg} 
-              alt="Before cleaning" 
-              className="banner-img" 
+            <img
+              src={beforeImg}
+              alt="Before cleaning"
+              className="banner-img"
               draggable="false"
-              loading="lazy"
+              loading="eager"
+              decoding="sync"
               onLoad={handleBeforeImageLoad}
               style={{ opacity: imagesLoaded.before ? 1 : 0, transition: 'opacity 0.3s' }}
             />
@@ -220,17 +210,18 @@ function BannerSection() {
         </div>
 
         {/* Layer 2 (Top/Clipped) -> LEFT SIDE (AFTER) */}
-        <div 
+        <div
           className="banner-layer layer-reveal"
           style={{ clipPath: `inset(0 ${100 - slidePosition}% 0 0)` }}
         >
           <div className="banner-img-container">
-            <img 
-              src={afterImg} 
-              alt="After cleaning" 
-              className="banner-img" 
+            <img
+              src={afterImg}
+              alt="After cleaning"
+              className="banner-img"
               draggable="false"
-              loading="lazy"
+              loading="eager"
+              decoding="sync"
               onLoad={handleAfterImageLoad}
               style={{ opacity: imagesLoaded.after ? 1 : 0, transition: 'opacity 0.3s' }}
             />
@@ -243,9 +234,9 @@ function BannerSection() {
         </div>
 
         {/* Slider Handle */}
-        <div 
+        <div
           className="banner-handle"
-          style={{ 
+          style={{
             left: `${slidePosition}%`,
             opacity: bothImagesLoaded ? 1 : 0,
             transition: 'opacity 0.3s'
@@ -256,7 +247,7 @@ function BannerSection() {
           <div className="handle-line"></div>
           <div className="handle-circle">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-              <path d="M8 18l-6-6 6-6M16 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M8 18l-6-6 6-6M16 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
         </div>

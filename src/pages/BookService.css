@@ -49,21 +49,6 @@
   justify-content: flex-end;
 }
 
-.bookservice-hero-text-wrapper {
-  text-align: left;
-  margin: 0;
-}
-
-.bookservice-hero-small-text {
-  font-size: 1.2rem;
-  font-weight: 500;
-  color: #ffffff;
-  margin: 0 0 6px 0;
-  letter-spacing: 0.3px;
-  font-family: "Montserrat", sans-serif;
-  opacity: 0.95;
-}
-
 .bookservice-hero-large-text {
   font-size: 2.8rem;
   font-weight: 600;
@@ -134,14 +119,6 @@
   padding: 0;
 }
 
-.bookservice-section-header {
-  margin-bottom: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-}
-
 .bookservice-small-label {
   display: block !important;
   visibility: visible !important;
@@ -203,14 +180,6 @@
   display: flex;
   flex-direction: column;
 }
-.bookservice-form-group-1 {
-  grid-column: 1 / -1; /* spans full row */
-}
-
-
-.bookservice-form-group.bookservice-full-width {
-  grid-column: 1 / -1;
-}
 
 .bookservice-form-group label {
   display: block;
@@ -236,6 +205,18 @@
   font-weight: 500;
 }
 
+/* Option styling to reduce dropdown list height */
+.bookservice-select option {
+  font-size: 14px !important;
+  line-height: 1.2;
+}
+
+/* Specific styling for Cleaning For (Commercial/Residential) */
+.bookservice-cleaning-select option {
+  font-size: 18px !important;
+  padding: 10px 15px !important;
+}
+
 .bookservice-input:focus,
 .bookservice-select:focus {
   outline: none;
@@ -247,20 +228,36 @@
   font-size: 1rem;
 }
 
-/* Error State */
+/* --- DISABLED STATE --- */
+.bookservice-select:disabled {
+  opacity: 0.4;
+  background-color: #d3d3d3 !important;
+  color: #666666 !important;
+  cursor: not-allowed !important;
+  border-color: #999999 !important;
+}
+
+.bookservice-select:disabled+.bookservice-select-arrow {
+  color: #999999 !important;
+  opacity: 0.4;
+}
+
+/* --- ERROR & VALIDATION STATES --- */
 .bookservice-input.bookservice-error,
 .bookservice-select.bookservice-error,
-.bookservice-phone-wrapper.bookservice-error {
+.bookservice-phone-wrapper.bookservice-error,
+.custom-dropdown-trigger.bookservice-error {
   border-color: var(--bookservice-error-red) !important;
 }
 
 .bookservice-error-message {
   display: block;
   color: var(--bookservice-error-red);
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   margin-top: 5px;
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
+  text-align: left;
 }
 
 /* Phone Input */
@@ -298,6 +295,10 @@
   border: none !important;
   height: 100%;
   padding: 0 15px;
+  font-size: 20px;
+  font-family: "Montserrat", sans-serif;
+  color: var(--bookservice-text-dark);
+  font-weight: 500;
 }
 
 .bookservice-phone-input:focus {
@@ -317,6 +318,7 @@
   font-weight: 500;
 }
 
+/* --- ARROW ANIMATION --- */
 .bookservice-select-arrow {
   position: absolute;
   right: 20px;
@@ -325,6 +327,13 @@
   color: var(--bookservice-teal);
   font-size: 12px;
   pointer-events: none;
+  transition: transform 0.3s ease;
+  /* Animation */
+}
+
+/* Rotate arrow when dropdown is active */
+.custom-dropdown-trigger.active .bookservice-select-arrow {
+  transform: translateY(-50%) rotate(180deg);
 }
 
 /* Date & Time Input */
@@ -337,8 +346,7 @@
 .bookservice-input[type="date"]::-webkit-calendar-picker-indicator,
 .bookservice-input[type="time"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
-  filter: brightness(0) saturate(100%) invert(66%) sepia(23%) saturate(723%)
-    hue-rotate(128deg) brightness(91%) contrast(87%);
+  filter: brightness(0) saturate(100%) invert(66%) sepia(23%) saturate(723%) hue-rotate(128deg) brightness(91%) contrast(87%);
 }
 
 /* Form Actions */
@@ -347,12 +355,11 @@
   justify-content: flex-end;
   gap: 20px;
   margin-top: 10px;
-  padding:40px
+  padding: 40px
 }
 
-.bookservice-btn-reset,
 .bookservice-btn-submit {
-   height: 48px;   
+  height: 48px;
   padding: 16px 50px;
   font-size: 14px;
   font-weight: 600;
@@ -363,18 +370,6 @@
   transition: all 0.3s ease;
   font-family: "Montserrat", sans-serif;
   border-radius: 0;
-}
-
-.bookservice-btn-reset {
-  background: #e0e0e0;
-  color: var(--bookservice-text-gray);
-}
-
-.bookservice-btn-reset:hover {
-  background: #d0d0d0;
-}
-
-.bookservice-btn-submit {
   background: var(--bookservice-teal);
   color: #ffffff;
 }
@@ -406,10 +401,40 @@
   border-left: 3px solid var(--bookservice-error-red);
 }
 
+/* ==================== CUSTOM DROPDOWN CSS ==================== */
+.bookservice-custom-dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  background: white;
+  border: 2px solid var(--bookservice-teal);
+  border-top: none;
+  z-index: 100;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.bookservice-custom-option {
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: "Montserrat", sans-serif;
+  color: var(--bookservice-text-dark);
+  transition: background 0.2s;
+}
+
+.bookservice-custom-option:hover {
+  background: #f0f0f0;
+  color: var(--bookservice-teal-dark);
+}
+
 /* ==================== RESPONSIVE DESIGN ==================== */
 
 /* Large Screens - 1440px */
 @media (max-width: 1440px) {
+
   .bookservice-hero-banner,
   .bookservice-container {
     padding-left: 10% !important;
@@ -419,6 +444,7 @@
 
 /* Tablets & Small Laptops - 1024px */
 @media (max-width: 1024px) {
+
   .bookservice-hero-banner,
   .bookservice-container {
     padding-left: 5% !important;
@@ -434,8 +460,8 @@
   }
 }
 
+/* Mobile - 480px */
 @media (max-width: 480px) {
-
   .bookservice-hero-banner {
     min-height: 300px;
     padding-bottom: 80px;
@@ -446,6 +472,7 @@
   }
 
   .bookservice-main-title {
+    letter-spacing: normal;
     font-size: 28px;
   }
 
@@ -465,7 +492,7 @@
     padding: 0 14px;
   }
 
-  /* PHONE WRAPPER — DO NOT ADD PADDING HERE */
+  /* PHONE WRAPPER */
   .bookservice-phone-wrapper {
     height: 55px;
   }
@@ -475,11 +502,12 @@
     padding: 0 12px;
   }
 
-  .bookservice-phone-input {
-    font-size: 14px;
-    padding: 0 12px;
+  .bookservice-custom-dropdown-list {
+    max-height: 150px;
   }
 }
+
+/* Tablets - 768px */
 @media (max-width: 768px) {
 
   .bookservice-hero-banner,
@@ -490,10 +518,6 @@
 
   .bookservice-hero-large-text {
     font-size: 2.5rem;
-  }
-
-  .bookservice-hero-small-text {
-    font-size: 1rem;
   }
 
   .bookservice-main-title {
@@ -521,14 +545,8 @@
     padding: 0 16px;
   }
 
-  /* PHONE WRAPPER */
   .bookservice-phone-wrapper {
     height: 60px;
-  }
-
-  .bookservice-country-code {
-    font-size: 16px;
-    padding: 0 14px;
   }
 
   .bookservice-form-actions {
@@ -537,7 +555,6 @@
     padding: 30px 0;
   }
 
-  .bookservice-btn-reset,
   .bookservice-btn-submit {
     width: 100%;
     padding: 14px 0;

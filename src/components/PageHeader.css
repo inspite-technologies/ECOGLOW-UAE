@@ -4,7 +4,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   overflow-x: hidden;
   max-width: 100%;
   margin: 0;
@@ -24,27 +25,25 @@ html, body {
 }
 
 .page-main-header {
-  position: fixed; 
-  top: 0; 
+  position: fixed;
+  top: 0;
   left: 0;
   right: 0;
-  width: 100%; 
-  height: 90px; 
-  z-index: 1000;
-  display: flex; 
-  align-items: center; 
-  
+  width: 100%;
+  height: 90px;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+
   /* Top Teal Accent */
   border-top: 3px solid #73c9c1;
-  
+
   /* Black gradient overlay (The Scrim) */
-  background: linear-gradient(
-    to bottom, 
-    rgba(0, 0, 0, 0.463) 0%, 
-    rgba(0, 0, 0, 0.128) 60%, 
-    rgba(0, 0, 0, 0) 100%
-  );
-  
+  background: linear-gradient(to bottom,
+      rgba(0, 0, 0, 0.463) 0%,
+      rgba(0, 0, 0, 0.128) 60%,
+      rgba(0, 0, 0, 0) 100%);
+
   border-bottom: none;
   transition: all 0.3s ease;
 }
@@ -99,70 +98,70 @@ html, body {
 }
 
 .page-header-container {
-  width: 100%; 
+  width: 100%;
   max-width: 1400px;
-  margin: 0 auto; 
+  margin: 0 auto;
   padding: 0 50px;
-  display: flex; 
-  justify-content: space-between; 
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
-.page-header-logo-img { 
+.page-header-logo-img {
   height: 24px;
   transition: height 0.3s ease;
   margin-right: 40px;
   flex-shrink: 0;
 }
 
-.page-nav-links { 
-  display: flex; 
-  gap: 25px; 
-  align-items: center; 
+.page-nav-links {
+  display: flex;
+  gap: 25px;
+  align-items: center;
   position: relative;
   flex-wrap: nowrap;
 }
 
-.page-nav-links a { 
-  text-decoration: none; 
-  color: white; 
+.page-nav-links a {
+  text-decoration: none;
+  color: white;
   font-size: 13px;
-  font-weight: 500; 
+  font-weight: 500;
   font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  opacity: 0.8; 
-  letter-spacing: 0.5px; 
-  text-transform: uppercase; 
+  opacity: 0.8;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
   transition: opacity 0.3s;
   white-space: nowrap;
 }
 
 .page-nav-links a:hover,
-.page-nav-links a.active { 
-  opacity: 1; 
+.page-nav-links a.active {
+  opacity: 1;
 }
 
 /* Services Dropdown */
-.page-services-dropdown { 
-  position: relative; 
+.page-services-dropdown {
+  position: relative;
 }
 
 .page-services-toggle {
-  background: none; 
-  border: none; 
-  color: white; 
+  background: none;
+  border: none;
+  color: white;
   font-size: 13px;
-  font-weight: 500; 
+  font-weight: 500;
   font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  opacity: 0.9; 
-  letter-spacing: 0.5px; 
+  opacity: 0.9;
+  letter-spacing: 0.5px;
   cursor: pointer;
-  display: flex; 
-  align-items: center; 
-  gap: 5px; 
+  display: flex;
+  align-items: center;
+  gap: 5px;
   text-transform: uppercase;
   transition: opacity 0.3s;
   padding: 0;
@@ -170,125 +169,125 @@ html, body {
   text-decoration: none;
 }
 
-.page-services-toggle:hover { 
-  opacity: 1; 
+.page-services-toggle:hover {
+  opacity: 1;
 }
 
 .page-dropdown-menu {
-  position: absolute; 
-  top: 100%; 
-  left: 0; 
+  position: absolute;
+  top: 100%;
+  left: 0;
   margin-top: 15px;
-  background: white; 
-  min-width: 200px; 
+  background: white;
+  min-width: 200px;
   border-radius: 0;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   opacity: 0;
-  visibility: hidden; 
+  visibility: hidden;
   transition: all 0.3s ease;
   z-index: 1001;
 }
 
-.page-dropdown-menu.active { 
-  opacity: 1; 
-  visibility: visible; 
+.page-dropdown-menu.active {
+  opacity: 1;
+  visibility: visible;
 }
 
 .page-dropdown-menu a {
-  display: block; 
-  padding: 12px 20px; 
-  color: #333; 
+  display: block;
+  padding: 12px 20px;
+  color: #333;
   font-size: 13px;
-  font-weight: 500; 
+  font-weight: 500;
   font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-decoration: none; 
-  transition: background 0.2s; 
+  text-decoration: none;
+  transition: background 0.2s;
   text-transform: uppercase;
 }
 
-.page-dropdown-menu a:hover { 
-  background: #14b8a6; 
-  color: white; 
+.page-dropdown-menu a:hover {
+  background: #14b8a6;
+  color: white;
 }
 
-.page-header-actions { 
-  display: flex; 
-  align-items: center; 
+.page-header-actions {
+  display: flex;
+  align-items: center;
   gap: 20px;
   flex-shrink: 0;
 }
 
-.page-book-btn { 
-  background: transparent; 
-  border: 1px solid rgba(255,255,255,0.4); 
-  color: white; 
+.page-book-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: white;
   padding: 8px 14px;
   font-size: 13px;
-  font-weight: 500; 
+  font-weight: 500;
   font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  cursor: pointer; 
-  text-transform: uppercase; 
-  letter-spacing: 0.5px; 
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   transition: all 0.3s;
   white-space: nowrap;
   border-radius: 4px;
 }
 
-.page-book-btn:hover { 
-  background: #14b8a6; 
-  border-color: #14b8a6; 
+.page-book-btn:hover {
+  background: #14b8a6;
+  border-color: #14b8a6;
 }
 
-.page-social-icons { 
-  display: flex; 
-  gap: 12px; 
-  align-items: center; 
+.page-social-icons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
 
-.page-icon-circle { 
-  width: 25px; 
-  height: 25px; 
-  border-radius: 50%; 
-  border: 1px solid rgba(255,255,255,0.2); 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  cursor: pointer; 
+.page-icon-circle {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
   transition: all 0.3s;
   flex-shrink: 0;
   text-decoration: none !important;
 }
 
-.page-icon-circle:hover { 
-  background: rgba(255,255,255,0.1);
+.page-icon-circle:hover {
+  background: rgba(255, 255, 255, 0.1);
   text-decoration: none !important;
 }
 
-.page-icon-circle.page-whatsapp { 
-  background: #25D366; 
+.page-icon-circle.page-whatsapp {
+  background: #25D366;
   border: none;
   text-decoration: none !important;
 }
 
-.page-icon-circle.page-whatsapp:hover { 
+.page-icon-circle.page-whatsapp:hover {
   background: #1ea952;
   text-decoration: none !important;
 }
 
-.page-search-icon { 
-  cursor: pointer; 
-  opacity: 0.8; 
+.page-search-icon {
+  cursor: pointer;
+  opacity: 0.9;
   transition: opacity 0.3s;
   color: #14b8a6;
-  margin-left: 30px;
+  margin-left: 10px;
 }
 
-.page-search-icon:hover { 
-  opacity: 1; 
+.page-search-icon:hover {
+  opacity: 1;
 }
 
 /* Mobile Menu Toggle */
@@ -344,7 +343,8 @@ html, body {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.4s ease;
-  z-index: 999;
+  z-index: 10002;
+  /* Higher than footer (10000) */
 }
 
 .page-mobile-nav.active {
@@ -358,7 +358,7 @@ html, body {
   padding: 20px 0;
 }
 
-.page-mobile-nav-links > a {
+.page-mobile-nav-links>a {
   padding: 15px 30px;
   color: #333;
   text-decoration: none;
@@ -371,7 +371,7 @@ html, body {
   font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
-.page-mobile-nav-links > a:hover {
+.page-mobile-nav-links>a:hover {
   background: #f5f5f5;
 }
 
@@ -1629,9 +1629,9 @@ body.page-mobile-menu-open {
     display: none;
   }
 
-  .page-header-actions .page-search-icon {
+  /* .page-header-actions .page-search-icon {
     display: none;
-  }
+  } */
 
   .page-header-actions {
     gap: 12px;
@@ -1682,7 +1682,7 @@ body.page-mobile-menu-open {
     font-size: 16px !important;
   }
 
-  .page-mobile-nav-links > a,
+  .page-mobile-nav-links>a,
   .page-mobile-services-toggle {
     font-size: 14px;
     padding: 16px 32px;
@@ -1721,7 +1721,7 @@ body.page-mobile-menu-open {
     height: 33px;
   }
 
-  .page-mobile-nav-links > a,
+  .page-mobile-nav-links>a,
   .page-mobile-services-toggle {
     font-size: 14px;
     padding: 15px 30px;
@@ -1756,7 +1756,7 @@ body.page-mobile-menu-open {
     font-size: 15px !important;
   }
 
-  .page-mobile-nav-links > a,
+  .page-mobile-nav-links>a,
   .page-mobile-services-toggle {
     font-size: 14px;
     padding: 15px 28px;
@@ -1795,7 +1795,7 @@ body.page-mobile-menu-open {
     height: 31px;
   }
 
-  .page-mobile-nav-links > a,
+  .page-mobile-nav-links>a,
   .page-mobile-services-toggle {
     font-size: 14px;
   }
@@ -1821,7 +1821,7 @@ body.page-mobile-menu-open {
     font-size: 14px !important;
   }
 
-  .page-mobile-nav-links > a,
+  .page-mobile-nav-links>a,
   .page-mobile-services-toggle {
     font-size: 14px;
     padding: 14px 25px;
@@ -1892,7 +1892,7 @@ body.page-mobile-menu-open {
     max-height: calc(100vh - 65px);
   }
 
-  .page-mobile-nav-links > a,
+  .page-mobile-nav-links>a,
   .page-mobile-services-toggle {
     font-size: 14px;
     padding: 13px 20px;
@@ -1970,7 +1970,7 @@ body.page-mobile-menu-open {
     max-height: calc(100vh - 60px);
   }
 
-  .page-mobile-nav-links > a,
+  .page-mobile-nav-links>a,
   .page-mobile-services-toggle {
     font-size: 14px;
     padding: 12px 18px;
@@ -2077,7 +2077,7 @@ body.page-mobile-menu-open {
     height: 28px;
   }
 
-  .page-mobile-nav-links > a,
+  .page-mobile-nav-links>a,
   .page-mobile-services-toggle {
     padding: 12px 25px;
     font-size: 14px;
@@ -2127,6 +2127,7 @@ body.page-mobile-menu-open {
 
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
+
   .page-main-header,
   .page-main-header::after,
   .page-nav-links a,
@@ -2139,7 +2140,7 @@ body.page-mobile-menu-open {
   .page-mobile-nav,
   .page-mobile-services-menu,
   .page-mobile-book-btn,
-  .page-mobile-nav-links > a,
+  .page-mobile-nav-links>a,
   .page-mobile-services-toggle,
   .page-mobile-social-link {
     transition: none !important;
@@ -2147,7 +2148,8 @@ body.page-mobile-menu-open {
 }
 
 /* High DPI Displays (Retina) */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
   .page-header-logo-img {
     image-rendering: -webkit-optimize-contrast;
   }
@@ -2169,13 +2171,13 @@ body.page-mobile-menu-open {
       background: #1a1a1a;
     }
 
-    .page-mobile-nav-links > a,
+    .page-mobile-nav-links>a,
     .page-mobile-services-toggle {
       color: #e0e0e0;
       border-bottom-color: #333;
     }
 
-    .page-mobile-nav-links > a:hover,
+    .page-mobile-nav-links>a:hover,
     .page-mobile-services-toggle:hover {
       background: #2a2a2a;
     }
@@ -2218,7 +2220,7 @@ body.page-mobile-menu-open {
       background: white !important;
     }
 
-    .page-mobile-nav-links > a,
+    .page-mobile-nav-links>a,
     .page-mobile-services-toggle {
       color: #333 !important;
       border-bottom-color: #f0f0f0 !important;
@@ -2268,6 +2270,7 @@ body.page-mobile-menu-open {
     }
   }
 }
+
 /* Print Styles */
 @media print {
   .page-main-header {
@@ -2302,14 +2305,334 @@ body.page-mobile-menu-open {
 
   .page-dropdown-menu {
     -webkit-transform: translateZ(0);
+    transform: translateZ(0);
   }
 }
 
 /* Firefox-specific optimizations */
 @-moz-document url-prefix() {
+
   .page-nav-links a,
   .page-services-toggle,
   .page-book-btn {
     -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* ==================== SEARCH DROPDOWN STYLES ==================== */
+
+/* 1. Position Parent Relative */
+.page-header-actions {
+  position: relative;
+  /* Keep existing layout styles */
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* 2. The Dropdown Container (Desktop) */
+.page-search-dropdown-wrapper {
+  position: absolute;
+  top: 130%;
+  right: 0;
+  width: 300px;
+  /* Standardized reduced width */
+  padding: 15px;
+  /* Added padding for "container in container" look */
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 12px;
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.3);
+  z-index: 2000;
+  overflow: hidden;
+  animation: pageSlideInFade 0.2s ease-out;
+}
+
+/* Triangle Pointer */
+.page-search-dropdown-wrapper::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  right: 175px;
+  /* Adjust based on icon position */
+  width: 12px;
+  height: 12px;
+  background: white;
+  transform: rotate(45deg);
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+@keyframes pageSlideInFade {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 3. Input Styles */
+.page-search-input-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background: #f5f5f5;
+  /* Container look */
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+.page-search-input-icon {
+  color: #14b8a6;
+  margin-right: 10px;
+}
+
+.page-search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  color: #333;
+  background: transparent;
+}
+
+.page-search-close-btn {
+  background: #f5f5f5;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+}
+
+.page-search-close-btn:hover {
+  background: #e0e0e0;
+}
+
+/* 4. Results Styles */
+.page-search-results {
+  max-height: 280px;
+  overflow-y: auto;
+  background: white;
+}
+
+.page-search-result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 12px 15px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #f9f9f9;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s;
+}
+
+.page-search-result-item:hover {
+  background: #f0fdfc;
+}
+
+.page-result-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+}
+
+.page-result-path {
+  font-size: 11px;
+  color: #14b8a6;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.page-search-no-results {
+  padding: 20px;
+  text-align: center;
+  color: #999;
+  font-size: 13px;
+}
+
+/* 5. Suggestions (Quick Links) */
+.page-search-suggestions {
+  padding: 12px 15px;
+  background: #fafafa;
+}
+
+.page-suggestions-title {
+  font-size: 11px;
+  color: #aaa;
+  font-weight: 600;
+  margin: 0 0 10px 0;
+  text-transform: uppercase;
+}
+
+.page-suggestions-grid {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.page-suggestions-grid button {
+  background: white;
+  border: 1px solid #e0e0e0;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.page-suggestions-grid button:hover {
+  border-color: #14b8a6;
+  color: #14b8a6;
+}
+
+/* ==================== MOBILE BREAKPOINT (Max 767px) ==================== */
+
+@media (max-width: 767px) {
+
+  .page-main-header,
+  .page-main-header.page-scrolled {
+    height: 70px;
+    background: white !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+    /* --- NEW CODE START --- */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10002;
+    /* High z-index to stay on top of content and footer */
+    /* --- NEW CODE END --- */
+  }
+
+  .page-main-header::after {
+    background: rgba(0, 0, 0, 0.08);
+  }
+
+  .page-header-container {
+    padding: 0 20px;
+  }
+
+  .page-header-logo-img {
+    height: 24px;
+    margin-right: 0;
+    flex-shrink: 0;
+  }
+
+  .page-nav-links,
+  .page-book-btn,
+  .page-social-icons {
+    display: none !important;
+  }
+
+  .page-mobile-menu-toggle {
+    display: flex;
+    z-index: 1002;
+  }
+
+  .page-mobile-menu-toggle .page-menu-icon {
+    color: #333 !important;
+  }
+
+  /* Make sure the Mobile Nav acts correctly with the fixed header */
+  .page-mobile-nav {
+    display: block;
+    position: fixed;
+    /* Changed to fixed so it scrolls WITH the header */
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background: white !important;
+    z-index: 10001;
+    height: calc(100vh - 70px);
+    /* Fill remaining height */
+    overflow-y: auto;
+    /* Allow menu scrolling if items are long */
+  }
+
+  .page-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    z-index: 1002;
+    flex-shrink: 0;
+  }
+
+  .page-search-trigger-wrapper {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    visibility: visible !important;
+    width: 40px !important;
+    height: 40px !important;
+    pointer-events: auto !important;
+  }
+
+  .page-search-icon {
+    display: block;
+    color: #333 !important;
+    font-size: 20px;
+    height: 24px !important;
+    margin-left: 0;
+    opacity: 1;
+  }
+
+  /* SEARCH DROPDOWN - Fixed position related to viewport */
+  .page-search-dropdown-wrapper {
+    position: fixed;
+    top: 70px;
+    /* Aligns exactly under the 70px header */
+    left: 10px;
+    right: 10px;
+    width: auto;
+    margin: 0;
+    padding: 15px;
+    background: white;
+    backdrop-filter: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    z-index: 100002;
+    border: 1px solid #eee;
+  }
+
+  .page-search-dropdown-wrapper::before {
+    display: none;
+  }
+
+  .page-search-input {
+    font-size: 16px;
+  }
+
+  .page-suggestions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .page-suggestions-grid button {
+    text-align: center;
+    padding: 10px;
+  }
+
+  /* IMPORTANT: Add padding to body so content doesn't hide behind fixed header */
+  body {
+    padding-top: 70px;
   }
 }
