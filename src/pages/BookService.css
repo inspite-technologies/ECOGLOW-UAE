@@ -59,6 +59,16 @@
   font-family: "Montserrat", sans-serif;
 }
 
+.bookservice-hero-small-text {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+  letter-spacing: 0.3px;
+  font-family: 'Montserrat', sans-serif;
+  opacity: 0.95;
+}
+
 /* ==================== BOOK SECTION ==================== */
 .bookservice-section {
   background: #ffffff;
@@ -69,7 +79,8 @@
 .bookservice-container {
   max-width: 100%;
   margin: 0 auto;
-  padding: 0 15%;
+  padding: 0 10%;
+  /* Reduced from 15% to make form wider/bigger */
 }
 
 /* ==================== TOP LABEL ==================== */
@@ -172,7 +183,8 @@
 .bookservice-form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 30px;
+  /* Increased from 20px */
 }
 
 .bookservice-form-group {
@@ -193,9 +205,12 @@
 .bookservice-input,
 .bookservice-select {
   width: 100%;
-  height: 70px;
-  padding: 0 20px;
-  font-size: 20px;
+  height: 80px;
+  /* Increased from 70px */
+  padding: 0 25px;
+  /* Increased padding */
+  font-size: 22px;
+  /* Increased font size */
   color: var(--bookservice-text-dark);
   background: #ffffff;
   border: 2px solid var(--bookservice-teal);
@@ -267,7 +282,8 @@
   align-items: center;
   border: 2px solid var(--bookservice-teal);
   background: #ffffff;
-  height: 70px;
+  height: 80px;
+  /* Increased from 70px */
   transition: all 0.3s ease;
   border-radius: 0;
 }
@@ -328,7 +344,6 @@
   font-size: 12px;
   pointer-events: none;
   transition: transform 0.3s ease;
-  /* Animation */
 }
 
 /* Rotate arrow when dropdown is active */
@@ -341,6 +356,13 @@
 .bookservice-input[type="time"] {
   cursor: pointer;
   color-scheme: light;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.bookservice-input[type="date"]::-webkit-date-and-time-value {
+  text-align: left;
 }
 
 .bookservice-input[type="date"]::-webkit-calendar-picker-indicator,
@@ -355,7 +377,7 @@
   justify-content: flex-end;
   gap: 20px;
   margin-top: 10px;
-  padding: 40px
+  padding: 40px;
 }
 
 .bookservice-btn-submit {
@@ -460,50 +482,102 @@
   }
 }
 
-/* Mobile - 480px */
-@media (max-width: 480px) {
-  .bookservice-hero-banner {
-    min-height: 300px;
-    padding-bottom: 80px;
+/* Standard Shine Options Styles */
+.bookservice-radio-horizontal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 5px;
+  width: 100%;
+}
+
+.bookservice-radio-label {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  padding: 16px 15px;
+  border: 2px solid var(--bookservice-teal);
+  background: #fff;
+  transition: all 0.3s ease;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.bookservice-radio-label:hover {
+  background: rgba(118, 200, 193, 0.05);
+  border-color: var(--bookservice-teal-dark);
+}
+
+.bookservice-radio-input {
+  /* Normalize across browsers including Safari/Mac */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  flex-shrink: 0;
+  border: 2px solid var(--bookservice-teal);
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: border-color 0.2s ease;
+}
+
+/* Checked state — filled dot */
+.bookservice-radio-input:checked {
+  border-color: var(--bookservice-teal);
+  background: var(--bookservice-teal);
+}
+
+.bookservice-radio-input:checked::after {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.bookservice-radio-text {
+  font-size: clamp(13px, 1.4vw, 18px);
+  font-weight: 600;
+  color: var(--bookservice-text-dark);
+  font-family: "Montserrat", sans-serif;
+  line-height: 1.2;
+  white-space: normal;
+  flex: 1;
+  display: inline-block;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
 
-  .bookservice-hero-large-text {
-    font-size: 2rem;
-  }
-
-  .bookservice-main-title {
-    letter-spacing: normal;
-    font-size: 28px;
-  }
-
-  .bookservice-subtitle {
-    font-size: 16px;
-  }
-
-  .bookservice-form-group label {
-    font-size: 16px;
-  }
-
-  /* INPUTS */
-  .bookservice-input,
-  .bookservice-select {
-    height: 55px;
-    font-size: 14px;
-    padding: 0 14px;
-  }
-
-  /* PHONE WRAPPER */
-  .bookservice-phone-wrapper {
-    height: 55px;
-  }
-
-  .bookservice-country-code {
-    font-size: 14px;
-    padding: 0 12px;
-  }
-
-  .bookservice-custom-dropdown-list {
-    max-height: 150px;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -539,14 +613,32 @@
 
   /* INPUTS */
   .bookservice-input,
-  .bookservice-select {
-    height: 60px;
-    font-size: 16px;
-    padding: 0 16px;
+  .bookservice-select,
+  .custom-dropdown-trigger {
+    height: 60px !important;
+    font-size: 16px !important;
+    padding: 0 16px !important;
+  }
+
+  /* DATE INPUT SPECIFIC - iOS Fix */
+  .bookservice-input[type="date"] {
+    height: 60px !important;
+    padding: 0 16px !important;
+    line-height: 60px !important;
+    display: block !important;
+  }
+
+  .bookservice-input[type="date"]::-webkit-date-and-time-value {
+    line-height: 60px !important;
   }
 
   .bookservice-phone-wrapper {
-    height: 60px;
+    height: 60px !important;
+  }
+
+  .bookservice-phone-input,
+  .bookservice-country-code {
+    font-size: 16px !important;
   }
 
   .bookservice-form-actions {
@@ -558,5 +650,120 @@
   .bookservice-btn-submit {
     width: 100%;
     padding: 14px 0;
+  }
+
+  /* Radio buttons - keep in one row on tablet */
+  .bookservice-radio-horizontal {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .bookservice-radio-label {
+    padding: 12px 14px 12px 8px;
+  }
+
+  .bookservice-radio-text {
+    font-size: 14px;
+    white-space: normal;
+  }
+
+  .bookservice-radio-input {
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    margin-right: 6px;
+  }
+}
+
+/* Mobile - 480px */
+@media (max-width: 480px) {
+  .bookservice-hero-banner {
+    min-height: 300px;
+    padding-bottom: 80px;
+  }
+
+  .bookservice-hero-large-text {
+    font-size: 2rem;
+  }
+
+  .bookservice-main-title {
+    letter-spacing: normal;
+    font-size: 28px;
+  }
+
+  .bookservice-subtitle {
+    font-size: 16px;
+  }
+
+  .bookservice-form-group label {
+    font-size: 16px;
+  }
+
+  /* ALL INPUTS */
+  .bookservice-input,
+  .bookservice-select,
+  .custom-dropdown-trigger {
+    height: 55px !important;
+    font-size: 14px !important;
+    padding: 0 14px !important;
+  }
+
+  /* DATE INPUT SPECIFIC - Critical iOS Fix */
+  .bookservice-input[type="date"] {
+    height: 55px !important;
+    padding: 0 14px !important;
+    line-height: 55px !important;
+    display: block !important;
+    box-sizing: border-box !important;
+  }
+
+  .bookservice-input[type="date"]::-webkit-date-and-time-value {
+    line-height: 55px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  /* PHONE WRAPPER */
+  .bookservice-phone-wrapper {
+    height: 55px !important;
+  }
+
+  .bookservice-country-code {
+    font-size: 14px !important;
+    padding: 0 12px !important;
+  }
+
+  .bookservice-phone-input {
+    font-size: 14px !important;
+  }
+
+  .bookservice-custom-dropdown-list {
+    max-height: 150px;
+  }
+
+  .bookservice-select-arrow {
+    font-size: 10px;
+  }
+
+  /* Radio buttons - keep in one row on mobile */
+  .bookservice-radio-horizontal {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .bookservice-radio-label {
+    padding: 10px 10px 10px 6px;
+  }
+
+  .bookservice-radio-text {
+    font-size: 12px;
+    white-space: normal;
+  }
+
+  .bookservice-radio-input {
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    margin-right: 4px;
   }
 }

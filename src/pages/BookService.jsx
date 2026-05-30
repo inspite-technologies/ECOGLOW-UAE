@@ -19,6 +19,15 @@ function BookService() {
 
   const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
+  // --- HELPER: Get Today's Date String ---
+  const getTodayString = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   // --- HELPER: Generate Time Slots (8:00 AM - 5:00 PM, 30 min) ---
   const generateTimeSlots = () => {
     const slots = [];
@@ -38,7 +47,7 @@ function BookService() {
   };
 
   // --- HELPER: Generate Duration Options (2-8 Hours) ---
-  const generateDurationOptions = () => Array.from({ length: 8 }, (_, i) => `${i + 2} Hours`);
+  const generateDurationOptions = () => Array.from({ length: 7 }, (_, i) => `${i + 2} Hours`);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -46,13 +55,15 @@ function BookService() {
     email: "",
     phone: "",
     cleaningFor: "Residential",
-    serviceName: "",
+    serviceName: "Mattress Cleaning", // Set as default
     needMaterials: "Yes, I need cleaning materials.",
     bedrooms: "Studio",
     rooms: "Studio",
     date: "",
     timing: "",
     duration: "2 Hours", // Default duration
+    standardShineOption: "With materials", // New field
+    numberOfStaff: "1", // New field
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -94,16 +105,40 @@ function BookService() {
   // --- LOGIC: Active List & Card Details ---
   const activeServiceList = formData.cleaningFor === "Residential" ? residentialList : commercialList;
 
-  // Auto-select first option on category change
+  // Auto-select default or first option on category change
   useEffect(() => {
     if (activeServiceList.length > 0) {
+      const mattressService = activeServiceList.find(s =>
+        s.title.toLowerCase().trim() === "mattress cleaning"
+      );
+
       const exists = activeServiceList.some(s => s.title === formData.serviceName);
-      if (!exists) setFormData(prev => ({ ...prev, serviceName: activeServiceList[0].title }));
+
+      if (mattressService && !exists) {
+        setFormData(prev => ({ ...prev, serviceName: mattressService.title }));
+      } else if (!exists) {
+        setFormData(prev => ({ ...prev, serviceName: activeServiceList[0].title }));
+      }
     }
   }, [formData.cleaningFor, activeServiceList]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // Prevent past date selection for iOS/mobile devices
+    if (name === 'date') {
+      const selectedDate = new Date(value + "T00:00:00");
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      if (selectedDate < today) {
+        setFormData(prev => ({ ...prev, date: "" }));
+        setFormErrors(prev => ({ ...prev, date: "Cannot select past dates" }));
+        // Don't update the state if past date is selected
+        return;
+      }
+    }
+
     setFormData(prev => ({ ...prev, [name]: value }));
     // Clear error for this field if it exists
     if (formErrors[name]) setFormErrors(prev => ({ ...prev, [name]: "" }));
@@ -141,7 +176,7 @@ function BookService() {
     if (!formData.date) {
       errors.date = "Select a date";
     } else {
-      const selectedDate = new Date(formData.date);
+      const selectedDate = new Date(formData.date + "T00:00:00");
       const today = new Date();
       today.setHours(0, 0, 0, 0); // Reset time
       if (selectedDate < today) errors.date = "Cannot select past dates";
@@ -167,6 +202,8 @@ function BookService() {
       date: "",
       timing: "",
       duration: "2 Hours",
+      standardShineOption: "With materials",
+      numberOfStaff: "1",
     });
     setFormErrors({});
     setFormStatus("");
@@ -206,12 +243,16 @@ function BookService() {
 Booking Details:
 - Service Type: ${formData.cleaningFor}
 - Specific Service: ${formData.serviceName}
+${formData.cleaningFor === "Residential" && formData.serviceName === "EcoGlow Standard Shine" ? `- Standard Shine Option: ${formData.standardShineOption}` : ""}
 - Materials Needed: ${formData.needMaterials}
 - Bedrooms: ${formData.bedrooms}
 - Duration: ${formData.duration}
+- Number of Staff: ${formData.numberOfStaff}
 - Preferred Date: ${formData.date}
 - Start Time: ${formData.timing}
-          `.trim()
+          `.trim(),
+          materialPreference: (formData.cleaningFor === "Residential" && formData.serviceName === "EcoGlow Standard Shine") ? formData.standardShineOption : null,
+          numberOfStaff: formData.numberOfStaff
         }),
       });
 
@@ -237,6 +278,9 @@ Booking Details:
       <section className="bookservice-hero-banner" style={{ backgroundImage: `url("${bgImage}")` }}>
         <div className="bookservice-hero-overlay"></div>
         <div className="bookservice-hero-content">
+          {pageData.heroSmallText && (
+            <p className="bookservice-hero-small-text">{pageData.heroSmallText}</p>
+          )}
           <h1 className="bookservice-hero-large-text">{pageData.heroLargeText}</h1>
         </div>
       </section>
@@ -349,6 +393,40 @@ Booking Details:
                 </div>
               </div>
 
+              {/* Row: Standard Shine Options (Outside the Service Column) */}
+              {formData.cleaningFor === "Residential" && formData.serviceName === "EcoGlow Standard Shine" && (
+                <div className="bookservice-form-row animate-fade-in" style={{ gridColumn: "1 / -1", marginTop: "10px", marginBottom: "10px" }}>
+                  <div className="bookservice-form-group">
+                    <label>Standard Shine Options</label>
+                    <div className="bookservice-radio-horizontal">
+                      <label className="bookservice-radio-label">
+                        <input
+                          type="radio"
+                          name="standardShineOption"
+                          value="With materials"
+                          checked={formData.standardShineOption === "With materials"}
+                          onChange={handleChange}
+                          className="bookservice-radio-input"
+                        />
+                        <span className="bookservice-radio-text">With materials</span>
+                      </label>
+                      <label className="bookservice-radio-label">
+                        <input
+                          type="radio"
+                          name="standardShineOption"
+                          value="Without materials"
+                          checked={formData.standardShineOption === "Without materials"}
+                          onChange={handleChange}
+                          className="bookservice-radio-input"
+                        />
+                        <span className="bookservice-radio-text">Without materials</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+
               {/* Row 4: Bedrooms & Date */}
               <div className="bookservice-form-row">
                 <div className="bookservice-form-group">
@@ -379,7 +457,7 @@ Booking Details:
                     name="date"
                     value={formData.date}
                     onChange={handleChange}
-                    min={new Date().toISOString().split("T")[0]}
+                    min={getTodayString()}
                     className={`bookservice-input ${formErrors.date ? 'bookservice-error' : ''}`}
                   />
                   {formErrors.date && <span className="bookservice-error-message">{formErrors.date}</span>}
@@ -403,7 +481,7 @@ Booking Details:
                 <div className="bookservice-form-group" ref={timeDropdownRef}>
                   <label>Select Start Time</label>
 
-                  {/* Custom Trigger (needs relative position for the absolute arrow) */}
+                  {/* Custom Trigger */}
                   <div
                     className={`bookservice-select custom-dropdown-trigger ${showTimeDropdown ? 'active' : ''} ${formErrors.timing ? 'bookservice-error' : ''}`}
                     onClick={() => setShowTimeDropdown(!showTimeDropdown)}
@@ -412,7 +490,7 @@ Booking Details:
                       alignItems: 'center',
                       justifyContent: 'space-between',
                       cursor: 'pointer',
-                      position: 'relative' // Added to contain the arrow properly
+                      position: 'relative'
                     }}
                   >
                     {formData.timing || "-- Select Time --"}
@@ -439,6 +517,31 @@ Booking Details:
                       {formErrors.timing}
                     </span>
                   )}
+                </div>
+              </div>
+
+              {/* Row 6: Number of Staff */}
+              <div className="bookservice-form-row">
+                <div className="bookservice-form-group">
+                  <label>Number of Staff</label>
+                  <div className="bookservice-select-wrapper">
+                    <select
+                      name="numberOfStaff"
+                      value={formData.numberOfStaff}
+                      onChange={handleChange}
+                      className="bookservice-select"
+                    >
+                      {pageData.staffOptions && pageData.staffOptions.length > 0
+                        ? pageData.staffOptions.map((opt, i) => (
+                          <option key={i} value={opt}>{opt}</option>
+                        ))
+                        : Array.from({ length: 9 }, (_, i) => i + 1).map((num) => (
+                          <option key={num} value={num}>{num}</option>
+                        ))
+                      }
+                    </select>
+                    <span className="bookservice-select-arrow">▼</span>
+                  </div>
                 </div>
               </div>
 

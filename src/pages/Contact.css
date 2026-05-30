@@ -19,8 +19,8 @@
   align-items: flex-end;
   justify-content: flex-start;
   margin: 0;
-  padding: 0 15% 10px 15%;
-  /* Reduced padding-bottom for mobile compatibility */
+  padding: 0 15% 100px 15%;
+  /* Increased from 10px to move text higher on laptops */
   background-image: url('../assets/contactus.webp');
   background-size: cover;
   background-position: center 78%;
@@ -583,6 +583,11 @@
     padding-right: 20px !important;
   }
 
+  .contact-hero-banner {
+    padding-bottom: 80px !important;
+    /* Increased to move text higher on tablets */
+  }
+
   .hero-large-text {
     font-size: 2.5rem;
   }
@@ -728,7 +733,8 @@
 @media (max-width: 480px) {
   .contact-hero-banner {
     min-height: 250px;
-    padding-bottom: 20px;
+    padding-bottom: 60px !important;
+    /* Increased to move text higher on mobile */
   }
 
   .about-intro {
